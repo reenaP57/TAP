@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="I4T-Zr-IkD" customClass="CustomSearchView" customModule="Ta_Pronto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-0w-Xys">
+                    <rect key="frame" x="0.0" y="0.0" width="45" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="nBw-mO-9Yx"/>
+                    </constraints>
+                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="back_white"/>
+                </button>
+                <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8me-zu-KoQ" customClass="GenericView" customModule="FoodOrderingApp" customModuleProvider="target">
+                    <rect key="frame" x="45" y="0.0" width="320" height="56"/>
+                    <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Uef-zQ-zvU">
+                    <rect key="frame" x="45" y="0.0" width="320" height="56"/>
+                    <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="999" constant="56" id="qEm-p2-LsP"/>
+                        <constraint firstAttribute="width" priority="999" constant="320" id="yZm-9h-WFB"/>
+                    </constraints>
+                    <color key="barTintColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <offsetWrapper key="searchTextPositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    <offsetWrapper key="searchFieldBackgroundPositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="I4T-Zr-IkD" id="LVo-ea-74x"/>
+                    </connections>
+                </searchBar>
+            </subviews>
+            <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="8me-zu-KoQ" firstAttribute="bottom" secondItem="Uef-zQ-zvU" secondAttribute="bottom" id="20j-Al-bB2"/>
+                <constraint firstItem="Uef-zQ-zvU" firstAttribute="top" secondItem="m6H-LO-RNN" secondAttribute="top" id="Gef-3o-5cd"/>
+                <constraint firstItem="Uef-zQ-zvU" firstAttribute="leading" secondItem="gCO-0w-Xys" secondAttribute="trailing" id="Ka7-H6-mHZ"/>
+                <constraint firstItem="gCO-0w-Xys" firstAttribute="top" secondItem="m6H-LO-RNN" secondAttribute="top" id="LaO-dG-oMB"/>
+                <constraint firstItem="gCO-0w-Xys" firstAttribute="bottom" secondItem="m6H-LO-RNN" secondAttribute="bottom" id="STK-QN-izR"/>
+                <constraint firstItem="Uef-zQ-zvU" firstAttribute="bottom" secondItem="m6H-LO-RNN" secondAttribute="bottom" id="bmE-yT-kjN"/>
+                <constraint firstItem="8me-zu-KoQ" firstAttribute="trailing" secondItem="Uef-zQ-zvU" secondAttribute="trailing" id="eF8-MW-UgQ"/>
+                <constraint firstItem="gCO-0w-Xys" firstAttribute="leading" secondItem="m6H-LO-RNN" secondAttribute="leading" id="iVP-PD-LfI"/>
+                <constraint firstItem="8me-zu-KoQ" firstAttribute="top" secondItem="Uef-zQ-zvU" secondAttribute="top" id="qys-WX-T8I"/>
+                <constraint firstItem="8me-zu-KoQ" firstAttribute="leading" secondItem="Uef-zQ-zvU" secondAttribute="leading" id="tah-R5-Yxk"/>
+                <constraint firstItem="m6H-LO-RNN" firstAttribute="trailing" secondItem="Uef-zQ-zvU" secondAttribute="trailing" constant="10" id="wMU-8t-OOu"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="m6H-LO-RNN"/>
+            <connections>
+                <outlet property="btnBack" destination="gCO-0w-Xys" id="mWT-iq-6bB"/>
+                <outlet property="layoutHeightSearchbar" destination="qEm-p2-LsP" id="tm8-Kl-TbM"/>
+                <outlet property="layoutLeadingSearchBar" destination="Ka7-H6-mHZ" id="plH-xl-dqu"/>
+                <outlet property="layoutSearchBarTrailing" destination="wMU-8t-OOu" id="cGt-d8-Xk9"/>
+                <outlet property="layoutWidthSearchbar" destination="yZm-9h-WFB" id="plR-wn-AXy"/>
+                <outlet property="searchBar" destination="Uef-zQ-zvU" id="5Wr-Fl-SA7"/>
+            </connections>
+            <point key="canvasLocation" x="26.5" y="52"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_white" width="22" height="15"/>
+    </resources>
+</document>
