@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF UI Text Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="YH7-dv-usM" customClass="RestaurantDetailFooterView" customModule="Ta_Pronto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nf-mc-i4K">
+                    <rect key="frame" x="0.0" y="19" width="375" height="75"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-tg-Ywz" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                    <rect key="frame" x="125" y="8" width="124" height="38"/>
+                    <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="124" id="f4U-3O-LNT"/>
+                        <constraint firstAttribute="width" secondItem="0eP-tg-Ywz" secondAttribute="height" multiplier="62:19" id="oYZ-Ly-Sk6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                    <state key="normal" title="View Cart">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="6nf-mc-i4K" firstAttribute="height" secondItem="YH7-dv-usM" secondAttribute="height" multiplier="0.797" id="50O-uJ-5F2"/>
+                <constraint firstItem="0eP-tg-Ywz" firstAttribute="centerX" secondItem="6nf-mc-i4K" secondAttribute="centerX" id="MuH-c5-arP"/>
+                <constraint firstItem="6nf-mc-i4K" firstAttribute="trailing" secondItem="CTP-1n-I6d" secondAttribute="trailing" id="h7T-db-rcE"/>
+                <constraint firstItem="6nf-mc-i4K" firstAttribute="bottom" secondItem="CTP-1n-I6d" secondAttribute="bottom" id="hG4-Uc-11i"/>
+                <constraint firstItem="6nf-mc-i4K" firstAttribute="top" secondItem="0eP-tg-Ywz" secondAttribute="bottom" constant="-27" id="iab-l5-vmY"/>
+                <constraint firstItem="6nf-mc-i4K" firstAttribute="leading" secondItem="CTP-1n-I6d" secondAttribute="leading" id="mYx-Wa-kTa"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="CTP-1n-I6d"/>
+            <connections>
+                <outlet property="btnViewCart" destination="0eP-tg-Ywz" id="m0H-hh-vSL"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="53"/>
+        </view>
+    </objects>
+</document>

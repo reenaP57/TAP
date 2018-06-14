@@ -518,6 +518,23 @@ extension UIViewController {
             print("Master Log ::--> Unable to Convert the String to URL")
         }
     }
+    
+    func dialPhoneNumber(phoneNumber:String) {
+        
+        if let url = "tel://\(phoneNumber)".toURL {
+            
+            if CSharedApplication.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    CSharedApplication.open(url, options: [:], completionHandler: nil)
+                } else {
+                    CSharedApplication.openURL(url)
+                }
+            }
+            
+        } else {
+            print("Master Log ::--> Unable to Convert the String to URL")
+        }
+    }
 }
 
 // MARK: -

@@ -24,6 +24,8 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var txtConfirmPassword : GenericTextField!
     @IBOutlet weak var imgVProfile : UIImageView!
 
+    var isFromProfileLogin : Bool = false
+    
     fileprivate var imgData = Data()
 
     override func viewDidLoad() {
@@ -31,6 +33,11 @@ class SignUpViewController: ParentViewController {
         self.initialize()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        appDelegate?.hideTabBar()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -38,7 +45,8 @@ class SignUpViewController: ParentViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
        
-        imgVProfile.layer.cornerRadius = imgVProfile.frame.size.height/2
+        self.view.layoutIfNeeded()
+        imgVProfile.layer.cornerRadius = imgVProfile.CViewHeight/2
         imgVProfile.layer.masksToBounds = true
     }
     
@@ -48,7 +56,7 @@ class SignUpViewController: ParentViewController {
     
     func initialize() {
         
-        self.title = "Sign Up"
+        self.title = CSignUp
         
         
         txtPassword.addTarget(self, action: #selector(self.textFieldEditingChange(_:)),
@@ -90,10 +98,16 @@ extension SignUpViewController {
     
     @IBAction func btnSingupClicked(sender : UIButton) {
         
-        if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+        if isFromProfileLogin {
+            self.navigationController?.popViewController(animated: true)
             
-            self.navigationController?.pushViewController(selectLocVC, animated: false)
+        } else {
+            if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+                
+                self.navigationController?.pushViewController(selectLocVC, animated: false)
+            }
         }
+  
     }
     
     @IBAction func btnTermsAndConditionClicked(sender : UIButton) {

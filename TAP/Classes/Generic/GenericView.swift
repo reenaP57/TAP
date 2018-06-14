@@ -10,6 +10,7 @@ import UIKit
 
 class GenericView: UIView {
     
+    @IBInspectable var cornerRadius : CGFloat = 0.0
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -23,8 +24,8 @@ class GenericView: UIView {
             ///... A Button that will in CornerRadius shape AND in shadow shape.
             
             self.shadow(color: CColorShadow, shadowOffset: CGSize(width: 0, height: 10), shadowRadius: 5.0, shadowOpacity: 0.9)
-            self.layer.cornerRadius = 9.5
+            self.layer.cornerRadius = cornerRadius
             
-        }
+        } 
     }
 }

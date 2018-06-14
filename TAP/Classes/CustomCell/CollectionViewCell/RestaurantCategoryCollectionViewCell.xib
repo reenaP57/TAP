@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF UI Text Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pIk-CO-uJi" customClass="RestaurantCategoryCollectionViewCell" customModule="Ta_Pronto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="89" height="25"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="89" height="25"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NnQ-Uu-GkW" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                        <rect key="frame" x="4" y="2" width="81" height="21"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDW-ip-3Ab">
+                        <rect key="frame" x="4" y="2" width="81" height="21"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </button>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="NnQ-Uu-GkW" secondAttribute="trailing" constant="4" id="2pX-Vj-sJz"/>
+                <constraint firstItem="DDW-ip-3Ab" firstAttribute="bottom" secondItem="NnQ-Uu-GkW" secondAttribute="bottom" id="Dxu-6O-dcl"/>
+                <constraint firstItem="DDW-ip-3Ab" firstAttribute="leading" secondItem="NnQ-Uu-GkW" secondAttribute="leading" id="EcX-ll-MFQ"/>
+                <constraint firstItem="DDW-ip-3Ab" firstAttribute="top" secondItem="NnQ-Uu-GkW" secondAttribute="top" id="fU7-XN-fFU"/>
+                <constraint firstItem="NnQ-Uu-GkW" firstAttribute="leading" secondItem="pIk-CO-uJi" secondAttribute="leading" constant="4" id="n2x-Y5-loe"/>
+                <constraint firstItem="DDW-ip-3Ab" firstAttribute="trailing" secondItem="NnQ-Uu-GkW" secondAttribute="trailing" id="rrm-aB-hJO"/>
+                <constraint firstItem="NnQ-Uu-GkW" firstAttribute="top" secondItem="pIk-CO-uJi" secondAttribute="top" constant="2" id="u1i-QT-JnZ"/>
+                <constraint firstAttribute="bottom" secondItem="NnQ-Uu-GkW" secondAttribute="bottom" constant="2" id="uGx-O7-lar"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="dlP-w5-o6o"/>
+            <connections>
+                <outlet property="btnCategory" destination="DDW-ip-3Ab" id="mX7-FI-Ed6"/>
+                <outlet property="lblCategory" destination="NnQ-Uu-GkW" id="l3b-FJ-QuI"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>

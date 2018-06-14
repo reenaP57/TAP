@@ -13,6 +13,7 @@ import UIKit
 //.. Different Storyboard Instances.
 let CMain_SB        = UIStoryboard(name: "Main", bundle:  nil)
 let CLRF_SB         = UIStoryboard(name: "LRF", bundle: nil)
+let CProfile_SB     = UIStoryboard(name: "Profile", bundle: nil)
 
 
 //MARK:-
@@ -55,5 +56,6 @@ let CColorShadow             =  CRGB(r: 240.0, g: 240.0, b: 240.0)
 let CColorBlack              =  CRGB(r: 0, g: 0, b: 0)
 let CColorLightBlack         =  CRGB(r: 51, g: 51, b: 51)
 let CColorNavRed             =  CRGB(r: 191, g: 0, b: 0)
-let CColorNavRedShadow       =  CRGBA(r: 191, g: 0, b: 0, a: 0.5)
+let CColorNavRedShadow       =  CRGBA(r: 191, g: 0, b: 0, a: 0.7)
+let CColorCement             =  CRGB(r: 212.0, g: 212.0, b: 212.0)
 

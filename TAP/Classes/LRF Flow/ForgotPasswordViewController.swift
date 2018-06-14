@@ -28,7 +28,7 @@ class ForgotPasswordViewController: ParentViewController {
     
     func initialize() {
         
-        self.title = "Forgot Password"
+        self.title = CForgotPassword
     }
 }
 

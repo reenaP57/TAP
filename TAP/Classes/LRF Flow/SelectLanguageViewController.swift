@@ -29,7 +29,7 @@ class SelectLanguageViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
-        self.title = "Select Language"
+        self.title = CSelectLanguage
     }
 }
 

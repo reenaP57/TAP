@@ -12,6 +12,8 @@ class LoginViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
+    
+    var isFromProfileLogin : Bool = false
 
     
     override func viewDidLoad() {
@@ -20,6 +22,11 @@ class LoginViewController: ParentViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        appDelegate?.hideTabBar()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -49,6 +56,15 @@ extension LoginViewController {
     }
     
     @IBAction func btnLoginClicked(sender : UIButton) {
+        
+        if isFromProfileLogin {
+            self.navigationController?.popViewController(animated: true)
+
+        } else {
+           
+            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+        }
         
     }
     

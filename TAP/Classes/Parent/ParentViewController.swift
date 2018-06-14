@@ -66,8 +66,15 @@ class ParentViewController: UIViewController {
         
         if self.view.tag == 100 {
             //...Hide NavigationBar
+            
             self.navigationItem.hidesBackButton = true
             self.navigationController?.isNavigationBarHidden = true
+            
+        } else if self.view.tag == 101 {
+            //...Navigation Animation
+
+            self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(customPopBack))
             
         } else {
             
@@ -75,7 +82,17 @@ class ParentViewController: UIViewController {
             self.navigationController?.isNavigationBarHidden = false
         }
         
-
+    }
+    
+    @objc func customPopBack()
+    {
+        let animation = CATransition()
+        animation.type = kCATransitionPush
+        animation.subtype = kCATransitionFromBottom
+        animation.duration = 0.3
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        self.navigationController?.view.layer.add(animation, forKey: "AnimationFromTopToBottom")
+        self.navigationController?.popViewController(animated: false)
         
     }
     

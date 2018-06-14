@@ -13,9 +13,11 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var tabbarController : TabbarViewController?
+    var tabbar : TabBarView?
 
+  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
         self.initSelectLanguageViewController()
         return true
@@ -23,13 +25,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   
     // MARK:-
-    // MARK:- Root Function
+    // MARK:- General Method
     
     
     func initSelectLanguageViewController()
     {
-        let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
-        self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+        
+//        let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
+//        self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+    }
+    
+    func hideTabBar() {
+        appDelegate?.tabbar?.CViewSetY(y: CScreenHeight)
+    }
+    
+    func showTabBar() {
+        appDelegate?.tabbar?.CViewSetY(y: CScreenHeight - 49.0 - (IS_iPhone_X ? 34.0 : 0.0))
     }
     
     
@@ -56,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+
     
     // MARK: - Core Data stack
 

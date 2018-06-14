@@ -23,9 +23,10 @@ class SelectLocationViewController: ParentViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        appDelegate?.hideTabBar()
         self.updateSearchUI()
     }
-    
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -41,7 +42,7 @@ class SelectLocationViewController: ParentViewController {
         
         guard let customSearch = CustomSearchView.shared else {return}
         
-        customSearch.searchBar.placeholder = "Search your location"
+        customSearch.searchBar.placeholder = CSearchYourLocation
         vwCustomSearch = customSearch
         vwCustomSearch?.searchBar.delegate = self as? UISearchBarDelegate
         
@@ -82,6 +83,13 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
         }
         
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+        
     }
     
 }
