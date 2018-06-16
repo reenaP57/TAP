@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF UI Text Bold.otf">
+            <string>SFUIText-Bold</string>
+        </array>
+        <array key="SF UI Text Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PaymentPopupView" customModule="Ta_Pronto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="woX-J5-TNh" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
+                    <rect key="frame" x="32" y="219.5" width="311" height="227"/>
+                    <subviews>
+                        <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJA-np-4FH" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="67" y="76.5" width="177" height="50"/>
+                            <color key="backgroundColor" red="0.40392156862745099" green="0.44705882352941173" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <state key="normal" title="Pay with Stripe">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64Q-t7-shd" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="67" y="147" width="177" height="50"/>
+                            <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="64Q-t7-shd" secondAttribute="height" multiplier="177:50" id="jBq-Yf-f2P"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <state key="normal" title="Pay by Cash">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT PAYMENT METHOD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0O-Ld-ohu">
+                            <rect key="frame" x="10" y="25" width="291" height="19"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="16"/>
+                            <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Si8-qt-eHB">
+                            <rect key="frame" x="261" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Mx8-FZ-YR3"/>
+                                <constraint firstAttribute="width" constant="50" id="g3F-l3-F3c"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
+                            <state key="normal" image="cancel_popup"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="G0O-Ld-ohu" secondAttribute="trailing" constant="10" id="5L1-2c-RY2"/>
+                        <constraint firstAttribute="bottom" secondItem="64Q-t7-shd" secondAttribute="bottom" constant="30" id="DXP-H2-J5r"/>
+                        <constraint firstAttribute="trailing" secondItem="Si8-qt-eHB" secondAttribute="trailing" id="EyK-qC-iV5"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="centerX" secondItem="woX-J5-TNh" secondAttribute="centerX" id="H6e-de-cz9"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="width" secondItem="woX-J5-TNh" secondAttribute="width" multiplier="0.569132" id="HUg-XD-Sgm"/>
+                        <constraint firstItem="XJA-np-4FH" firstAttribute="centerX" secondItem="64Q-t7-shd" secondAttribute="centerX" id="OOM-dB-c94"/>
+                        <constraint firstItem="XJA-np-4FH" firstAttribute="height" secondItem="64Q-t7-shd" secondAttribute="height" id="Xnf-0z-Mml"/>
+                        <constraint firstItem="XJA-np-4FH" firstAttribute="width" secondItem="64Q-t7-shd" secondAttribute="width" id="iob-du-yja"/>
+                        <constraint firstItem="Si8-qt-eHB" firstAttribute="top" secondItem="woX-J5-TNh" secondAttribute="top" id="m3S-jJ-ZZD"/>
+                        <constraint firstItem="G0O-Ld-ohu" firstAttribute="leading" secondItem="woX-J5-TNh" secondAttribute="leading" constant="10" id="os3-Ps-hnY"/>
+                        <constraint firstItem="G0O-Ld-ohu" firstAttribute="top" secondItem="woX-J5-TNh" secondAttribute="top" constant="25" id="seX-mp-Twc"/>
+                        <constraint firstAttribute="width" secondItem="woX-J5-TNh" secondAttribute="height" multiplier="311:227" id="vnd-H8-f3Y"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="top" secondItem="XJA-np-4FH" secondAttribute="bottom" constant="20" id="xz9-VW-9o0"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.53397337147887325" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="woX-J5-TNh" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.829333" id="0jY-wZ-enU"/>
+                <constraint firstItem="woX-J5-TNh" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ti3-dj-GH7"/>
+                <constraint firstItem="woX-J5-TNh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="bNk-vX-x4d"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="btnClose" destination="Si8-qt-eHB" id="Vl9-3X-09D"/>
+                <outlet property="btnViaCash" destination="64Q-t7-shd" id="QuA-rT-2eQ"/>
+                <outlet property="btnWithStripe" destination="XJA-np-4FH" id="m5E-6f-Vca"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cancel_popup" width="15" height="15"/>
+    </resources>
+</document>

@@ -59,6 +59,7 @@ let IS_iPhone_5 = CScreenHeight == 568
 let IS_iPhone_6 = CScreenHeight == 667
 let IS_iPhone_6_Plus = CScreenHeight == 736
 let IS_iPhone_X = CScreenHeight == 812
+let IS_iPhone_Simulator = TARGET_OS_SIMULATOR != 0
 
 let CMainBundle = Bundle.main
 let CBundleIdentifier = CMainBundle.bundleIdentifier

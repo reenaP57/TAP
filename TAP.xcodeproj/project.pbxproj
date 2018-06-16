@@ -19,6 +19,10 @@
 		5C1190E420D14298003166EE /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1190E320D14298003166EE /* SettingTableViewCell.swift */; };
 		5C1190E620D142D2003166EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1190E520D142D2003166EE /* ProfileViewController.swift */; };
 		5C1190E820D14F10003166EE /* ProfileLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1190E720D14F10003166EE /* ProfileLoginViewController.swift */; };
+		5C19B77620D4CD0C006061F9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C19B77520D4CD0C006061F9 /* SearchViewController.swift */; };
+		5C19B77820D4DEF5006061F9 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C19B77720D4DEF5006061F9 /* ChangePasswordViewController.swift */; };
+		5C19B77A20D4E35B006061F9 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C19B77920D4E35B006061F9 /* FavoritesViewController.swift */; };
+		5C19B77C20D4E5D6006061F9 /* CMSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C19B77B20D4E5D6006061F9 /* CMSViewController.swift */; };
 		5C21B7DE20CE3C7F00890B42 /* SelectLanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21B7DD20CE3C7F00890B42 /* SelectLanguageViewController.swift */; };
 		5C21B7E020CE532400890B42 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21B7DF20CE532400890B42 /* LoginViewController.swift */; };
 		5C21B7E220CE7EA200890B42 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21B7E120CE7EA200890B42 /* SignUpViewController.swift */; };
@@ -72,6 +76,14 @@
 		5C2B9A9F20D229D300C17F1F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9A9E20D229D300C17F1F /* RatingView.swift */; };
 		5C2B9AA220D22A8100C17F1F /* SelectLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA020D22A8000C17F1F /* SelectLocationTableViewCell.swift */; };
 		5C2B9AA320D22A8100C17F1F /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA120D22A8000C17F1F /* RestaurantTableViewCell.swift */; };
+		5C2B9AA620D22C3500C17F1F /* Order.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA520D22C3500C17F1F /* Order.storyboard */; };
+		5C2B9AA820D2330F00C17F1F /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA720D2330F00C17F1F /* OrderViewController.swift */; };
+		5C2B9AAA20D2334D00C17F1F /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA920D2334D00C17F1F /* OrderTableViewCell.swift */; };
+		5C2B9AB120D2505C00C17F1F /* OrderDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AB020D2505C00C17F1F /* OrderDetailTableViewCell.swift */; };
+		5C2B9AB320D2514A00C17F1F /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AB220D2514A00C17F1F /* OrderDetailViewController.swift */; };
+		5C2B9AB520D2577A00C17F1F /* OrderPriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AB420D2577A00C17F1F /* OrderPriceTableViewCell.swift */; };
+		5C2B9AB720D28B7C00C17F1F /* GenericTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AB620D28B7C00C17F1F /* GenericTextView.swift */; };
+		5C2B9AB920D2967900C17F1F /* RateOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AB820D2967900C17F1F /* RateOrderViewController.swift */; };
 		5C3DBF5920CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5820CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift */; };
 		5C3DBF5C20CFA06800F9E2E4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5B20CFA06800F9E2E4 /* HomeViewController.swift */; };
 		5C3DBF5E20CFA62300F9E2E4 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5D20CFA62300F9E2E4 /* RestaurantDetailViewController.swift */; };
@@ -97,6 +109,15 @@
 		5C9040D620CF84BB008A5C1C /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9040D520CF84BB008A5C1C /* TabBarView.swift */; };
 		5C9040D820CF84C6008A5C1C /* TabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C9040D720CF84C6008A5C1C /* TabBarView.xib */; };
 		5C9040DA20CF8516008A5C1C /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9040D920CF8516008A5C1C /* TabbarViewController.swift */; };
+		5C92B86620D37B7E002CFF32 /* Cart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C92B86520D37B7E002CFF32 /* Cart.storyboard */; };
+		5C92B86920D38AC1002CFF32 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B86820D38AC1002CFF32 /* CartViewController.swift */; };
+		5C92B86B20D39959002CFF32 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B86A20D39959002CFF32 /* CartTableViewCell.swift */; };
+		5C92B86D20D3C126002CFF32 /* PaymentPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B86C20D3C126002CFF32 /* PaymentPopupView.swift */; };
+		5C92B86F20D3C132002CFF32 /* PaymentPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C92B86E20D3C132002CFF32 /* PaymentPopupView.xib */; };
+		5C92B87120D3CAB8002CFF32 /* LoginPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B87020D3CAB8002CFF32 /* LoginPopupView.swift */; };
+		5C92B87320D3CACA002CFF32 /* LoginPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C92B87220D3CACA002CFF32 /* LoginPopupView.xib */; };
+		5C92B87520D3D0A9002CFF32 /* PaymentSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B87420D3D0A9002CFF32 /* PaymentSuccessViewController.swift */; };
+		5C92B87720D3F13D002CFF32 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92B87620D3F13D002CFF32 /* EditProfileViewController.swift */; };
 		5C944F1920CAA1FC00097FC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C944F1820CAA1FC00097FC4 /* AppDelegate.swift */; };
 		5C944F1E20CAA1FC00097FC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C944F1C20CAA1FC00097FC4 /* Main.storyboard */; };
 		5C944F2120CAA1FC00097FC4 /* TAP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C944F1F20CAA1FC00097FC4 /* TAP.xcdatamodeld */; };
@@ -147,6 +168,10 @@
 		5C1190E320D14298003166EE /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		5C1190E520D142D2003166EE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5C1190E720D14F10003166EE /* ProfileLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLoginViewController.swift; sourceTree = "<group>"; };
+		5C19B77520D4CD0C006061F9 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		5C19B77720D4DEF5006061F9 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		5C19B77920D4E35B006061F9 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		5C19B77B20D4E5D6006061F9 /* CMSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSViewController.swift; sourceTree = "<group>"; };
 		5C21B7DD20CE3C7F00890B42 /* SelectLanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageViewController.swift; sourceTree = "<group>"; };
 		5C21B7DF20CE532400890B42 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C21B7E120CE7EA200890B42 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +225,14 @@
 		5C2B9A9E20D229D300C17F1F /* RatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		5C2B9AA020D22A8000C17F1F /* SelectLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationTableViewCell.swift; sourceTree = "<group>"; };
 		5C2B9AA120D22A8000C17F1F /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
+		5C2B9AA520D22C3500C17F1F /* Order.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Order.storyboard; sourceTree = "<group>"; };
+		5C2B9AA720D2330F00C17F1F /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		5C2B9AA920D2334D00C17F1F /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		5C2B9AB020D2505C00C17F1F /* OrderDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailTableViewCell.swift; sourceTree = "<group>"; };
+		5C2B9AB220D2514A00C17F1F /* OrderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
+		5C2B9AB420D2577A00C17F1F /* OrderPriceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPriceTableViewCell.swift; sourceTree = "<group>"; };
+		5C2B9AB620D28B7C00C17F1F /* GenericTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTextView.swift; sourceTree = "<group>"; };
+		5C2B9AB820D2967900C17F1F /* RateOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateOrderViewController.swift; sourceTree = "<group>"; };
 		5C3DBF5820CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C3DBF5B20CFA06800F9E2E4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C3DBF5D20CFA62300F9E2E4 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +258,15 @@
 		5C9040D520CF84BB008A5C1C /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		5C9040D720CF84C6008A5C1C /* TabBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabBarView.xib; sourceTree = "<group>"; };
 		5C9040D920CF8516008A5C1C /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		5C92B86520D37B7E002CFF32 /* Cart.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cart.storyboard; sourceTree = "<group>"; };
+		5C92B86820D38AC1002CFF32 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		5C92B86A20D39959002CFF32 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
+		5C92B86C20D3C126002CFF32 /* PaymentPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupView.swift; sourceTree = "<group>"; };
+		5C92B86E20D3C132002CFF32 /* PaymentPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentPopupView.xib; sourceTree = "<group>"; };
+		5C92B87020D3CAB8002CFF32 /* LoginPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopupView.swift; sourceTree = "<group>"; };
+		5C92B87220D3CACA002CFF32 /* LoginPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginPopupView.xib; sourceTree = "<group>"; };
+		5C92B87420D3D0A9002CFF32 /* PaymentSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessViewController.swift; sourceTree = "<group>"; };
+		5C92B87620D3F13D002CFF32 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		5C944F1520CAA1FC00097FC4 /* Ta Pronto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ta Pronto.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C944F1820CAA1FC00097FC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C944F1D20CAA1FC00097FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -278,6 +320,10 @@
 			children = (
 				5C1190E520D142D2003166EE /* ProfileViewController.swift */,
 				5C1190E720D14F10003166EE /* ProfileLoginViewController.swift */,
+				5C92B87620D3F13D002CFF32 /* EditProfileViewController.swift */,
+				5C19B77720D4DEF5006061F9 /* ChangePasswordViewController.swift */,
+				5C19B77920D4E35B006061F9 /* FavoritesViewController.swift */,
+				5C19B77B20D4E5D6006061F9 /* CMSViewController.swift */,
 			);
 			path = "Profile Flow";
 			sourceTree = "<group>";
@@ -316,6 +362,10 @@
 				5C1190D220D0E52A003166EE /* RestaurantDetailFooterView.xib */,
 				5C1190DF20D1381A003166EE /* ProfileHeaderView.swift */,
 				5C1190E120D13823003166EE /* ProfileHeaderView.xib */,
+				5C92B86C20D3C126002CFF32 /* PaymentPopupView.swift */,
+				5C92B86E20D3C132002CFF32 /* PaymentPopupView.xib */,
+				5C92B87020D3CAB8002CFF32 /* LoginPopupView.swift */,
+				5C92B87220D3CACA002CFF32 /* LoginPopupView.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -417,6 +467,16 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		5C2B9AA420D22C2400C17F1F /* Order Flow */ = {
+			isa = PBXGroup;
+			children = (
+				5C2B9AA720D2330F00C17F1F /* OrderViewController.swift */,
+				5C2B9AB220D2514A00C17F1F /* OrderDetailViewController.swift */,
+				5C2B9AB820D2967900C17F1F /* RateOrderViewController.swift */,
+			);
+			path = "Order Flow";
+			sourceTree = "<group>";
+		};
 		5C3DBF5220CF9E6800F9E2E4 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +487,10 @@
 				5C1190D620D11F4B003166EE /* PromotionTableViewCell.swift */,
 				5C1190DA20D13144003166EE /* RatingTableViewCell.swift */,
 				5C1190E320D14298003166EE /* SettingTableViewCell.swift */,
+				5C2B9AA920D2334D00C17F1F /* OrderTableViewCell.swift */,
+				5C2B9AB020D2505C00C17F1F /* OrderDetailTableViewCell.swift */,
+				5C2B9AB420D2577A00C17F1F /* OrderPriceTableViewCell.swift */,
+				5C92B86A20D39959002CFF32 /* CartTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -450,6 +514,7 @@
 				5C3DBF7220CFCB4E00F9E2E4 /* SeeAllRestaurantViewController.swift */,
 				5C1190D420D11934003166EE /* PromotionViewController.swift */,
 				5C1190D820D12E00003166EE /* RatingViewController.swift */,
+				5C19B77520D4CD0C006061F9 /* SearchViewController.swift */,
 			);
 			path = "Home Flow";
 			sourceTree = "<group>";
@@ -493,6 +558,15 @@
 				5C9040D920CF8516008A5C1C /* TabbarViewController.swift */,
 			);
 			path = Tabbar;
+			sourceTree = "<group>";
+		};
+		5C92B86720D38AAB002CFF32 /* Cart Flow */ = {
+			isa = PBXGroup;
+			children = (
+				5C92B86820D38AC1002CFF32 /* CartViewController.swift */,
+				5C92B87420D3D0A9002CFF32 /* PaymentSuccessViewController.swift */,
+			);
+			path = "Cart Flow";
 			sourceTree = "<group>";
 		};
 		5C944F0C20CAA1FC00097FC4 = {
@@ -554,6 +628,8 @@
 				5C9040D420CF8495008A5C1C /* Tabbar */,
 				5C21B7DC20CE3C2B00890B42 /* LRF Flow */,
 				5C3DBF5A20CFA04B00F9E2E4 /* Home Flow */,
+				5C2B9AA420D22C2400C17F1F /* Order Flow */,
+				5C92B86720D38AAB002CFF32 /* Cart Flow */,
 				5C1190DC20D1364E003166EE /* Profile Flow */,
 			);
 			path = Classes;
@@ -574,6 +650,8 @@
 				5C944F2420CAA1FF00097FC4 /* LaunchScreen.storyboard */,
 				5C944FAD20CAB50800097FC4 /* LRF.storyboard */,
 				5C1190DD20D1368D003166EE /* Profile.storyboard */,
+				5C2B9AA520D22C3500C17F1F /* Order.storyboard */,
+				5C92B86520D37B7E002CFF32 /* Cart.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -595,6 +673,7 @@
 				5C944FA720CAA84500097FC4 /* GenericLabel.swift */,
 				5C944FA920CAA85B00097FC4 /* GenericTextField.swift */,
 				5C944FAB20CAA87100097FC4 /* GenericView.swift */,
+				5C2B9AB620D28B7C00C17F1F /* GenericTextView.swift */,
 			);
 			name = Generic;
 			path = TAP/Classes/Generic;
@@ -637,6 +716,7 @@
 				5C944F1220CAA1FC00097FC4 /* Frameworks */,
 				5C944F1320CAA1FC00097FC4 /* Resources */,
 				19CEDC2EE87A8B331D8B72F4 /* [CP] Embed Pods Frameworks */,
+				8F5E10CF8C9211D3A713C3B4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -738,13 +818,16 @@
 				5C21B7EE20CEA3F600890B42 /* CustomSearchView.xib in Resources */,
 				5C3DBF6A20CFB52B00F9E2E4 /* download-3.jpg in Resources */,
 				5C3DBF7D20CFDF6700F9E2E4 /* RestaurantDetailTopView.xib in Resources */,
+				5C92B87320D3CACA002CFF32 /* LoginPopupView.xib in Resources */,
 				5C1190E220D13823003166EE /* ProfileHeaderView.xib in Resources */,
 				5C3DBF6D20CFB52B00F9E2E4 /* images-1.jpg in Resources */,
 				5C21B85120CEAF1000890B42 /* SF UI Text Regular.otf in Resources */,
 				5C944F2620CAA1FF00097FC4 /* LaunchScreen.storyboard in Resources */,
+				5C2B9AA620D22C3500C17F1F /* Order.storyboard in Resources */,
 				5C3DBF8520CFFFF000F9E2E4 /* RestaurantDetailHeaderView.xib in Resources */,
 				5C21B84D20CEAF1000890B42 /* SF UI Text Light.otf in Resources */,
 				5C21B85020CEAF1000890B42 /* SF UI Text Bold.otf in Resources */,
+				5C92B86620D37B7E002CFF32 /* Cart.storyboard in Resources */,
 				5C1190D320D0E52A003166EE /* RestaurantDetailFooterView.xib in Resources */,
 				5C3DBF6F20CFB52B00F9E2E4 /* images.jpg in Resources */,
 				5C3DBF6920CFB52B00F9E2E4 /* download-2.jpg in Resources */,
@@ -755,6 +838,7 @@
 				5C3DBF6C20CFB52B00F9E2E4 /* download.jpg in Resources */,
 				5C3DBF6B20CFB52B00F9E2E4 /* download-4.jpg in Resources */,
 				5C21B84F20CEAF1000890B42 /* SF UI Text Semibold.otf in Resources */,
+				5C92B86F20D3C132002CFF32 /* PaymentPopupView.xib in Resources */,
 				5C21B84420CEAEB800890B42 /* MIPopUpOverlay.xib in Resources */,
 				5C3DBF6820CFB52B00F9E2E4 /* download-1.jpg in Resources */,
 				5C3DBF8920D000C100F9E2E4 /* RestaurantCategoryCollectionViewCell.xib in Resources */,
@@ -800,6 +884,28 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TAP/Pods-TAP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8F5E10CF8C9211D3A713C3B4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TAP/Pods-TAP-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TAP/Pods-TAP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CF187E76629DD697E55CB484 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -836,13 +942,18 @@
 				5C2B9AA220D22A8100C17F1F /* SelectLocationTableViewCell.swift in Sources */,
 				5C944FA620CAA83300097FC4 /* GenericButton.swift in Sources */,
 				5C1190DB20D13144003166EE /* RatingTableViewCell.swift in Sources */,
+				5C92B87520D3D0A9002CFF32 /* PaymentSuccessViewController.swift in Sources */,
+				5C19B77820D4DEF5006061F9 /* ChangePasswordViewController.swift in Sources */,
 				5C3DBF7120CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift in Sources */,
+				5C92B87720D3F13D002CFF32 /* EditProfileViewController.swift in Sources */,
 				5C1190E620D142D2003166EE /* ProfileViewController.swift in Sources */,
+				5C2B9AB320D2514A00C17F1F /* OrderDetailViewController.swift in Sources */,
 				5C1190D120D0E521003166EE /* RestaurantDetailFooterView.swift in Sources */,
 				5C944FBE20CAB8FE00097FC4 /* ParentViewController.swift in Sources */,
 				5C21B82920CEAE4100890B42 /* CAGradientLayerExtension.swift in Sources */,
 				5C3DBF5920CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift in Sources */,
 				5C21B82420CEAE4100890B42 /* ExtensionArray.swift in Sources */,
+				5C2B9AA820D2330F00C17F1F /* OrderViewController.swift in Sources */,
 				5C21B82820CEAE4100890B42 /* ExtensionDouble.swift in Sources */,
 				5C944F9620CAA52D00097FC4 /* ApplicationConfig.swift in Sources */,
 				5C21B82E20CEAE4100890B42 /* ExtensionUINavigationController.swift in Sources */,
@@ -856,6 +967,7 @@
 				5C1190D520D11934003166EE /* PromotionViewController.swift in Sources */,
 				5C3DBF7F20CFEC1E00F9E2E4 /* DishDetailTableViewCell.swift in Sources */,
 				5C21B7E920CE9A9500890B42 /* SelectLocationViewController.swift in Sources */,
+				5C19B77C20D4E5D6006061F9 /* CMSViewController.swift in Sources */,
 				5C21B83720CEAE4100890B42 /* ExtensionDictionary.swift in Sources */,
 				5C2B9A9F20D229D300C17F1F /* RatingView.swift in Sources */,
 				5C21B84220CEAEB800890B42 /* MILoader.swift in Sources */,
@@ -872,15 +984,21 @@
 				5C21B7E420CE8FE000890B42 /* ForgotPasswordViewController.swift in Sources */,
 				5C1190D720D11F4B003166EE /* PromotionTableViewCell.swift in Sources */,
 				5C3DBF5C20CFA06800F9E2E4 /* HomeViewController.swift in Sources */,
+				5C2B9AB120D2505C00C17F1F /* OrderDetailTableViewCell.swift in Sources */,
 				5C21B83620CEAE4100890B42 /* ExetensionFloat.swift in Sources */,
 				5C21B83A20CEAE4100890B42 /* ExtensionUITextView.swift in Sources */,
 				5C21B83420CEAE4100890B42 /* MIKeyboardManager.swift in Sources */,
+				5C92B87120D3CAB8002CFF32 /* LoginPopupView.swift in Sources */,
 				5C21B80020CEAE2300890B42 /* AutoLayout.swift in Sources */,
 				5C1190E420D14298003166EE /* SettingTableViewCell.swift in Sources */,
 				5C21B84520CEAEB800890B42 /* MIPopUpOverlay.swift in Sources */,
 				5C21B83320CEAE4100890B42 /* ExtensionUILabel.swift in Sources */,
 				5C21B7E020CE532400890B42 /* LoginViewController.swift in Sources */,
+				5C92B86920D38AC1002CFF32 /* CartViewController.swift in Sources */,
 				5C21B83120CEAE4100890B42 /* ExtensionUIResponder.swift in Sources */,
+				5C19B77A20D4E35B006061F9 /* FavoritesViewController.swift in Sources */,
+				5C92B86B20D39959002CFF32 /* CartTableViewCell.swift in Sources */,
+				5C2B9AB920D2967900C17F1F /* RateOrderViewController.swift in Sources */,
 				5C21B82D20CEAE4100890B42 /* ExtensionUIBarButtonItem.swift in Sources */,
 				5C3DBF7B20CFDF5B00F9E2E4 /* RestaurantDetailTopView.swift in Sources */,
 				5C21B83520CEAE4100890B42 /* ExtensionNSObject.swift in Sources */,
@@ -890,18 +1008,23 @@
 				5C944FAA20CAA85B00097FC4 /* GenericTextField.swift in Sources */,
 				5C3DBF7720CFCEEA00F9E2E4 /* FloatRatingView.swift in Sources */,
 				5C3DBF8820D000C100F9E2E4 /* RestaurantCategoryCollectionViewCell.swift in Sources */,
+				5C2B9AAA20D2334D00C17F1F /* OrderTableViewCell.swift in Sources */,
 				5C9040DA20CF8516008A5C1C /* TabbarViewController.swift in Sources */,
 				5C21B7EC20CEA3EB00890B42 /* CustomSearchView.swift in Sources */,
 				5C944F1920CAA1FC00097FC4 /* AppDelegate.swift in Sources */,
 				5C21B82720CEAE4100890B42 /* ExtensionUIApplication.swift in Sources */,
+				5C2B9AB520D2577A00C17F1F /* OrderPriceTableViewCell.swift in Sources */,
 				5C1190E820D14F10003166EE /* ProfileLoginViewController.swift in Sources */,
 				5C21B82C20CEAE4100890B42 /* ExtensionUIImageView.swift in Sources */,
+				5C19B77620D4CD0C006061F9 /* SearchViewController.swift in Sources */,
 				5C21B82B20CEAE4100890B42 /* ExtensionString.swift in Sources */,
 				5C21B83020CEAE4100890B42 /* ExtensionInt.swift in Sources */,
 				5C21B82520CEAE4100890B42 /* ExtensionUITextField.swift in Sources */,
 				5C21B80820CEAE2C00890B42 /* CoreData.swift in Sources */,
 				5C21B82320CEAE4100890B42 /* ExtensionDate.swift in Sources */,
+				5C2B9AB720D28B7C00C17F1F /* GenericTextView.swift in Sources */,
 				5C2B9AA320D22A8100C17F1F /* RestaurantTableViewCell.swift in Sources */,
+				5C92B86D20D3C126002CFF32 /* PaymentPopupView.swift in Sources */,
 				5C3DBF7320CFCB4E00F9E2E4 /* SeeAllRestaurantViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1077,10 +1200,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TAP/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1097,10 +1217,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TAP/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1116,11 +1233,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1136,11 +1249,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1155,11 +1264,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1174,11 +1279,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

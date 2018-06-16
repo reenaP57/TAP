@@ -26,6 +26,8 @@ class GenericView: UIView {
             self.shadow(color: CColorShadow, shadowOffset: CGSize(width: 0, height: 10), shadowRadius: 5.0, shadowOpacity: 0.9)
             self.layer.cornerRadius = cornerRadius
             
-        } 
+        } else {
+            self.layer.cornerRadius = cornerRadius
+        }
     }
 }

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
+import GooglePlacePicker
+
 
 class SelectLocationViewController: ParentViewController {
 
@@ -16,17 +19,23 @@ class SelectLocationViewController: ParentViewController {
     var vwCustomSearch : CustomSearchView?
     var arrLocation = [Any]()
     
+    var locManager = CLLocationManager()
+    var currentLocation: CLLocation!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialize()
+       self.initialize()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.hideTabBar()
-        self.updateSearchUI()
     }
  
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -40,15 +49,25 @@ class SelectLocationViewController: ParentViewController {
         arrLocation = ["New York, NY","San Fransisco, CA","Washington, DC","London, UK","Chicago, LA","Los Angeles, CA","Atlanta, GA","Austin, TX","Boston, MA","Houston, TX","Seattle, WA","Dallas, TX"]
         
         
-        guard let customSearch = CustomSearchView.shared else {return}
+        if let customeView = CustomSearchView.viewFromXib as? CustomSearchView
+        {
+            customeView.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 44)
+            customeView.searchBar.placeholder = CSearchYourLocation
+            vwCustomSearch = customeView
+            vwCustomSearch?.delegate = self
+            self.navigationItem.titleView = customeView
+            
+            customeView.btnBack.touchUpInside { (sender) in
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+        }
         
-        customSearch.searchBar.placeholder = CSearchYourLocation
-        vwCustomSearch = customSearch
-        vwCustomSearch?.searchBar.delegate = self as? UISearchBarDelegate
+        locManager.requestWhenInUseAuthorization()
         
-        self.navigationItem.titleView = vwCustomSearch
-        customSearch.btnBack.touchUpInside { (sender) in
-            self.navigationController?.popViewController(animated: true)
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            currentLocation = locManager.location
         }
         
     }
@@ -57,10 +76,87 @@ class SelectLocationViewController: ParentViewController {
     {
         DispatchQueue.main.async {
             
-            self.vwCustomSearch?.btnBack.hide(byWidth: false)
-            self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
-            self.vwCustomSearch?.layoutLeadingSearchBar.constant = 0
+//            self.vwCustomSearch?.btnBack.hide(byWidth: false)
+//            self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
+//            self.vwCustomSearch?.layoutLeadingSearchBar.constant = 0
         }
+    }
+}
+
+
+//MARK:-
+//MARK:- CustomSearchView Delegate
+
+extension SelectLocationViewController : customSearchViewDelegate {
+    
+    func showNextScreen() {
+        //...Open Google Picker
+        
+        showPickerWithCurrentLocation()
+    }
+}
+
+
+//MARK:-
+//MARK:- Google Picker Delegate
+
+
+extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
+    
+    func showPickerWithCurrentLocation()
+    {
+        var latitude = 23.0524
+        var longitude = 72.5337
+        
+        if !IS_iPhone_Simulator {
+            
+            latitude = currentLocation.coordinate.latitude
+            longitude = currentLocation.coordinate.longitude
+        }
+        
+        
+//        if let latitude = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let longitude = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
+//        {
+//            MILoader.shared.hideLoader()
+            let center = CLLocationCoordinate2DMake(latitude, longitude)
+            let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001, longitude: center.longitude + 0.001)
+            let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001, longitude: center.longitude - 0.001)
+            let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+            let config = GMSPlacePickerConfig(viewport: viewport)
+            self.showPlacePicker(config: config)
+            
+  //      }
+        
+    }
+    
+    func showPlacePicker(config: GMSPlacePickerConfig)
+    {
+        let placePicker = GMSPlacePickerViewController(config: config)
+        placePicker.delegate = self
+        
+        present(placePicker, animated: true, completion: nil)
+    }
+    
+    
+    //...Called when a place has been selected
+    func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
+        
+        viewController.dismiss(animated: true, completion: nil)
+        
+        vwCustomSearch?.searchBar.text = place.formattedAddress
+        vwCustomSearch?.btnClear.hide(byWidth: false)
+        
+        print("Place : ",place)
+        print("Name : ",place.name)
+        print("coordinate : ",place.coordinate.latitude, place.coordinate.longitude)
+        print("address : ",place.formattedAddress)
+        print("id : ",place.placeID)
+        
+    }
+    
+    //...Called when the place picking operation has been cancelled.
+    func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 }
 

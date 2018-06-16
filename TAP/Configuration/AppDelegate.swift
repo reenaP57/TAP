@@ -8,6 +8,10 @@
 
 import UIKit
 import CoreData
+import IQKeyboardManagerSwift
+import GooglePlaces
+import GoogleMaps
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var tabbarController : TabbarViewController?
     var tabbar : TabBarView?
 
-  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        IQKeyboardManager.shared.enable = true
+        
+        GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
+        GMSServices.provideAPIKey(CGooglePlacePickerKey)
+        
         
         self.initSelectLanguageViewController()
         return true
@@ -30,11 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initSelectLanguageViewController()
     {
-        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+//        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+//        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
         
-//        let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
-//        self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+        let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
+        self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
     }
     
     func hideTabBar() {
@@ -43,6 +52,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showTabBar() {
         appDelegate?.tabbar?.CViewSetY(y: CScreenHeight - 49.0 - (IS_iPhone_X ? 34.0 : 0.0))
+    }
+    
+    func logout()
+    {
+        tabbarController = nil
+        tabbar = nil
+        
+        guard let vcLogin = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
+            return
+        }
+            
+       self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: vcLogin), animated: true, completion: nil)
+        
+    }
+    
+    func openLoginPopup(viewController : UIViewController) {
+        
+        if let vwLogin = LoginPopupView.viewFromXib as? LoginPopupView {
+            
+            vwLogin.CViewSetSize(width: CScreenWidth, height: CScreenHeight)
+            
+            vwLogin.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            UIView.animate(withDuration: 0.1) {
+                vwLogin.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            
+            appDelegate?.window?.addSubview(vwLogin)
+            
+            
+            //...Action
+            vwLogin.btnLogin.touchUpInside { (sender) in
+                
+                //...After Payment Success redirect
+                
+                vwLogin.removeFromSuperview()
+                
+                if let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                    loginVC.loginFrom = .FromPopup
+                    viewController.navigationController?.pushViewController(loginVC, animated: true)
+                }
+            }
+            
+            vwLogin.btnSignUp.touchUpInside { (sender) in
+                
+                vwLogin.removeFromSuperview()
+                
+                if let signUpVC = CLRF_SB.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController {
+                    signUpVC.signupFrom = .FromPopup
+                    viewController.navigationController?.pushViewController(signUpVC, animated: true)
+                }
+            }
+            
+            vwLogin.btnClose.touchUpInside { (sender) in
+                vwLogin.removeFromSuperview()
+            }
+        }
     }
     
     

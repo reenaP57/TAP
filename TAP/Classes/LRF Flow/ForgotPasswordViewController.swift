@@ -27,7 +27,6 @@ class ForgotPasswordViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
-        
         self.title = CForgotPassword
     }
 }
@@ -39,6 +38,6 @@ class ForgotPasswordViewController: ParentViewController {
 extension ForgotPasswordViewController {
     
     @IBAction func btnSubmitClicked(sender : UIButton) {
-        
+        self.navigationController?.popViewController(animated: true)
     }
 }

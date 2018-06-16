@@ -45,15 +45,15 @@ extension TabbarViewController {
         let homeNav = UINavigationController.rootViewController(viewController: homeVC)
         
       
-        guard let searchVC = CMain_SB.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+        guard let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return }
         let searchNav = UINavigationController.rootViewController(viewController: searchVC)
         
         
-        guard let orderVC = CMain_SB.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+        guard let orderVC = COrder_SB.instantiateViewController(withIdentifier: "OrderViewController") as? OrderViewController else { return }
         let orderNav = UINavigationController.rootViewController(viewController: orderVC)
         
         
-        guard let cartVC = CMain_SB.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+        guard let cartVC = CCart_SB.instantiateViewController(withIdentifier: "CartViewController") as? CartViewController else { return }
         let cartNav = UINavigationController.rootViewController(viewController: cartVC)
         
      
@@ -64,7 +64,7 @@ extension TabbarViewController {
         let profileLoginNav = UINavigationController.rootViewController(viewController: profileLoginVC)
         
         
-        self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileLoginNav], animated: true)
+        self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileNav], animated: true)
         
     }
 }

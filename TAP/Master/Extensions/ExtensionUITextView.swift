@@ -37,7 +37,7 @@ extension UITextView : UITextViewDelegate {
         }
     }
     
-     var placeholderFont:UIFont? {
+    var placeholderFont:UIFont? {
         
         get  {
             
@@ -54,7 +54,7 @@ extension UITextView : UITextViewDelegate {
                 placeholderLabel.font = newValue
             } else {
                 
-                self.addPlaceholderLabel(placeholder: placeholder, placeholderColor: placeholderColor, placeholderFont: newValue)
+                self.addPlaceholderLabel(placeholder: nil, placeholderColor: nil, placeholderFont: newValue)
             }
         }
     }
@@ -77,8 +77,8 @@ extension UITextView : UITextViewDelegate {
                 placeholderLabel.textColor = newValue
             } else {
                 
-                self.addPlaceholderLabel(placeholder: placeholder, placeholderColor: newValue, placeholderFont: self.font)
-           }
+                self.addPlaceholderLabel(placeholder: nil, placeholderColor: newValue, placeholderFont: nil)
+            }
         }
     }
     
@@ -95,7 +95,7 @@ extension UITextView : UITextViewDelegate {
         placeholderLabel.tag = 100
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = placeholderColor
-        placeholderLabel.font = self.font
+        placeholderLabel.font = placeholderFont
         placeholderLabel.sizeToFit()
         placeholderLabel.isHidden = self.text.count > 0
         self.addSubview(placeholderLabel)
@@ -104,20 +104,19 @@ extension UITextView : UITextViewDelegate {
         self.delegate = self
         
         self.addObserver(self, forKeyPath: "text", options: .new, context: nil)
-        
-        // ColorBlue_362E77 Shadow , Blue Shadow
-        placeholderLabel.shadow(color: CColorNavRed, shadowOffset: CGSize(width: 0.0, height: 2.0), shadowRadius: 0.0, shadowOpacity: 1.0)
     }
     
     /// This Private Method is used to Assign Frame to placeholderLabel in UITextView.
-    public func resizePlaceholderLabel() {
+    private func resizePlaceholderLabel() {
         
         if let placeholderLabel = self.viewWithTag(100) as? UILabel {
             
             let labelX = self.textContainer.lineFragmentPadding
-            let labelY = self.textContainerInset.top
+            let labelY = 0 //self.textContainerInset.top
             
-            placeholderLabel.frame = CGRect(x: labelX, y: labelY, width: (self.frame.size.width - (2 * labelX)), height: placeholderLabel.frame.size.height)
+            placeholderLabel.frame = CGRect(x: labelX, y: CGFloat(labelY), width: (self.frame.size.width - (2 * labelX)), height: self.frame.size.height)
+            
+            //CGRect(x: labelX, y: labelY, width: (self.frame.size.width - (2 * labelX)), height: placeholderLabel.frame.size.height)
         }
     }
     
@@ -126,12 +125,18 @@ extension UITextView : UITextViewDelegate {
         if let placeholderLabel = self.viewWithTag(100) as? UILabel {
             placeholderLabel.isHidden = self.text.count > 0
         }
+        
+        if textView.text.count > CharacterLimit {
+            let currentText = textView.text as NSString
+            textView.text = currentText.substring(to: currentText.length - 1)
+        }
+        
     }
     
     open override func willMove(toSuperview newSuperview: UIView?) {
         
-        if newSuperview == nil {
-            if (self.viewWithTag(100) as? UILabel) != nil {
+        if self.observationInfo != nil {
+            if newSuperview == nil {
                 self.removeObserver(self, forKeyPath: "text")
             }
         }

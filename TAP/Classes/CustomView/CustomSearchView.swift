@@ -8,21 +8,27 @@
 
 import UIKit
 
+protocol customSearchViewDelegate : class {
+    func showNextScreen()
+}
+
 class CustomSearchView: UIView, UISearchBarDelegate {
+    
+    var delegate : customSearchViewDelegate?
     
     @IBOutlet weak var layoutWidthSearchbar: NSLayoutConstraint!
     @IBOutlet weak var layoutSearchBarTrailing: NSLayoutConstraint!
     @IBOutlet weak var layoutHeightSearchbar: NSLayoutConstraint!
     @IBOutlet weak var layoutLeadingSearchBar: NSLayoutConstraint!
     @IBOutlet weak var btnBack : UIButton!
-
+    @IBOutlet weak var btnClear: UIButton!
+    
+    
     @IBOutlet weak var searchBar : UISearchBar!{
         didSet {
             
-            searchBar.delegate = self
-            
             searchBar.setImage(UIImage(named:"search"), for: .search, state: .normal)
-            searchBar.tintColor = CColorNavRed
+            searchBar.tintColor = CColorWhite
             searchBar.backgroundImage = UIImage()
             
             
@@ -32,8 +38,8 @@ class CustomSearchView: UIView, UISearchBarDelegate {
             
             let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
             
-            searchTextField?.font = (IS_iPhone_X) ? CFontSFUIText(size: 15, type: .Regular) : (IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 15, type: .Regular) :  CFontSFUIText(size: 14, type: .Regular)
-            searchTextField?.textColor = CColorBlack   // CRGB(r: 204, g: 204, b: 204)
+            searchTextField?.font = (IS_iPhone_X) ? CFontSFUIText(size: 15, type: .Regular) : (IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 15, type: .Regular) :  CFontSFUIText(size: 13, type: .Regular)
+            searchTextField?.textColor = CColorWhite
             searchBar.layer.cornerRadius = 0.0
             searchBar.layer.masksToBounds = true
             
@@ -55,28 +61,46 @@ class CustomSearchView: UIView, UISearchBarDelegate {
                 searchFieldBackground.layer.cornerRadius = 4
                 searchFieldBackground.clipsToBounds = true
             }
+            
+            searchTextField?.clearButtonMode = .never
         }
     }
     
-    private static var customSearch : CustomSearchView? = {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        searchBar.delegate = self
+        btnClear.hide(byWidth: true)
         
-        guard let customSearch = CustomSearchView.viewFromXib as? CustomSearchView else {return nil
+        btnClear.touchUpInside { (sender) in
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            btnClear.hide(byWidth: true)
         }
-        customSearch.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 40)
-        return customSearch
-    }()
+    }
+
     
-    
-    static var shared : CustomSearchView? {
-        return customSearch
+    //MARK:-
+    //MARK:- UISearchBar delegate
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        delegate?.showNextScreen()
     }
     
-    override var intrinsicContentSize: CGSize {
-        return UILayoutFittingExpandedSize
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        if searchText.count == 0  {
+            searchBar.resignFirstResponder()
+            btnClear.hide(byWidth: true)
+        } else {
+            btnClear.hide(byWidth: false)
+        }
     }
     
-    class func destroy() {
-        customSearch = nil
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+       // delegate?.searchCuisine()
+        searchBar.resignFirstResponder()
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+    }
 }
+

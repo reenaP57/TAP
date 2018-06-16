@@ -66,7 +66,6 @@ class ParentViewController: UIViewController {
         
         if self.view.tag == 100 {
             //...Hide NavigationBar
-            
             self.navigationItem.hidesBackButton = true
             self.navigationController?.isNavigationBarHidden = true
             

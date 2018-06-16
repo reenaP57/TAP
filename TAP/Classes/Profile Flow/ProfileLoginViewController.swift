@@ -41,7 +41,7 @@ extension ProfileLoginViewController {
     @IBAction func btnLoginClicked(sender : UIButton) {
        
         if let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginVC.isFromProfileLogin = true
+            loginVC.loginFrom = .FromPopup
             self.navigationController?.pushViewController(loginVC, animated: true)
         }
     }
@@ -49,7 +49,7 @@ extension ProfileLoginViewController {
     @IBAction func btnSignUpClicked(sender : UIButton) {
         
         if let signUpVC = CLRF_SB.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController {
-            signUpVC.isFromProfileLogin = true
+            signUpVC.signupFrom = .FromPopup
             self.navigationController?.pushViewController(signUpVC, animated: true)
         }
     }

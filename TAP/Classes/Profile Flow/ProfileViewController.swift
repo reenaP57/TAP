@@ -93,6 +93,69 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row {
+       
+        case 0:
+            //...Edit Profile
+            
+            if let editProfileVC = CProfile_SB.instantiateViewController(withIdentifier: "EditProfileViewController") as? EditProfileViewController {
+                self.navigationController?.pushViewController(editProfileVC, animated: true)
+            }
+            
+        case 1:
+            //...Change Password
+            
+            if let changePwdVC = CProfile_SB.instantiateViewController(withIdentifier: "ChangePasswordViewController") as? ChangePasswordViewController {
+                self.navigationController?.pushViewController(changePwdVC, animated: true)
+            }
+            
+        case 2:
+            //...Favorites
+            
+            if let favoritesVC = CProfile_SB.instantiateViewController(withIdentifier: "FavoritesViewController") as? FavoritesViewController {
+                self.navigationController?.pushViewController(favoritesVC, animated: true)
+            }
+         
+        case 3:
+            //...Change Langugae
+            
+            if let changeLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController {
+                changeLangVC.isFromProfile = true
+                self.navigationController?.pushViewController(changeLangVC, animated: true)
+            }
+            
+        case 5,6,8:
+            //...CMS
+            
+            if let cmsVC = CProfile_SB.instantiateViewController(withIdentifier: "CMSViewController") as? CMSViewController {
+                
+                if indexPath.row == 5 {
+                   cmsVC.cmsEnum = .AboutUs
+                } else if indexPath.row == 6 {
+                    cmsVC.cmsEnum = .TermsCondition
+                } else{
+                    cmsVC.cmsEnum = .PrivacyPolicy
+                }
+                
+                self.navigationController?.pushViewController(cmsVC, animated: true)
+            }
+            
+        case 9:
+            //...LogOut
+            
+            self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CLogOutMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
+                appDelegate?.logout()
+                
+            }, btnTwoTitle: CNo) { (action) in
+            }
+            
+        default:
+            print("")
+        }
+    }
 }
 
 

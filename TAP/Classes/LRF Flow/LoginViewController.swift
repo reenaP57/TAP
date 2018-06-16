@@ -8,18 +8,22 @@
 
 import UIKit
 
+enum loginFromType {
+    case FromPopup
+    case FromSelectLangugae
+}
+
+
 class LoginViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
     
-    var isFromProfileLogin : Bool = false
-
+    var loginFrom = loginFromType.FromSelectLangugae
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,9 +43,6 @@ class LoginViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
-        
-        txtPassword.addTarget(self, action: #selector(self.textFieldEditingChange(_:)),
-                                 for: UIControlEvents.editingChanged)
     }
 
 }
@@ -51,25 +52,38 @@ class LoginViewController: ParentViewController {
 
 extension LoginViewController {
     
-    @objc func textFieldEditingChange(_ textField: UITextField) {
-        txtPassword.customPasswordPattern(textField: textField)
+    @IBAction func textFieldDidChanged(_ sender: UITextField) {
+        
+        _ = txtPassword.customPasswordPattern(textField: sender)
     }
     
     @IBAction func btnLoginClicked(sender : UIButton) {
-        
-        if isFromProfileLogin {
-            self.navigationController?.popViewController(animated: true)
+      /*
+        if (txtEmail.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if (txtPassword.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
 
         } else {
-           
-            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
-        }
-        
+          */
+            if loginFrom == .FromPopup {
+                self.navigationController?.popViewController(animated: true)
+                
+            } else {
+                
+                if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+                    self.navigationController?.pushViewController(selectLocVC, animated: false)
+                }
+            }
+       // }
     }
     
     @IBAction func btnGuestUserClicked(sender : UIButton) {
         
+        if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+            self.navigationController?.pushViewController(selectLocVC, animated: false)
+        }
     }
     
     @IBAction func btnForgotPasswordClicked(sender : UIButton) {

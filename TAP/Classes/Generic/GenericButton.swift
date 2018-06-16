@@ -40,6 +40,14 @@ class GenericButton: UIButton {
             
             self.shadow(color: CColorShadow, shadowOffset: CGSize(width: 0, height: 10), shadowRadius: 5.0, shadowOpacity: 0.9)
             self.layer.cornerRadius = 5.0
+            
+        } else if self.tag == 104 {
+            
+            //...For Purple Button
+            
+            self.backgroundColor = CRGB(r: 103, g: 114, b: 229)
+            self.shadow(color: CRGBA(r: 103, g: 114, b: 229, a: 0.7), shadowOffset: CGSize(width: 0, height: 3), shadowRadius: 5.0, shadowOpacity: 0.9)
+            self.layer.cornerRadius = self.CViewHeight/2.0
         }
         
     }

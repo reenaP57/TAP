@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF UI Text Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+        <array key="SF UI Text Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="wSc-GS-ajD" customClass="LoginPopupView" customModule="Ta_Pronto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tFo-ad-eFJ" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
+                    <rect key="frame" x="32" y="219.5" width="311" height="227"/>
+                    <subviews>
+                        <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPe-N1-teE" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="67" y="76.5" width="177" height="50"/>
+                            <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <state key="normal" title="Login">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZH9-5d-9Qa" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="67" y="147" width="177" height="50"/>
+                            <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ZH9-5d-9Qa" secondAttribute="height" multiplier="177:50" id="maY-bs-wh2"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <state key="normal" title="Sign Up">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aup-3z-91g">
+                            <rect key="frame" x="10" y="25" width="291" height="17"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHm-ML-dDc">
+                            <rect key="frame" x="261" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Myg-ca-Cyl"/>
+                                <constraint firstAttribute="width" constant="50" id="hkP-Cq-8B7"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
+                            <state key="normal" image="cancel_popup"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Aup-3z-91g" firstAttribute="leading" secondItem="tFo-ad-eFJ" secondAttribute="leading" constant="10" id="41P-PA-KP0"/>
+                        <constraint firstItem="oPe-N1-teE" firstAttribute="centerX" secondItem="ZH9-5d-9Qa" secondAttribute="centerX" id="DSt-86-Z47"/>
+                        <constraint firstItem="oPe-N1-teE" firstAttribute="width" secondItem="ZH9-5d-9Qa" secondAttribute="width" id="J29-kc-xqk"/>
+                        <constraint firstAttribute="trailing" secondItem="RHm-ML-dDc" secondAttribute="trailing" id="NfK-20-Q9m"/>
+                        <constraint firstItem="ZH9-5d-9Qa" firstAttribute="width" secondItem="tFo-ad-eFJ" secondAttribute="width" multiplier="0.569132" id="Smy-Ke-pdo"/>
+                        <constraint firstItem="RHm-ML-dDc" firstAttribute="top" secondItem="tFo-ad-eFJ" secondAttribute="top" id="VKS-sY-x6g"/>
+                        <constraint firstItem="ZH9-5d-9Qa" firstAttribute="top" secondItem="oPe-N1-teE" secondAttribute="bottom" constant="20" id="Y1E-TU-KMI"/>
+                        <constraint firstAttribute="bottom" secondItem="ZH9-5d-9Qa" secondAttribute="bottom" constant="30" id="cLT-Vc-HqJ"/>
+                        <constraint firstItem="Aup-3z-91g" firstAttribute="top" secondItem="tFo-ad-eFJ" secondAttribute="top" constant="25" id="jEN-WB-B2i"/>
+                        <constraint firstItem="ZH9-5d-9Qa" firstAttribute="centerX" secondItem="tFo-ad-eFJ" secondAttribute="centerX" id="jes-eT-nOz"/>
+                        <constraint firstItem="oPe-N1-teE" firstAttribute="height" secondItem="ZH9-5d-9Qa" secondAttribute="height" id="nC7-2K-Cve"/>
+                        <constraint firstAttribute="trailing" secondItem="Aup-3z-91g" secondAttribute="trailing" constant="10" id="pjA-tZ-Z3e"/>
+                        <constraint firstAttribute="width" secondItem="tFo-ad-eFJ" secondAttribute="height" multiplier="311:227" id="qgL-Ez-oDf"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.53397337150000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="tFo-ad-eFJ" firstAttribute="centerY" secondItem="wSc-GS-ajD" secondAttribute="centerY" id="CyU-2n-oUy"/>
+                <constraint firstItem="tFo-ad-eFJ" firstAttribute="centerX" secondItem="wSc-GS-ajD" secondAttribute="centerX" id="U6o-t4-6aZ"/>
+                <constraint firstItem="tFo-ad-eFJ" firstAttribute="width" secondItem="wSc-GS-ajD" secondAttribute="width" multiplier="0.829333" id="mK2-ZQ-f9Q"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="mhV-xR-F8i"/>
+            <connections>
+                <outlet property="btnClose" destination="RHm-ML-dDc" id="uu4-6M-0JN"/>
+                <outlet property="btnLogin" destination="oPe-N1-teE" id="coN-nZ-eK7"/>
+                <outlet property="btnSignUp" destination="ZH9-5d-9Qa" id="5ND-IF-EpF"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cancel_popup" width="15" height="15"/>
+    </resources>
+</document>

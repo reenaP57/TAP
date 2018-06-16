@@ -18,10 +18,10 @@ class RestaurantDetailViewController: ParentViewController {
     var footerView : RestaurantDetailFooterView!
 
     
-    var arrDishList  = [["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":"4"],
-                        ["dishname":"Cesar salad wrap","desc":"Maxican style tomato salsa, spicy chill sauce cheese creame tomato salsa, spicy chill sauce cheese crea","price":"10"],
-                        ["dishname":"Country road chicken","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":"7"],
-                        ["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":"14"]]
+    var arrDishList  = [["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":4],
+                        ["dishname":"Cesar salad wrap","desc":"Maxican style tomato salsa, spicy chill sauce cheese creame tomato salsa, spicy chill sauce cheese crea","price":10],
+                        ["dishname":"Country road chicken","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":7],
+                        ["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":14]]
     
     var dict  = ["res_name":"Cafe De Perks","res_location":"1066 Eastlawn Ave Sarnia ON (Sarnia ,Ontario)","cusuine":"Rolls - Desserts","contact_no":"91 9498785865","rated_count":"45","rating":3.0,"like_status":1] as [String : AnyObject]
     
@@ -47,6 +47,10 @@ class RestaurantDetailViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
+        
+        self.title = "Cafe De Perks"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(btnSearchClicked))
         
         if headerView == nil {
             headerView = RestaurantDetailHeaderView.viewFromXib as? RestaurantDetailHeaderView
@@ -135,6 +139,20 @@ class RestaurantDetailViewController: ParentViewController {
             }
         }
     }
+    
+    @objc func btnSearchClicked() {
+        
+        self.tblRestDetail.setContentOffset(CGPoint.zero, animated: false)
+        showSearchScreen()
+    }
+    
+    func showSearchScreen()
+    {
+        if let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController {
+            searchVC.isFromOther = true
+            self.navigationController?.pushViewController(searchVC, animated: true)
+        }
+    }
 }
 
 
@@ -176,17 +194,30 @@ extension RestaurantDetailViewController : UITableViewDelegate, UITableViewDataS
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "DishDetailTableViewCell") as? DishDetailTableViewCell {
             
-            let dict = arrDishList[indexPath.row] as? [String : AnyObject]
+            let dict = arrDishList[indexPath.row]
             
-            cell.lblDishName.text = dict?.valueForString(key: "dishname")
-            cell.lblCuisine.text = dict?.valueForString(key: "desc")
-            cell.lblPrice.text = "$\(dict?.valueForString(key: "price") ?? "")"
+            cell.lblDishName.text = dict.valueForString(key: "dishname")
+            cell.lblCuisine.text = dict.valueForString(key: "desc")
+            cell.lblPrice.text = "$\(dict.valueForString(key: "price"))"
 
+            cell.btnPlus.touchUpInside { (sender) in
+                
+                let currentCount = (cell.lblquantity.text?.toInt)! + 1
+                cell.lblquantity.text = "\(currentCount)"
+            }
+            
+            cell.btnMinus.touchUpInside { (sender) in
+                
+                let currentCount = (cell.lblquantity.text?.toInt)! - 1 > 0 ? (cell.lblquantity.text?.toInt)! - 1 : 0
+                cell.lblquantity.text = "\(currentCount)"
+            }
+            
             return cell
         }
         
         return UITableViewCell()
     }
+    
 }
 
 

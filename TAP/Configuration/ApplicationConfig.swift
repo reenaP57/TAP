@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+
+let CGooglePlacePickerKey      =  "AIzaSyAz2HPl7uRXfj-uTY_zbkpYWF8Oqj4f2bA"
+

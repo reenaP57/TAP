@@ -21,6 +21,9 @@ class DishDetailTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        imgVDish.layer.cornerRadius = 5
+        imgVDish.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

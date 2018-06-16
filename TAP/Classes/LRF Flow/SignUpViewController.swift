@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum signUpFromType {
+    case FromPopup
+    case FromLogin
+}
+
 class SignUpViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
@@ -24,10 +29,10 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var txtConfirmPassword : GenericTextField!
     @IBOutlet weak var imgVProfile : UIImageView!
 
-    var isFromProfileLogin : Bool = false
-    
     fileprivate var imgData = Data()
+    var signupFrom = signUpFromType.FromLogin
 
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -55,14 +60,7 @@ class SignUpViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
-        
         self.title = CSignUp
-        
-        
-        txtPassword.addTarget(self, action: #selector(self.textFieldEditingChange(_:)),
-                              for: UIControlEvents.editingChanged)
-        txtConfirmPassword.addTarget(self, action: #selector(self.textFieldEditingChange(_:)),
-                              for: UIControlEvents.editingChanged)
     }
 
 }
@@ -72,14 +70,15 @@ class SignUpViewController: ParentViewController {
 
 extension SignUpViewController {
     
-    @objc func textFieldEditingChange(_ textField: UITextField) {
+    @IBAction func textFieldDidChanged(_ sender: UITextField) {
         
-        if textField == txtPassword {
-            txtPassword.customPasswordPattern(textField: textField)
+        if sender == txtPassword {
+           _ = txtPassword.customPasswordPattern(textField: sender)
         } else {
-            txtConfirmPassword.customPasswordPattern(textField: textField)
+           _ = txtConfirmPassword.customPasswordPattern(textField: sender)
         }
     }
+    
     
     @IBAction func btnLoginClicked(sender : UIButton) {
          self.navigationController?.popViewController(animated: true)
@@ -97,20 +96,48 @@ extension SignUpViewController {
     }
     
     @IBAction func btnSingupClicked(sender : UIButton) {
-        
-        if isFromProfileLogin {
-            self.navigationController?.popViewController(animated: true)
+      /*
+        if (txtFullName.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankFullNameMessage, btnOneTitle:COk , btnOneTapped: nil)
             
+        } else if (txtEmail.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if !(txtEmail.text?.isValidEmail)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if !(txtMobileNo.text?.isBlank)! && (txtCountryCode.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankCountryCodeMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if (txtPassword.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
+        
+        } else if (txtPassword.text?.count)! < 6 || (txtPassword.text?.isAlphanumeric)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
+       
+        } else if txtPassword.text != txtConfirmPassword.text {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
+       
         } else {
-            if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+            */
+            if signupFrom == .FromPopup {
+                self.navigationController?.popViewController(animated: true)
                 
-                self.navigationController?.pushViewController(selectLocVC, animated: false)
+            } else {
+                if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+                    
+                    self.navigationController?.pushViewController(selectLocVC, animated: false)
+                }
             }
-        }
-  
+       // }
     }
     
     @IBAction func btnTermsAndConditionClicked(sender : UIButton) {
         
+        if let cmsVC = CProfile_SB.instantiateViewController(withIdentifier: "CMSViewController") as? CMSViewController {
+            
+            cmsVC.cmsEnum = .TermsCondition
+            self.navigationController?.pushViewController(cmsVC, animated: true)
+        }
     }
 }

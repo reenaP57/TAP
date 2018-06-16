@@ -12,9 +12,12 @@ class SelectLanguageViewController: ParentViewController {
 
     @IBOutlet weak var btnEnglish : UIButton!
     @IBOutlet weak var btnPortuguese : UIButton!
+    @IBOutlet weak var btnContinue : UIButton!
     @IBOutlet weak var imgVEnglish : UIImageView!
     @IBOutlet weak var imgVPortuguese : UIImageView!
 
+    var isFromProfile : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -29,7 +32,14 @@ class SelectLanguageViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
-        self.title = CSelectLanguage
+        
+        if isFromProfile {
+            self.title = CChangeLanguage
+            btnContinue.setTitle(CDone, for: .normal)
+        } else {
+            self.title = CSelectLanguage
+            btnContinue.setTitle(CContinue, for: .normal)
+        }
     }
 }
 

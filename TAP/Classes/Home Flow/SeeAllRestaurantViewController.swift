@@ -73,6 +73,19 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
                  cell.btnLike.isSelected = true
             }
             
+            cell.btnLike.touchUpInside { (sender) in
+                
+            //...Open login Popup If user is not logged In OtherWise Like
+                
+            //    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                
+                if cell.btnLike.isSelected {
+                    cell.btnLike.isSelected = false
+                } else {
+                    cell.btnLike.isSelected = true
+                }
+            }
+            
             return cell
         }
         
