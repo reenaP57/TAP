@@ -95,6 +95,10 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let orderDetailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+            
+            if indexPath.row == 2 {
+                orderDetailVC.isCompleted = true
+            }
             self.navigationController?.pushViewController(orderDetailVC, animated: true)
         }
     }

@@ -20,6 +20,8 @@ class ProfileHeaderView: UIView {
         
         super.layoutSubviews()
 
+        vwProfile.layoutIfNeeded()
+        imgVProfile.layoutIfNeeded()
         vwProfile.layer.cornerRadius = vwProfile.CViewHeight/2
         vwProfile.layer.masksToBounds = true
         

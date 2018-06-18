@@ -45,6 +45,9 @@ extension PaymentSuccessViewController {
     
     @IBAction func btnViewOrderDetailClicked(sender : UIButton) {
         
+        if let detailVC = CMain_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
     
 }

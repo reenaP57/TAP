@@ -28,6 +28,7 @@ class RatingTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        imgVProfile.layoutIfNeeded()
         imgVProfile.layer.cornerRadius = imgVProfile.CViewHeight/2
         imgVProfile.layer.masksToBounds = true
     }

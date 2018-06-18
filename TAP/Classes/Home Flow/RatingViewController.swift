@@ -68,7 +68,7 @@ extension RatingViewController : UITableViewDelegate, UITableViewDataSource {
             
             let dict = arrRating[indexPath.row] as? [String : AnyObject]
             cell.lblUserName.text = dict?.valueForString(key: "username")
-            cell.lblRating.text = dict?.valueForString(key: "rating")
+            cell.lblRating.text = "\(dict?.valueForDouble(key: "rating") ?? 0.0)"
             cell.lblReview.text = dict?.valueForString(key: "review")
             cell.vwRating.rating = (dict?.valueForDouble(key: "rating"))!
 

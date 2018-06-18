@@ -39,9 +39,9 @@ let CSearchRestaurant   = CLocalize(text: "Search restaurant or cusine")
 
 let CYourOrders         =  CLocalize(text: "Your Orders")
 let COrderSummary       =  CLocalize(text: "Order Summary")
-let COrderAccepted      =  CLocalize(text: "Order Accepted")
-let COrderRejected      =  CLocalize(text: "Order Rejected")
-let COrderReady         =  CLocalize(text: "Order Ready")
+let COrderAccepted      =  CLocalize(text: "ORDER ACCEPTED")
+let COrderRejected      =  CLocalize(text: "ORDER REJECTED")
+let COrderReady         =  CLocalize(text: "ORDER READY")
 let CAddYourReview      =  CLocalize(text: "Add your review...")
 
 //Cart
@@ -57,7 +57,7 @@ let CProfileSetting      =  CLocalize(text: "Profile Setting")
 let CEditProfile         =  CLocalize(text: "Edit Profile")
 let CChangePassword      =  CLocalize(text: "Change Password")
 let CChangeLanguage      =  CLocalize(text: "Change Language") 
-let CMyFavourite         =  CLocalize(text: "My Favourite")
+let CMyFavourite         =  CLocalize(text: "My Favourites")
 let CTermsConditions     =  CLocalize(text: "Terms & Conditions")
 let CNotification        =  CLocalize(text: "Notification")
 let CAboutUs             =  CLocalize(text: "About Us")
@@ -69,20 +69,36 @@ let CLogOut              =  CLocalize(text: "Log Out")
 
 //Confirmation Message
 
-let CDeleteOrderMessage     = "Are you sure you want to delete this order?"
-let CLogOutMessage          = "Are you sure you want to logOut?"
+let CDeleteOrderMessage     = CLocalize(text: "Are you sure you want to delete this order?")
+let CLogOutMessage          = CLocalize(text: "Are you sure you want to logOut?")
 
 
 //Validaton Message
 
-let CBlankEmailMessage           = "Please enter your Email."
-let CInvalidEmailMessage         = "Please enter valid Email."
-let CBlankPasswordMessage        = "Please enter your Password."
-let CBlankConfirmPasswordMessage = "Please enter your Confirm Password."
-let CMisMatchMessage             = "Password and Confirm Password doesn’t match."
-let CBlankFullNameMessage        = "Please enter your Full Name."
-let CInvalidPasswordMessage      = "Please enter minimum 6 character alphanumeric Password."
-let CBlankCountryCodeMessage     = "Please select your Country Code."
+let CBlankEmailMessage           = CLocalize(text:"Please enter your Email.")
+let CInvalidEmailMessage         = CLocalize(text:"Please enter valid Email.")
+let CBlankPasswordMessage        = CLocalize(text:"Please enter your Password.")
+let CBlankConfirmPasswordMessage = CLocalize(text:"Please enter your Confirm Password.")
+let CMisMatchMessage             = CLocalize(text:"Password and Confirm Password doesn’t match.")
+let CBlankFullNameMessage        = CLocalize(text:"Please enter your Full Name.")
+let CInvalidPasswordMessage      = CLocalize(text:"Please enter minimum 6 character alphanumeric Password.")
+let CBlankCountryCodeMessage     = CLocalize(text:"Please select your Country Code.")
+let CValidMobileNo               =  CLocalize(text:"Please enter valid Mobile Number.")
+
+let CSelectRating                = CLocalize(text:"Please select ratings.")
+let CBlankReview                 = CLocalize(text:"Please enter review.")
+
+let CBlankOldPassword                 = CLocalize(text:"Please enter your Old Password.")
+let CBlankNewPassword                 = CLocalize(text:"Please enter your New Password.")
+
+
+
+let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not support mail")
+
+
+
+
+
 
 
 

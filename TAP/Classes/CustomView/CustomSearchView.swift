@@ -63,6 +63,11 @@ class CustomSearchView: UIView, UISearchBarDelegate {
             }
             
             searchTextField?.clearButtonMode = .never
+            
+            if let segmentView = searchBar.subviews.first?.subviews.first?.subviews.last {
+                segmentView.isHidden = true
+            }
+            
         }
     }
     

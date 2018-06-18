@@ -21,7 +21,7 @@ class GenericView: UIView {
         
         if self.tag == 101 {
             
-            ///... A Button that will in CornerRadius shape AND in shadow shape.
+            ///... A View that will in CornerRadius shape AND in shadow shape.
             
             self.shadow(color: CColorShadow, shadowOffset: CGSize(width: 0, height: 10), shadowRadius: 5.0, shadowOpacity: 0.9)
             self.layer.cornerRadius = cornerRadius

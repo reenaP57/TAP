@@ -249,6 +249,7 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                     self.arrOrderList.remove(at: indexPath.row)
                     self.tblOrderList.reloadData()
                     self.updateOrderTableHeight()
+                    self.view.layoutIfNeeded()
                     
                 }, btnTwoTitle: CNo) { (action) in
                 }

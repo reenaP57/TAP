@@ -11,7 +11,7 @@ import CoreData
 import IQKeyboardManagerSwift
 import GooglePlaces
 import GoogleMaps
-
+import MessageUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -59,11 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabbarController = nil
         tabbar = nil
         
-        guard let vcLogin = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
+        guard let selectLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController else{
             return
         }
             
-       self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: vcLogin), animated: true, completion: nil)
+       self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: selectLangVC), animated: true, completion: nil)
         
     }
     
@@ -110,6 +110,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func openMailComposer(_ vController : UIViewController, email : String?)  {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self as? MFMailComposeViewControllerDelegate
+            mail.setToRecipients(["test@gmail.com"])
+            mail.setMessageBody("You're so awesome!", isHTML: true)
+            vController.present(mail, animated: true)
+        } else {
+            
+            vController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMessaseDeviceNotSupport, btnOneTitle: COk) { (action) in
+            }
+        }
+    }
+    
+    
     
     // MARK:-
     // MARK:- Root update
@@ -135,7 +151,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
@@ -183,3 +198,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+// MARK:-
+// MARK:- MFMailComposeViewControllerDelegate
+
+extension AppDelegate :MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+}

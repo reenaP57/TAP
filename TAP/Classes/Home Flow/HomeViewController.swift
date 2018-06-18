@@ -64,7 +64,7 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((CScreenWidth  * 276)/375.0)
+        return ((CScreenWidth  * 291)/375.0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -98,9 +98,3 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
     }
 
 }
-
-
-
-
-
-

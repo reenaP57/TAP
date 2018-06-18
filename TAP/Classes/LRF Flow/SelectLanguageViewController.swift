@@ -74,11 +74,16 @@ extension SelectLanguageViewController {
     
     @IBAction func btnContinueClicked(sender : UIButton) {
         
-        if let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+        if isFromProfile {
+            self.navigationController?.popViewController(animated: true)
             
-            self.navigationController?.pushViewController(loginVC, animated: true)
+        } else {
+            
+            if let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                
+                self.navigationController?.pushViewController(loginVC, animated: true)
+            }
         }
-        
     }
 }
 

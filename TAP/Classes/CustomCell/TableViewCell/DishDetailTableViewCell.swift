@@ -12,7 +12,7 @@ class DishDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblDishName : UILabel!
     @IBOutlet weak var lblPrice : UILabel!
-    @IBOutlet weak var lblquantity : UILabel!
+    @IBOutlet weak var txtQuantity : UITextField!
     @IBOutlet weak var lblCuisine : UILabel!
     @IBOutlet weak var imgVDish : UIImageView!
     @IBOutlet weak var btnMinus : UIButton!

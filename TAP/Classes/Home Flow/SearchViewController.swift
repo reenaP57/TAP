@@ -51,7 +51,6 @@ class SearchViewController: ParentViewController {
         {
             customeView.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 44)
             customeView.searchBar.placeholder = CSearchRestaurant
-            customeView.searchBar.delegate = self as? UISearchBarDelegate
             
             if isFromOther {
                 cnTblBottom.constant = 0
@@ -61,9 +60,7 @@ class SearchViewController: ParentViewController {
                 
             } else {
                 customeView.btnBack.hide(byWidth: true)
-                customeView.layoutLeadingSearchBar.constant = 0
-                customeView.layoutSearchBarTrailing.constant = 10
-                customeView.layoutHeightSearchbar.constant = 44
+                customeView.layoutSearchBarTrailing.constant = 0
                 customeView.layoutWidthSearchbar.constant = CScreenWidth - 20
             }
  
@@ -110,6 +107,18 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.btnLike.isSelected = true
             }
             
+            cell.btnLike.touchUpInside { (sender) in
+                
+                //...Open login Popup If user is not logged In OtherWise Like
+                
+           //     appDelegate?.openLoginPopup(viewController: self.viewController!)
+                
+                if cell.btnLike.isSelected {
+                    cell.btnLike.isSelected = false
+                } else {
+                    cell.btnLike.isSelected = true
+                }
+            }
             return cell
         }
         

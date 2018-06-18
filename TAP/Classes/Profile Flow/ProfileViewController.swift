@@ -142,6 +142,10 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 self.navigationController?.pushViewController(cmsVC, animated: true)
             }
+        case 7:
+            //... Contact Us
+            
+            appDelegate?.openMailComposer(self, email: "")
             
         case 9:
             //...LogOut

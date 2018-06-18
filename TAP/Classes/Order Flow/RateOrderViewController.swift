@@ -64,10 +64,23 @@ extension RateOrderViewController {
     
     @IBAction func btnSubmitRatingClicked(sender : UIButton) {
         
+        if vwRating.rating < 1.0 {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CSelectRating, btnOneTitle: COk, btnOneTapped: nil)
+        
+        }
+        else if txtVReview.text.isBlank {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankReview, btnOneTitle: COk, btnOneTapped: nil)
+       
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func btnViewOrderDetailedClicked(sender : UIButton) {
         
+        if let detailVC = CMain_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 }
 

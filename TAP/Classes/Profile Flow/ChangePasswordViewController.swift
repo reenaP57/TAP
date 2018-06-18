@@ -59,5 +59,23 @@ extension ChangePasswordViewController {
 
     @IBAction func btnUpdateClicked(sender : UIButton) {
         
+        if (txtOldPwd.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankOldPassword, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if (txtNewPwd.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankNewPassword, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if (txtNewPwd.text?.count)! < 6 || (txtNewPwd.text?.isAlphanumeric)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if (txtConfirmPwd.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankConfirmPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if txtNewPwd.text != txtConfirmPwd.text {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

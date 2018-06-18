@@ -25,21 +25,26 @@ class SelectLocationViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       self.initialize()
+        self.initialize()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.hidesBackButton = true
         appDelegate?.hideTabBar()
     }
  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
     
     //MARK:-
     //MARK:- General Method
@@ -49,19 +54,28 @@ class SelectLocationViewController: ParentViewController {
         arrLocation = ["New York, NY","San Fransisco, CA","Washington, DC","London, UK","Chicago, LA","Los Angeles, CA","Atlanta, GA","Austin, TX","Boston, MA","Houston, TX","Seattle, WA","Dallas, TX"]
         
         
-        if let customeView = CustomSearchView.viewFromXib as? CustomSearchView
-        {
-            customeView.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 44)
-            customeView.searchBar.placeholder = CSearchYourLocation
-            vwCustomSearch = customeView
-            vwCustomSearch?.delegate = self
-            self.navigationItem.titleView = customeView
+        DispatchQueue.main.async {
             
-            customeView.btnBack.touchUpInside { (sender) in
-                self.navigationController?.popViewController(animated: true)
+            if let customeView = CustomSearchView.viewFromXib as? CustomSearchView
+            {
+                customeView.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 44)
+                customeView.searchBar.placeholder = CSearchYourLocation
+                self.vwCustomSearch = customeView
+                self.vwCustomSearch?.delegate = self
+                self.navigationItem.titleView = self.vwCustomSearch
+                
+                self.vwCustomSearch?.btnBack.hide(byWidth: false)
+                self.vwCustomSearch?.layoutSearchBarTrailing.constant = 0
+                self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
+                
+                
+                customeView.btnBack.touchUpInside { (sender) in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
             }
-            
         }
+        
         
         locManager.requestWhenInUseAuthorization()
         
@@ -71,16 +85,7 @@ class SelectLocationViewController: ParentViewController {
         }
         
     }
-    
-    fileprivate func updateSearchUI()
-    {
-        DispatchQueue.main.async {
-            
-//            self.vwCustomSearch?.btnBack.hide(byWidth: false)
-//            self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
-//            self.vwCustomSearch?.layoutLeadingSearchBar.constant = 0
-        }
-    }
+
 }
 
 
@@ -110,8 +115,11 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
         
         if !IS_iPhone_Simulator {
             
-            latitude = currentLocation.coordinate.latitude
-            longitude = currentLocation.coordinate.longitude
+            if currentLocation != nil {
+                latitude = currentLocation.coordinate.latitude
+                longitude = currentLocation.coordinate.longitude
+            }
+          
         }
         
         

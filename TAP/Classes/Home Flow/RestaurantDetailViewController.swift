@@ -23,9 +23,10 @@ class RestaurantDetailViewController: ParentViewController {
                         ["dishname":"Country road chicken","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":7],
                         ["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":14]]
     
-    var dict  = ["res_name":"Cafe De Perks","res_location":"1066 Eastlawn Ave Sarnia ON (Sarnia ,Ontario)","cusuine":"Rolls - Desserts","contact_no":"91 9498785865","rated_count":"45","rating":3.0,"like_status":1] as [String : AnyObject]
+    var dict  = ["res_name":"Cafe De Perks","res_location":"1066 Eastlawn Ave Sarnia ON (Sarnia ,Ontario)","cusuine":"Rolls - Desserts","country_code":"+91","contact_no":"9498785865","rated_count":"45","rating":3.0,"like_status":1] as [String : AnyObject]
     
-   
+    var isUpdated : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -54,6 +55,7 @@ class RestaurantDetailViewController: ParentViewController {
         
         if headerView == nil {
             headerView = RestaurantDetailHeaderView.viewFromXib as? RestaurantDetailHeaderView
+    
         }
         
         if footerView == nil {
@@ -64,6 +66,7 @@ class RestaurantDetailViewController: ParentViewController {
             restaurantTopView = (Bundle.main.loadNibNamed("RestaurantDetailTopView", owner: self, options: nil)?[0] as? RestaurantDetailTopView)!
         }
         
+        restaurantTopView.txtSearch.delegate = self
         restaurantTopView.frame.size.width = CScreenWidth
         headerTableTop = ParallaxHeaderView.parallaxHeaderView(withSubView: restaurantTopView)
         self.tblRestDetail.tableHeaderView = headerTableTop
@@ -73,11 +76,9 @@ class RestaurantDetailViewController: ParentViewController {
 
     func setCusotmNavigationBar()
     {
-        let colorImage = UIImage.imageFromColor(color: CColorNavRedShadow)
+        self.navigationController?.navigationBar.backgroundColor = CColorWhite
         
-        self.navigationController?.navigationBar.backgroundColor = CColorNavRedShadow
-        self.navigationController?.navigationBar.barTintColor = CColorNavRedShadow
-        self.navigationController?.navigationBar.alpha = 0.15
+        let colorImage = UIImage.imageFromColor(color: CColorNavRed)
         
         self.navigationController?.navigationBar.shadowImage = colorImage
         self.navigationController?.navigationBar.setBackgroundImage(colorImage, for: .default)
@@ -90,9 +91,9 @@ class RestaurantDetailViewController: ParentViewController {
         restaurantTopView.lblResLocation.text = dict.valueForString(key: "res_location")
         restaurantTopView.lblCuisines.text = dict.valueForString(key: "cusuine")
 
-        restaurantTopView.lblRating.text = dict.valueForString(key: "rating")
+        restaurantTopView.lblRating.text = "\(dict.valueForDouble(key: "rating") ?? 0.0)"
         restaurantTopView.lblRatingCount.text = "(\(dict.valueForString(key: "rated_count")))"
-        restaurantTopView.btnContactNo.setTitle(dict.valueForString(key: "contact_no"), for: .normal)
+        restaurantTopView.btnContactNo.setTitle("\(dict.valueForString(key: "country_code")) \(dict.valueForString(key: "contact_no"))", for: .normal)
         
         restaurantTopView.vwRating.rating = dict.valueForDouble(key: "rating")!
         
@@ -181,13 +182,19 @@ extension RestaurantDetailViewController : UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         footerView.btnViewCart.touchUpInside { (sender) in
+            
+            appDelegate?.tabbar?.btnTabClicked(sender: (appDelegate?.tabbar?.btnCart)!)
         }
         
         return footerView
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((CScreenWidth  * 120)/375.0)
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -200,16 +207,19 @@ extension RestaurantDetailViewController : UITableViewDelegate, UITableViewDataS
             cell.lblCuisine.text = dict.valueForString(key: "desc")
             cell.lblPrice.text = "$\(dict.valueForString(key: "price"))"
 
+            cell.txtQuantity.addTarget(self, action: #selector(txtQuantityDidBeginChange), for: .editingDidBegin)
+            cell.txtQuantity.addTarget(self, action: #selector(txtQuantityDidEndChange), for: .editingDidEnd)
+            
             cell.btnPlus.touchUpInside { (sender) in
                 
-                let currentCount = (cell.lblquantity.text?.toInt)! + 1
-                cell.lblquantity.text = "\(currentCount)"
+                let currentCount = (cell.txtQuantity.text?.toInt)! + 1
+                cell.txtQuantity.text = "\(currentCount)"
             }
             
             cell.btnMinus.touchUpInside { (sender) in
                 
-                let currentCount = (cell.lblquantity.text?.toInt)! - 1 > 0 ? (cell.lblquantity.text?.toInt)! - 1 : 0
-                cell.lblquantity.text = "\(currentCount)"
+                let currentCount = (cell.txtQuantity.text?.toInt)! - 1 > 0 ? (cell.txtQuantity.text?.toInt)! - 1 : 0
+                cell.txtQuantity.text = "\(currentCount)"
             }
             
             return cell
@@ -218,7 +228,31 @@ extension RestaurantDetailViewController : UITableViewDelegate, UITableViewDataS
         return UITableViewCell()
     }
     
+    @objc func txtQuantityDidBeginChange() {
+        isUpdated = true
+    }
+    
+    @objc func txtQuantityDidEndChange() {
+        isUpdated = false
+    }
+    
 }
+
+//MARK:-
+//MARK:- TextField Delegate
+
+extension RestaurantDetailViewController : UITextFieldDelegate {
+   
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        restaurantTopView.txtSearch.resignFirstResponder()
+        
+        if let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchDishesViewController") as? SearchDishesViewController {
+            self.navigationController?.pushViewController(searchVC, animated: false)
+        }
+    }
+}
+
 
 
 // MARK: -
@@ -228,13 +262,15 @@ extension RestaurantDetailViewController : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        if isUpdated{
+            headerTableTop.layoutHeadeForScrollViewOffset(offset: scrollView.contentOffset)
+            
+            return
+        }
+        
         if headerTableTop != nil
         {
             if scrollView.contentOffset.y > 200 {
-                
-//                self.navigationController?.navigationBar.barTintColor = UIColor.yellow
-//
-//                self.navigationController?.navigationBar.backgroundColor = UIColor.yellow //  CRGBA(r: 191, g: 0, b: 0, a: 0.7)
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
             } else {
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
