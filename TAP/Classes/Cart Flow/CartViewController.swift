@@ -108,6 +108,11 @@ class CartViewController: ParentViewController {
 
 extension CartViewController {
     
+    @IBAction func btnViewMapClicked(sender : UIButton) {
+        
+        UIApplication.shared.open(URL(string: "https://maps.google.com/?q=@23.0524,72.5337")!, options: [:], completionHandler: nil)
+    }
+    
     @IBAction func btnProceedToPayClicked(sender:UIButton){
         
         if let vwPayment = PaymentPopupView.viewFromXib as? PaymentPopupView {
@@ -196,7 +201,7 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 let dict = arrOrderList[indexPath.row] as? [String:AnyObject]
                 cell.lblDishName.text = dict?.valueForString(key: "dishname")
-                cell.lblPrice.text = "\(dict?.valueForInt(key: "price") ?? 0)"
+                cell.lblPrice.text = "$\(dict?.valueForInt(key: "price") ?? 0)"
                 cell.lblquantity.text = "\(dict?.valueForInt(key: "quantity") ?? 0)"
                 
                 cell.btnPlus.touchUpInside { (sender) in

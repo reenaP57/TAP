@@ -28,6 +28,10 @@ class PromotionViewController: ParentViewController {
         appDelegate?.hideTabBar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+    }
     
     //MARK:-
     //MARK:- General Method

@@ -64,6 +64,9 @@ class ParentViewController: UIViewController {
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = #imageLiteral(resourceName: "back_white")
         self.navigationController?.navigationBar.backIndicatorImage = #imageLiteral(resourceName: "back_white")
         
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+
+        
         if self.view.tag == 100 {
             //...Hide NavigationBar
             self.navigationItem.hidesBackButton = true

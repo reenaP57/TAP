@@ -14,7 +14,10 @@ class ChangePasswordViewController: ParentViewController {
     @IBOutlet weak var txtNewPwd : GenericTextField!
     @IBOutlet weak var txtConfirmPwd : GenericTextField!
     
-    
+    var strPwd = String()
+    var strNewPwd = String()
+    var strConfirmPwd = String()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -46,14 +49,26 @@ class ChangePasswordViewController: ParentViewController {
 
 extension ChangePasswordViewController {
     
+    @IBAction func focusOnTextfield(_ sender: UIButton) {
+        
+        switch sender.tag {
+        case 0:
+            txtOldPwd.becomeFirstResponder()
+        case 1:
+            txtNewPwd.becomeFirstResponder()
+        default:
+            txtConfirmPwd.becomeFirstResponder()
+        }
+    }
+    
     @IBAction func textFieldDidChanged(_ sender: UITextField) {
         
         if sender == txtOldPwd {
-           _ = txtOldPwd.customPasswordPattern(textField: sender)
+            strPwd = txtOldPwd.customPasswordPattern(textField: sender)
         } else if sender == txtNewPwd {
-          _ = txtNewPwd.customPasswordPattern(textField: sender)
+            strNewPwd = txtNewPwd.customPasswordPattern(textField: sender)
         } else {
-           _ = txtConfirmPwd.customPasswordPattern(textField: sender)
+            strConfirmPwd = txtConfirmPwd.customPasswordPattern(textField: sender)
         }
     }
 
@@ -65,13 +80,13 @@ extension ChangePasswordViewController {
         } else if (txtNewPwd.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankNewPassword, btnOneTitle:COk , btnOneTapped: nil)
             
-        } else if (txtNewPwd.text?.count)! < 6 || (txtNewPwd.text?.isAlphanumeric)! {
+        } else if (txtNewPwd.text?.count)! < 6 || !(strNewPwd.isAlphanumeric) {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else if (txtConfirmPwd.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankConfirmPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
             
-        } else if txtNewPwd.text != txtConfirmPwd.text {
+        } else if strNewPwd != strConfirmPwd {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else {

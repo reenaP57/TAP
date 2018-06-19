@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum signUpFromType {
-    case FromPopup
-    case FromLogin
-}
-
 class SignUpViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
@@ -30,9 +25,10 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var imgVProfile : UIImageView!
 
     fileprivate var imgData = Data()
-    var signupFrom = signUpFromType.FromLogin
-
-   
+    var strPwd = String()
+    var strConfirmPwd = String()
+    var isFromProfileScreen : Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -73,12 +69,27 @@ extension SignUpViewController {
     @IBAction func textFieldDidChanged(_ sender: UITextField) {
         
         if sender == txtPassword {
-           _ = txtPassword.customPasswordPattern(textField: sender)
+           strPwd = txtPassword.customPasswordPattern(textField: sender)
         } else {
-           _ = txtConfirmPassword.customPasswordPattern(textField: sender)
+           strConfirmPwd = txtConfirmPassword.customPasswordPattern(textField: sender)
         }
     }
     
+    @IBAction func focusOnTextfield(_ sender: UIButton) {
+        
+        switch sender.tag {
+        case 0:
+            txtFullName.becomeFirstResponder()
+        case 1:
+            txtEmail.becomeFirstResponder()
+        case 2:
+            txtMobileNo.becomeFirstResponder()
+        case 3:
+            txtPassword.becomeFirstResponder()
+        default:
+            txtConfirmPassword.becomeFirstResponder()
+        }
+    }
     
     @IBAction func btnLoginClicked(sender : UIButton) {
          self.navigationController?.popViewController(animated: true)
@@ -96,7 +107,7 @@ extension SignUpViewController {
     }
     
     @IBAction func btnSingupClicked(sender : UIButton) {
-      /*
+      
         if (txtFullName.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankFullNameMessage, btnOneTitle:COk , btnOneTapped: nil)
             
@@ -106,30 +117,44 @@ extension SignUpViewController {
         } else if !(txtEmail.text?.isValidEmail)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
             
+        } else if !(txtMobileNo.text?.isBlank)! &&
+            ((txtMobileNo.text?.count)! > 10 || (txtMobileNo.text?.count)! < 10)  {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CValidMobileNo, btnOneTitle:COk , btnOneTapped: nil)
+            
         } else if !(txtMobileNo.text?.isBlank)! && (txtCountryCode.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankCountryCodeMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else if (txtPassword.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
         
-        } else if (txtPassword.text?.count)! < 6 || (txtPassword.text?.isAlphanumeric)! {
+        } else if (txtPassword.text?.count)! < 6 || !(strPwd.isAlphanumeric) {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
        
-        } else if txtPassword.text != txtConfirmPassword.text {
+        } else if (txtConfirmPassword.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankConfirmPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if strPwd != strConfirmPwd {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
        
         } else {
-            */
-            if signupFrom == .FromPopup {
-                self.navigationController?.popViewController(animated: true)
+            
+            if (appDelegate?.isFromLoginPop)! || isFromProfileScreen!
+            {
+                if let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                    
+                    if isFromProfileScreen!
+                    {
+                        loginVC.loginFrom = .FromProfileLogin
+                    }
+                    
+                    self.navigationController?.pushViewController(loginVC, animated: false)
+                }
                 
             } else {
-                if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
-                    
-                    self.navigationController?.pushViewController(selectLocVC, animated: false)
-                }
+                self.navigationController?.popViewController(animated: true)
             }
-       // }
+            
+        }
     }
     
     @IBAction func btnTermsAndConditionClicked(sender : UIButton) {

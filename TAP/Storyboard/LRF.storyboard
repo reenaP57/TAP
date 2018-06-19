@@ -157,6 +157,12 @@
                                                 <color key="textColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJl-0p-rrL">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="32"/>
+                                                <connections>
+                                                    <action selector="focusOnTextfield:" destination="mhG-7o-Zeg" eventType="touchUpInside" id="hs3-vN-cfr"/>
+                                                </connections>
+                                            </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-d4-3ic" customClass="GenericTextField" customModule="Ta_Pronto">
                                                 <rect key="frame" x="15" y="32" width="305" height="25"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -167,11 +173,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="FJl-0p-rrL" secondAttribute="trailing" id="3JO-Vv-cB5"/>
                                             <constraint firstItem="g1R-d4-3ic" firstAttribute="top" secondItem="ZdS-zQ-F3m" secondAttribute="bottom" constant="2" id="3ga-dO-Zgp"/>
                                             <constraint firstItem="ZdS-zQ-F3m" firstAttribute="leading" secondItem="Ftq-uj-aGN" secondAttribute="leading" constant="15" id="55p-fH-OXH"/>
                                             <constraint firstAttribute="width" secondItem="Ftq-uj-aGN" secondAttribute="height" multiplier="67:13" id="AyE-QZ-xhi"/>
                                             <constraint firstItem="ZdS-zQ-F3m" firstAttribute="top" secondItem="Ftq-uj-aGN" secondAttribute="top" constant="13" id="Dbr-Ho-PeB"/>
                                             <constraint firstItem="g1R-d4-3ic" firstAttribute="leading" secondItem="Ftq-uj-aGN" secondAttribute="leading" constant="15" id="EFV-AR-TDl"/>
+                                            <constraint firstItem="FJl-0p-rrL" firstAttribute="leading" secondItem="Ftq-uj-aGN" secondAttribute="leading" id="LmZ-0a-lCV"/>
+                                            <constraint firstItem="FJl-0p-rrL" firstAttribute="top" secondItem="Ftq-uj-aGN" secondAttribute="top" id="brt-EF-NfU"/>
+                                            <constraint firstItem="g1R-d4-3ic" firstAttribute="top" secondItem="FJl-0p-rrL" secondAttribute="bottom" id="d2E-Na-Vcp"/>
                                             <constraint firstAttribute="bottom" secondItem="g1R-d4-3ic" secondAttribute="bottom" constant="8" id="q4U-6P-lti"/>
                                             <constraint firstAttribute="trailing" secondItem="g1R-d4-3ic" secondAttribute="trailing" constant="15" id="sVl-rV-SlF"/>
                                         </constraints>
@@ -190,6 +200,12 @@
                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5G-Xm-j0g">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="32"/>
+                                                <connections>
+                                                    <action selector="focusOnTextfield:" destination="mhG-7o-Zeg" eventType="touchUpInside" id="EGr-zu-bZK"/>
+                                                </connections>
+                                            </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKo-qt-0hP" customClass="GenericTextField" customModule="Ta_Pronto">
                                                 <rect key="frame" x="15" y="32" width="305" height="25"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -206,6 +222,10 @@
                                             <constraint firstItem="nKo-qt-0hP" firstAttribute="top" secondItem="vaC-Lt-Fol" secondAttribute="bottom" constant="2" id="3rn-yx-P9a"/>
                                             <constraint firstItem="vaC-Lt-Fol" firstAttribute="top" secondItem="I8z-h0-4LG" secondAttribute="top" constant="13" id="BKH-sq-IEx"/>
                                             <constraint firstItem="nKo-qt-0hP" firstAttribute="leading" secondItem="I8z-h0-4LG" secondAttribute="leading" constant="15" id="NIn-xb-d0b"/>
+                                            <constraint firstAttribute="trailing" secondItem="v5G-Xm-j0g" secondAttribute="trailing" id="PPU-DM-hgc"/>
+                                            <constraint firstItem="v5G-Xm-j0g" firstAttribute="leading" secondItem="I8z-h0-4LG" secondAttribute="leading" id="RTe-Gd-y5J"/>
+                                            <constraint firstItem="nKo-qt-0hP" firstAttribute="top" secondItem="v5G-Xm-j0g" secondAttribute="bottom" id="aT8-Hh-EYG"/>
+                                            <constraint firstItem="v5G-Xm-j0g" firstAttribute="top" secondItem="I8z-h0-4LG" secondAttribute="top" id="caB-Zv-itV"/>
                                             <constraint firstAttribute="trailing" secondItem="nKo-qt-0hP" secondAttribute="trailing" constant="15" id="f7V-J5-SIo"/>
                                             <constraint firstItem="vaC-Lt-Fol" firstAttribute="leading" secondItem="I8z-h0-4LG" secondAttribute="leading" constant="15" id="iJe-DL-2ow"/>
                                             <constraint firstAttribute="bottom" secondItem="nKo-qt-0hP" secondAttribute="bottom" constant="8" id="z8a-QS-9Lb"/>
@@ -384,6 +404,12 @@
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ek6-BZ-xa9">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                                        <connections>
+                                                            <action selector="focusOnTextfield:" destination="5um-G2-wtJ" eventType="touchUpInside" id="CBN-d7-8ju"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eFO-f0-hWf" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -395,8 +421,12 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="pWu-Pc-kSM" firstAttribute="leading" secondItem="4n1-3m-hTA" secondAttribute="leading" constant="15" id="0Nh-pP-59C"/>
+                                                    <constraint firstItem="eFO-f0-hWf" firstAttribute="top" secondItem="Ek6-BZ-xa9" secondAttribute="bottom" id="0Zh-5y-7Lr"/>
+                                                    <constraint firstItem="Ek6-BZ-xa9" firstAttribute="top" secondItem="4n1-3m-hTA" secondAttribute="top" id="N5o-8l-1LQ"/>
                                                     <constraint firstItem="eFO-f0-hWf" firstAttribute="leading" secondItem="4n1-3m-hTA" secondAttribute="leading" constant="15" id="NPA-hR-nRq"/>
                                                     <constraint firstAttribute="trailing" secondItem="eFO-f0-hWf" secondAttribute="trailing" constant="15" id="fpA-PV-Mhw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Ek6-BZ-xa9" secondAttribute="trailing" id="iAB-H4-QZ0"/>
+                                                    <constraint firstItem="Ek6-BZ-xa9" firstAttribute="leading" secondItem="4n1-3m-hTA" secondAttribute="leading" id="irr-vv-ZQ1"/>
                                                     <constraint firstAttribute="width" secondItem="4n1-3m-hTA" secondAttribute="height" multiplier="67:13" id="kKG-A1-6ip"/>
                                                     <constraint firstItem="pWu-Pc-kSM" firstAttribute="top" secondItem="4n1-3m-hTA" secondAttribute="top" constant="13" id="lpE-bI-wfD"/>
                                                     <constraint firstItem="eFO-f0-hWf" firstAttribute="top" secondItem="pWu-Pc-kSM" secondAttribute="bottom" constant="1" id="nld-fY-wgR"/>
@@ -417,6 +447,12 @@
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSK-hG-pDD">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                                        <connections>
+                                                            <action selector="focusOnTextfield:" destination="5um-G2-wtJ" eventType="touchUpInside" id="KHN-xa-IZN"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yfc-Nz-mha" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -430,9 +466,13 @@
                                                     <constraint firstItem="Yfc-Nz-mha" firstAttribute="top" secondItem="Cr8-yj-pDp" secondAttribute="bottom" constant="1" id="1FB-mL-kJ6"/>
                                                     <constraint firstAttribute="bottom" secondItem="Yfc-Nz-mha" secondAttribute="bottom" constant="8" id="6jZ-CM-gJ0"/>
                                                     <constraint firstAttribute="trailing" secondItem="Yfc-Nz-mha" secondAttribute="trailing" constant="15" id="FN6-sU-pvJ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="tSK-hG-pDD" secondAttribute="trailing" id="N3A-LK-I68"/>
+                                                    <constraint firstItem="Yfc-Nz-mha" firstAttribute="top" secondItem="tSK-hG-pDD" secondAttribute="bottom" id="Nkm-1V-UbQ"/>
                                                     <constraint firstItem="Cr8-yj-pDp" firstAttribute="leading" secondItem="aRh-r8-nqZ" secondAttribute="leading" constant="15" id="Pnn-QK-IHl"/>
                                                     <constraint firstItem="Yfc-Nz-mha" firstAttribute="leading" secondItem="aRh-r8-nqZ" secondAttribute="leading" constant="15" id="Rwk-Ns-bwD"/>
+                                                    <constraint firstItem="tSK-hG-pDD" firstAttribute="leading" secondItem="aRh-r8-nqZ" secondAttribute="leading" id="hTl-3K-qOz"/>
                                                     <constraint firstItem="Cr8-yj-pDp" firstAttribute="top" secondItem="aRh-r8-nqZ" secondAttribute="top" constant="13" id="qmN-Kz-Wab"/>
+                                                    <constraint firstItem="tSK-hG-pDD" firstAttribute="top" secondItem="aRh-r8-nqZ" secondAttribute="top" id="yni-bH-bAU"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -449,6 +489,12 @@
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnf-Vi-phb">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                                        <connections>
+                                                            <action selector="focusOnTextfield:" destination="5um-G2-wtJ" eventType="touchUpInside" id="BTi-fO-E8e"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QUi-Ie-98p" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="60" y="31" width="255" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -472,11 +518,15 @@
                                                     <constraint firstItem="5hu-bA-TBN" firstAttribute="leading" secondItem="YBd-Ad-8AQ" secondAttribute="leading" constant="15" id="0sQ-70-iy4"/>
                                                     <constraint firstItem="QUi-Ie-98p" firstAttribute="top" secondItem="5hu-bA-TBN" secondAttribute="bottom" constant="1" id="3Md-Zy-sJd"/>
                                                     <constraint firstItem="E1x-xQ-Hh6" firstAttribute="top" secondItem="5hu-bA-TBN" secondAttribute="bottom" constant="1" id="7dt-Fu-qhB"/>
+                                                    <constraint firstItem="QUi-Ie-98p" firstAttribute="top" secondItem="Lnf-Vi-phb" secondAttribute="bottom" id="C0d-Xs-EaJ"/>
+                                                    <constraint firstItem="Lnf-Vi-phb" firstAttribute="leading" secondItem="YBd-Ad-8AQ" secondAttribute="leading" id="JDU-hC-fBP"/>
                                                     <constraint firstAttribute="bottom" secondItem="E1x-xQ-Hh6" secondAttribute="bottom" constant="8" id="JvX-TO-Qca"/>
                                                     <constraint firstAttribute="trailing" secondItem="QUi-Ie-98p" secondAttribute="trailing" constant="20" id="gXc-gx-yJN"/>
                                                     <constraint firstItem="QUi-Ie-98p" firstAttribute="leading" secondItem="E1x-xQ-Hh6" secondAttribute="trailing" id="jxX-Ad-kEk"/>
+                                                    <constraint firstItem="Lnf-Vi-phb" firstAttribute="top" secondItem="YBd-Ad-8AQ" secondAttribute="top" id="lax-8B-goH"/>
                                                     <constraint firstItem="5hu-bA-TBN" firstAttribute="top" secondItem="YBd-Ad-8AQ" secondAttribute="top" constant="13" id="mb3-Gu-Zrt"/>
                                                     <constraint firstAttribute="bottom" secondItem="QUi-Ie-98p" secondAttribute="bottom" constant="8" id="s7w-7n-CNh"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Lnf-Vi-phb" secondAttribute="trailing" id="sJC-5n-M4E"/>
                                                     <constraint firstItem="E1x-xQ-Hh6" firstAttribute="leading" secondItem="YBd-Ad-8AQ" secondAttribute="leading" constant="15" id="yT5-Eo-cI9"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
@@ -494,6 +544,12 @@
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="beZ-9y-ybt">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                                        <connections>
+                                                            <action selector="focusOnTextfield:" destination="5um-G2-wtJ" eventType="touchUpInside" id="43s-iP-eUz"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ce8-Fd-L2g" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -507,11 +563,15 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="beZ-9y-ybt" firstAttribute="leading" secondItem="2nx-Tv-n0P" secondAttribute="leading" id="9b5-3y-ZeT"/>
+                                                    <constraint firstItem="Ce8-Fd-L2g" firstAttribute="top" secondItem="beZ-9y-ybt" secondAttribute="bottom" id="D7w-QP-jyP"/>
                                                     <constraint firstItem="Ce8-Fd-L2g" firstAttribute="top" secondItem="yNI-SL-yn9" secondAttribute="bottom" constant="1" id="N6n-U9-rxS"/>
                                                     <constraint firstItem="Ce8-Fd-L2g" firstAttribute="leading" secondItem="2nx-Tv-n0P" secondAttribute="leading" constant="15" id="Qmf-yU-YgO"/>
                                                     <constraint firstItem="yNI-SL-yn9" firstAttribute="leading" secondItem="2nx-Tv-n0P" secondAttribute="leading" constant="15" id="SVa-WI-Ter"/>
+                                                    <constraint firstAttribute="trailing" secondItem="beZ-9y-ybt" secondAttribute="trailing" id="XE1-fp-8k5"/>
                                                     <constraint firstItem="yNI-SL-yn9" firstAttribute="top" secondItem="2nx-Tv-n0P" secondAttribute="top" constant="13" id="YVi-NH-TvC"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ce8-Fd-L2g" secondAttribute="bottom" constant="8" id="b4g-3k-ZBr"/>
+                                                    <constraint firstItem="beZ-9y-ybt" firstAttribute="top" secondItem="2nx-Tv-n0P" secondAttribute="top" id="lsc-D9-XZr"/>
                                                     <constraint firstAttribute="trailing" secondItem="Ce8-Fd-L2g" secondAttribute="trailing" constant="15" id="pbJ-Y2-fpk"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
@@ -529,6 +589,12 @@
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ABM-hd-k4d">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                                        <connections>
+                                                            <action selector="focusOnTextfield:" destination="5um-G2-wtJ" eventType="touchUpInside" id="6EE-8v-hL3"/>
+                                                        </connections>
+                                                    </button>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bw7-dz-6Sq" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="15" y="31" width="305" height="25"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -542,10 +608,14 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="ABM-hd-k4d" firstAttribute="leading" secondItem="d5R-Q8-txe" secondAttribute="leading" id="3Bx-Cf-Etz"/>
+                                                    <constraint firstItem="ABM-hd-k4d" firstAttribute="top" secondItem="d5R-Q8-txe" secondAttribute="top" id="7Lz-JP-QN9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ABM-hd-k4d" secondAttribute="trailing" id="8Ow-Gf-B9f"/>
                                                     <constraint firstAttribute="bottom" secondItem="bw7-dz-6Sq" secondAttribute="bottom" constant="9" id="FZS-5F-MGA"/>
                                                     <constraint firstItem="bw7-dz-6Sq" firstAttribute="leading" secondItem="d5R-Q8-txe" secondAttribute="leading" constant="15" id="GoI-VU-twW"/>
                                                     <constraint firstItem="ee7-c6-M5p" firstAttribute="leading" secondItem="d5R-Q8-txe" secondAttribute="leading" constant="15" id="Hgw-d5-EXc"/>
                                                     <constraint firstAttribute="trailing" secondItem="bw7-dz-6Sq" secondAttribute="trailing" constant="15" id="Nxm-Mj-BhB"/>
+                                                    <constraint firstItem="bw7-dz-6Sq" firstAttribute="top" secondItem="ABM-hd-k4d" secondAttribute="bottom" id="Yf0-Ej-xfv"/>
                                                     <constraint firstItem="ee7-c6-M5p" firstAttribute="top" secondItem="d5R-Q8-txe" secondAttribute="top" constant="13" id="nIp-kU-wu6"/>
                                                     <constraint firstItem="bw7-dz-6Sq" firstAttribute="top" secondItem="ee7-c6-M5p" secondAttribute="bottom" constant="1" id="wWa-TN-Ans"/>
                                                 </constraints>
@@ -558,7 +628,20 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmg-DA-Mja">
                                                 <rect key="frame" x="20" y="504" width="335" height="36"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="By signing up you do agree with the ">
+                                                    <fragment content="By signing up you do agree with the">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="13" name="SFUIText-Regular"/>
+                                                            <real key="NSKern" value="0.0"/>
+                                                            <font key="NSOriginalFont" size="13" name="SFUIText-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="18" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                                <tabStops/>
+                                                            </paragraphStyle>
+                                                            <color key="NSStrokeColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <real key="NSStrokeWidth" value="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content=" ">
                                                         <attributes>
                                                             <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
@@ -574,7 +657,7 @@
                                                     <fragment content="Terms &amp; Condition">
                                                         <attributes>
                                                             <color key="NSColor" red="0.74901960784313726" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="14" name="SFUIText-Semibold"/>
+                                                            <font key="NSFont" size="13" name="SFUIText-Semibold"/>
                                                             <real key="NSKern" value="0.0"/>
                                                             <font key="NSOriginalFont" size="13" name="SFUIText-Semibold"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="18" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
@@ -597,10 +680,35 @@
                                                             <real key="NSStrokeWidth" value="0.0"/>
                                                         </attributes>
                                                     </fragment>
-                                                    <fragment content="of TAP.">
+                                                    <fragment content="of Ta Pronto">
                                                         <attributes>
                                                             <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                                            <font key="NSFont" size="13" name="SFUIText-Regular"/>
+                                                            <real key="NSKern" value="0.0"/>
+                                                            <font key="NSOriginalFont" size="13" name="SFUIText-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="18" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                                <tabStops/>
+                                                            </paragraphStyle>
+                                                            <color key="NSStrokeColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <real key="NSStrokeWidth" value="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="!">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="13" name="SFUIText-Regular"/>
+                                                            <real key="NSKern" value="0.0"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="18" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                                <tabStops/>
+                                                            </paragraphStyle>
+                                                            <color key="NSStrokeColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <real key="NSStrokeWidth" value="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content=".">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="13" name="SFUIText-Regular"/>
                                                             <real key="NSKern" value="0.0"/>
                                                             <font key="NSOriginalFont" size="13" name="SFUIText-Regular"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" minimumLineHeight="18" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
@@ -789,6 +897,12 @@ registered email address.</string>
                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E6Z-Lr-ba6">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="31"/>
+                                        <connections>
+                                            <action selector="focusOnTextfield:" destination="Pex-sO-8ie" eventType="touchUpInside" id="W5l-tV-bzY"/>
+                                        </connections>
+                                    </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4xs-ph-G0Z" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -800,12 +914,16 @@ registered email address.</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="l0K-C2-tp5" firstAttribute="leading" secondItem="8eY-UC-xL0" secondAttribute="leading" constant="15" id="7wI-FS-PGU"/>
+                                    <constraint firstItem="E6Z-Lr-ba6" firstAttribute="top" secondItem="8eY-UC-xL0" secondAttribute="top" id="9e3-pW-Rfv"/>
+                                    <constraint firstItem="E6Z-Lr-ba6" firstAttribute="leading" secondItem="8eY-UC-xL0" secondAttribute="leading" id="ATO-At-jSF"/>
                                     <constraint firstItem="l0K-C2-tp5" firstAttribute="top" secondItem="8eY-UC-xL0" secondAttribute="top" constant="13" id="LOt-iw-qq1"/>
                                     <constraint firstAttribute="bottom" secondItem="4xs-ph-G0Z" secondAttribute="bottom" constant="8" id="P4d-VF-U8j"/>
+                                    <constraint firstAttribute="trailing" secondItem="E6Z-Lr-ba6" secondAttribute="trailing" id="VTv-ez-qa7"/>
                                     <constraint firstItem="4xs-ph-G0Z" firstAttribute="leading" secondItem="8eY-UC-xL0" secondAttribute="leading" constant="15" id="b5l-EW-Ybq"/>
                                     <constraint firstAttribute="trailing" secondItem="4xs-ph-G0Z" secondAttribute="trailing" constant="15" id="jYZ-7C-rnw"/>
                                     <constraint firstItem="4xs-ph-G0Z" firstAttribute="top" secondItem="l0K-C2-tp5" secondAttribute="bottom" constant="1" id="r4j-Hx-aEe"/>
                                     <constraint firstAttribute="width" secondItem="8eY-UC-xL0" secondAttribute="height" multiplier="67:13" id="wEy-B8-uBD"/>
+                                    <constraint firstItem="4xs-ph-G0Z" firstAttribute="top" secondItem="E6Z-Lr-ba6" secondAttribute="bottom" id="wYZ-lA-6pN"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

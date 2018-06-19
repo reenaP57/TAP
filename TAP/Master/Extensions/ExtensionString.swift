@@ -46,7 +46,9 @@ extension String {
     }
     
     var isAlphanumeric:Bool {
-      return !isBlank && rangeOfCharacter(from: .alphanumerics) != nil
+        
+        return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
+    //  return !isBlank && rangeOfCharacter(from: .alphanumerics) != nil
     }
     
     var isValidEmail:Bool {

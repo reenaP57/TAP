@@ -10,7 +10,12 @@ import UIKit
 
 class SearchViewController: ParentViewController {
     
-    @IBOutlet weak var tblSearch : UITableView!
+    @IBOutlet weak var tblSearch : UITableView! {
+        didSet {
+            tblSearch.register(UINib(nibName: "SearchRestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchRestaurantTableViewCell")
+        }
+    }
+    
     @IBOutlet weak var lblResultCount : UILabel!
     @IBOutlet weak var cnTblBottom : NSLayoutConstraint!
     var vwCustomSearch : CustomSearchView?
@@ -86,7 +91,7 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((CScreenWidth  * 216)/375.0)
+        return ((CScreenWidth  * 222)/375.0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -82,7 +82,7 @@ class OrderDetailViewController: ParentViewController {
     func setOrderDetail() {
         
         // If order is completed
-        
+    /*
         if isCompleted {
             
             imgVContact.image = UIImage(named: "calender")
@@ -97,7 +97,8 @@ class OrderDetailViewController: ParentViewController {
             scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
             vwRateOrder.isHidden = true
         }
-
+   */
+        scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 120, 0)
         
         arrOrderDetail = [["dishname":"Maxican Crepe","price":"4","quantity":"1","total":"4"],
         ["dishname":"Cesar salad wrap","price":"15","quantity":"2","total":"30"],
@@ -127,39 +128,9 @@ extension OrderDetailViewController {
     
     @IBAction func btnViewMapClicked(sender : UIButton) {
         
-//        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-//            UIApplication.shared.openURL(URL(string:
-//                "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
-//        } else {
-//            print("Can't use comgooglemaps://");
-//         UIApplication.shared.open(URL(string: " https://maps.google.com/?q=@23.0524,72.5337")!, options: [:], completionHandler: nil)
-//        }
-        
-       
-        
-//        if UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!) {
-//
-//             UIApplication.shared.openURL(URL(string:"https://www.google.com/maps/@42.585444,13.007813,6z")!)
-//
-//
-//            UIApplication.shared.open(URL(string: "https://www.google.com/maps/@42.585444,13.007813,6z")!, options: [:], completionHandler: nil)
-//        } else {
-//            print("Can't use comgooglemaps://")
-//            UIApplication.shared.open(URL(string: "http://maps.google.com/maps?q=loc:23.0524,72.5337&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
-//        }
-       //        "http://maps.apple.com/maps?saddr=23.0524,72.5337&daddr=\(to.latitude),\(to.longitude)"
-//        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-//            //'openURL' was deprecated in iOS 10.0: Please use openURL:options:completionHandler: instead
-//
-//            UIApplication.shared.open(URL(string: "comgooglemaps://?center=23.0524,72.5337&zoom=14&views=traffic")!, options: [:], completionHandler: nil)
-//
-//          //  UIApplication.shared.open(URL(string:"comgooglemaps://?center=23.0524,72.5337&zoom=14&views=traffic&q=23.0524,72.5337")!, options: [:], completionHandler: nil)
-//        } else {
-//            print("Can't use comgooglemaps://")
-//        }
+        UIApplication.shared.open(URL(string: "https://maps.google.com/?q=@23.0524,72.5337")!, options: [:], completionHandler: nil)
     }
    
-    
     @IBAction func btnRateOrderClicked(sender:UIButton){
        
         if let rateVC = COrder_SB.instantiateViewController(withIdentifier: "RateOrderViewController") as? RateOrderViewController {

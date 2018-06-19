@@ -10,6 +10,11 @@ import UIKit
 import CoreLocation
 import GooglePlacePicker
 
+enum fromType {
+    case FromHome
+    case FromOther
+}
+
 
 class SelectLocationViewController: ParentViewController {
 
@@ -22,6 +27,7 @@ class SelectLocationViewController: ParentViewController {
     var locManager = CLLocationManager()
     var currentLocation: CLLocation!
 
+    var type = fromType.FromOther
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,9 +70,17 @@ class SelectLocationViewController: ParentViewController {
                 self.vwCustomSearch?.delegate = self
                 self.navigationItem.titleView = self.vwCustomSearch
                 
-                self.vwCustomSearch?.btnBack.hide(byWidth: false)
-                self.vwCustomSearch?.layoutSearchBarTrailing.constant = 0
-                self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
+                if self.type == .FromOther {
+                    self.vwCustomSearch?.btnBack.hide(byWidth: true)
+                    self.vwCustomSearch?.layoutSearchBarTrailing.constant = 0
+                    self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - 20
+                    
+                } else {
+                    self.vwCustomSearch?.btnBack.hide(byWidth: false)
+                    self.vwCustomSearch?.layoutSearchBarTrailing.constant = 0
+                    self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
+                }
+            
                 
                 
                 customeView.btnBack.touchUpInside { (sender) in
@@ -113,14 +127,14 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
         var latitude = 23.0524
         var longitude = 72.5337
         
-        if !IS_iPhone_Simulator {
-            
-            if currentLocation != nil {
-                latitude = currentLocation.coordinate.latitude
-                longitude = currentLocation.coordinate.longitude
-            }
-          
-        }
+//        if !IS_iPhone_Simulator {
+//
+//            if currentLocation != nil {
+//                latitude = currentLocation.coordinate.latitude
+//                longitude = currentLocation.coordinate.longitude
+//            }
+//
+//        }
         
         
 //        if let latitude = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let longitude = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees

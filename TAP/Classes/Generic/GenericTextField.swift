@@ -18,7 +18,7 @@ class GenericTextField: UITextField {
         self.setupGenericTextField()
     }
     
-    func customPasswordPattern(textField : UITextField) -> (String,String) {
+    func customPasswordPattern(textField : UITextField) -> (String) {
         
         if strPwd.count < (textField.text?.count)! {
             
@@ -35,7 +35,7 @@ class GenericTextField: UITextField {
         
         textField.text = strAsterisks
         
-        return (strPwd, strAsterisks)
+        return (strPwd)
     }
 
 }

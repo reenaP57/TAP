@@ -38,10 +38,18 @@ class ProfileLoginViewController: ParentViewController {
 
 extension ProfileLoginViewController {
     
+    @IBAction func btnChangeLangugueClicked(sender : UIButton) {
+        
+        if let changeLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController {
+            changeLangVC.isFromProfile = true
+            self.navigationController?.pushViewController(changeLangVC, animated: true)
+        }
+    }
+    
     @IBAction func btnLoginClicked(sender : UIButton) {
        
         if let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginVC.loginFrom = .FromPopup
+            loginVC.loginFrom = .FromProfileLogin
             self.navigationController?.pushViewController(loginVC, animated: true)
         }
     }
@@ -49,7 +57,7 @@ extension ProfileLoginViewController {
     @IBAction func btnSignUpClicked(sender : UIButton) {
         
         if let signUpVC = CLRF_SB.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController {
-            signUpVC.signupFrom = .FromPopup
+            signUpVC.isFromProfileScreen = true
             self.navigationController?.pushViewController(signUpVC, animated: true)
         }
     }

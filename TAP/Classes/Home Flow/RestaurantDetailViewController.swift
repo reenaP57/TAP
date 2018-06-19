@@ -21,6 +21,9 @@ class RestaurantDetailViewController: ParentViewController {
     var arrDishList  = [["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":4],
                         ["dishname":"Cesar salad wrap","desc":"Maxican style tomato salsa, spicy chill sauce cheese creame tomato salsa, spicy chill sauce cheese crea","price":10],
                         ["dishname":"Country road chicken","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":7],
+                        ["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":14],["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":4],
+                        ["dishname":"Cesar salad wrap","desc":"Maxican style tomato salsa, spicy chill sauce cheese creame tomato salsa, spicy chill sauce cheese crea","price":10],
+                        ["dishname":"Country road chicken","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":7],
                         ["dishname":"Maxican Crepe","desc":"Maxican style tomato salsa, spicy chill sauce cheese cream...","price":14]]
     
     var dict  = ["res_name":"Cafe De Perks","res_location":"1066 Eastlawn Ave Sarnia ON (Sarnia ,Ontario)","cusuine":"Rolls - Desserts","country_code":"+91","contact_no":"9498785865","rated_count":"45","rating":3.0,"like_status":1] as [String : AnyObject]
@@ -39,6 +42,7 @@ class RestaurantDetailViewController: ParentViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        isUpdated = false
         appDelegate?.hideTabBar()
         self.setCusotmNavigationBar()
     }
@@ -93,7 +97,7 @@ class RestaurantDetailViewController: ParentViewController {
 
         restaurantTopView.lblRating.text = "\(dict.valueForDouble(key: "rating") ?? 0.0)"
         restaurantTopView.lblRatingCount.text = "(\(dict.valueForString(key: "rated_count")))"
-        restaurantTopView.btnContactNo.setTitle("\(dict.valueForString(key: "country_code")) \(dict.valueForString(key: "contact_no"))", for: .normal)
+        restaurantTopView.btnContactNo.setTitle("\(dict.valueForString(key: "country_code"))-\(dict.valueForString(key: "contact_no"))", for: .normal)
         
         restaurantTopView.vwRating.rating = dict.valueForDouble(key: "rating")!
         
@@ -112,21 +116,26 @@ class RestaurantDetailViewController: ParentViewController {
         
         restaurantTopView.btnLike.touchUpInside { (sender) in
             
-            if restaurantTopView.btnLike.isSelected {
-                restaurantTopView.btnLike.isSelected = false
-            } else {
-                restaurantTopView.btnLike.isSelected = true
-            }
+            appDelegate?.openLoginPopup(viewController: self)
+            
+//            if restaurantTopView.btnLike.isSelected {
+//                restaurantTopView.btnLike.isSelected = false
+//            } else {
+//                restaurantTopView.btnLike.isSelected = true
+//            }
         }
         
         restaurantTopView.btnPromotion.touchUpInside { (sender) in
             
+            isUpdated = true
             if let promotionVC = CMain_SB.instantiateViewController(withIdentifier: "PromotionViewController") as? PromotionViewController {
                 self.navigationController?.pushViewController(promotionVC, animated: true)
             }
         }
         
         restaurantTopView.btnViewRating.touchUpInside { (sender) in
+            
+            isUpdated = true
             
             if let ratingVC = CMain_SB.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController {
                 self.navigationController?.pushViewController(ratingVC, animated: true)

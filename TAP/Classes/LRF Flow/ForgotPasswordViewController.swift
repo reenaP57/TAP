@@ -37,7 +37,20 @@ class ForgotPasswordViewController: ParentViewController {
 
 extension ForgotPasswordViewController {
     
+    @IBAction func focusOnTextfield(_ sender: UIButton) {
+        txtEmail.becomeFirstResponder()
+    }
+    
     @IBAction func btnSubmitClicked(sender : UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        
+        if (txtEmail.text?.isBlank)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if !(txtEmail.text?.isValidEmail)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

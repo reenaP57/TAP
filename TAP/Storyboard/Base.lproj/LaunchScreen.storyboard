@@ -18,15 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="xYs-ft-WPG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="xYs-ft-WPG">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xYs-ft-WPG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="20t-uK-GVC"/>
-                            <constraint firstItem="xYs-ft-WPG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Iu7-fl-jj5"/>
-                            <constraint firstItem="xYs-ft-WPG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="U1L-Vd-TOt"/>
+                            <constraint firstItem="xYs-ft-WPG" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="20t-uK-GVC"/>
+                            <constraint firstItem="xYs-ft-WPG" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="Iu7-fl-jj5"/>
+                            <constraint firstItem="xYs-ft-WPG" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="U1L-Vd-TOt"/>
                             <constraint firstItem="xYs-ft-WPG" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="lGp-a1-bpy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

@@ -75,6 +75,19 @@ class EditProfileViewController: ParentViewController {
 
 extension EditProfileViewController {
     
+    @IBAction func focusOnTextfield(_ sender: UIButton) {
+        
+        switch sender.tag {
+        case 0:
+            txtName.becomeFirstResponder()
+        case 1:
+            txtEmail.becomeFirstResponder()
+        default:
+            txtMobileNo.becomeFirstResponder()
+        }
+    }
+    
+    
     @IBAction func btnUploadProfileClicked(sender : UIButton) {
         
         self.presentImagePickerController(allowEditing: true) { (image, info) in

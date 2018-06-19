@@ -10,7 +10,12 @@ import UIKit
 
 class SeeAllRestaurantViewController: ParentViewController {
     
-    @IBOutlet weak var tblRestList : UITableView!
+    @IBOutlet weak var tblRestList : UITableView!{
+        didSet {
+            tblRestList.register(UINib(nibName: "SearchRestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchRestaurantTableViewCell")
+        }
+    }
+    
     var strTitle = String()
     
     var arrRestData = [["res_name":"Cafe de perks", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"", "like_status":0],
@@ -52,7 +57,7 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((CScreenWidth  * 216)/375.0)
+        return ((CScreenWidth  * 222)/375.0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

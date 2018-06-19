@@ -77,10 +77,7 @@ extension RateOrderViewController {
     }
     
     @IBAction func btnViewOrderDetailedClicked(sender : UIButton) {
-        
-        if let detailVC = CMain_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
-            self.navigationController?.pushViewController(detailVC, animated: true)
-        }
+         self.navigationController?.popViewController(animated: true)
     }
 }
 

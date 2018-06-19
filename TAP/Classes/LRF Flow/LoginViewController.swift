@@ -9,8 +9,9 @@
 import UIKit
 
 enum loginFromType {
-    case FromPopup
     case FromSelectLangugae
+    case FromProfileLogin
+    
 }
 
 
@@ -20,6 +21,8 @@ class LoginViewController: ParentViewController {
     @IBOutlet weak var txtPassword : GenericTextField!
     
     var loginFrom = loginFromType.FromSelectLangugae
+    var strPwd = String()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,33 +56,66 @@ class LoginViewController: ParentViewController {
 extension LoginViewController {
     
     @IBAction func textFieldDidChanged(_ sender: UITextField) {
+        strPwd = txtPassword.customPasswordPattern(textField: sender)
+    }
+    
+    @IBAction func focusOnTextfield(_ sender: UIButton) {
         
-        _ = txtPassword.customPasswordPattern(textField: sender)
+        switch sender.tag {
+        case 0:
+            txtEmail.becomeFirstResponder()
+        default:
+            txtPassword.becomeFirstResponder()
+        }
     }
     
     @IBAction func btnLoginClicked(sender : UIButton) {
-      /*
+      
         if (txtEmail.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
+            
+        } else if !(txtEmail.text?.isValidEmail)! {
+            self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else if (txtPassword.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
 
         } else {
-          */
-            if loginFrom == .FromPopup {
-                self.navigationController?.popViewController(animated: true)
+ 
+            if (appDelegate?.isFromLoginPop)!
+            {
+                //...From Login popup
+                if appDelegate?.objNavController != nil
+                {
+                    appDelegate?.isFromLoginPop = false
+                    self.navigationController?.popToViewController((appDelegate?.objNavController)!, animated: false)
+                }
                 
+            } else if loginFrom == .FromProfileLogin {
+              //... When user signup from profile Login screen
+                
+                if appDelegate?.tabbarController?.selectedIndex == 4 {
+                    appDelegate?.isGuestUser = false
+                    appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+                    appDelegate?.tabbarController?.selectedIndex = 4
+                    appDelegate?.tabbar?.btnProfile.isSelected = true
+                    appDelegate?.tabbar?.btnHome.isSelected = false
+                    appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+                }
+
             } else {
+                //... For Normal Login
                 
                 if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
                     self.navigationController?.pushViewController(selectLocVC, animated: false)
                 }
             }
-       // }
+        }
     }
     
     @IBAction func btnGuestUserClicked(sender : UIButton) {
+        
+        appDelegate?.isGuestUser = true
         
         if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
             self.navigationController?.pushViewController(selectLocVC, animated: false)
@@ -97,7 +133,7 @@ extension LoginViewController {
     @IBAction func btnSingupClicked(sender : UIButton) {
         
         if let signUpVC = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController {
-            
+            signUpVC.isFromProfileScreen = false
             self.navigationController?.pushViewController(signUpVC, animated: true)
         }
     }

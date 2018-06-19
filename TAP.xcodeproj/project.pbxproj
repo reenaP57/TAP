@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C082C5820D8E2060000F018 /* SearchRestaurantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C082C5720D8E2060000F018 /* SearchRestaurantTableViewCell.xib */; };
 		5C1190D120D0E521003166EE /* RestaurantDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1190D020D0E521003166EE /* RestaurantDetailFooterView.swift */; };
 		5C1190D320D0E52A003166EE /* RestaurantDetailFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C1190D220D0E52A003166EE /* RestaurantDetailFooterView.xib */; };
 		5C1190D520D11934003166EE /* PromotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1190D420D11934003166EE /* PromotionViewController.swift */; };
@@ -157,6 +158,10 @@
 /* Begin PBXFileReference section */
 		154B42EEDE2A023F0160D275 /* Pods-TAP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAP.release.xcconfig"; path = "Pods/Target Support Files/Pods-TAP/Pods-TAP.release.xcconfig"; sourceTree = "<group>"; };
 		5B06FE2689D97A5643BD828E /* Pods_TAP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C082C5120D8DB860000F018 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IQKeyboardManagerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C082C5320D8DC180000F018 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C082C5520D8DC1C0000F018 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C082C5720D8E2060000F018 /* SearchRestaurantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchRestaurantTableViewCell.xib; sourceTree = "<group>"; };
 		5C1190D020D0E521003166EE /* RestaurantDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailFooterView.swift; sourceTree = "<group>"; };
 		5C1190D220D0E52A003166EE /* RestaurantDetailFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantDetailFooterView.xib; sourceTree = "<group>"; };
 		5C1190D420D11934003166EE /* PromotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionViewController.swift; sourceTree = "<group>"; };
@@ -484,7 +489,6 @@
 			children = (
 				5C2B9AA120D22A8000C17F1F /* RestaurantTableViewCell.swift */,
 				5C2B9AA020D22A8000C17F1F /* SelectLocationTableViewCell.swift */,
-				5C3DBF7020CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift */,
 				5C3DBF7E20CFEC1E00F9E2E4 /* DishDetailTableViewCell.swift */,
 				5C1190D620D11F4B003166EE /* PromotionTableViewCell.swift */,
 				5C1190DA20D13144003166EE /* RatingTableViewCell.swift */,
@@ -493,6 +497,8 @@
 				5C2B9AB020D2505C00C17F1F /* OrderDetailTableViewCell.swift */,
 				5C2B9AB420D2577A00C17F1F /* OrderPriceTableViewCell.swift */,
 				5C92B86A20D39959002CFF32 /* CartTableViewCell.swift */,
+				5C3DBF7020CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift */,
+				5C082C5720D8E2060000F018 /* SearchRestaurantTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -702,6 +708,9 @@
 		B0CB511C50344A109B336C0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C082C5520D8DC1C0000F018 /* SDWebImage.framework */,
+				5C082C5320D8DC180000F018 /* Alamofire.framework */,
+				5C082C5120D8DB860000F018 /* IQKeyboardManagerSwift.framework */,
 				5B06FE2689D97A5643BD828E /* Pods_TAP.framework */,
 			);
 			name = Frameworks;
@@ -842,6 +851,7 @@
 				5C3DBF6B20CFB52B00F9E2E4 /* download-4.jpg in Resources */,
 				5C21B84F20CEAF1000890B42 /* SF UI Text Semibold.otf in Resources */,
 				5C92B86F20D3C132002CFF32 /* PaymentPopupView.xib in Resources */,
+				5C082C5820D8E2060000F018 /* SearchRestaurantTableViewCell.xib in Resources */,
 				5C21B84420CEAEB800890B42 /* MIPopUpOverlay.xib in Resources */,
 				5C3DBF6820CFB52B00F9E2E4 /* download-1.jpg in Resources */,
 				5C3DBF8920D000C100F9E2E4 /* RestaurantCategoryCollectionViewCell.xib in Resources */,
@@ -1201,6 +1211,7 @@
 			baseConfigurationReference = DB94963F7C18DD7F99661288 /* Pods-TAP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7224G6JACN;
 				INFOPLIST_FILE = TAP/Info.plist;
@@ -1210,8 +1221,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
-				PROVISIONING_PROFILE = "1c74b054-5eb5-497a-af17-7381ee416537";
-				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2Development 2 Feb 2018";
+				PROVISIONING_PROFILE = "d181e285-0fe6-4e20-9a77-4c524cb4c7c7";
+				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2ADHoc 2 Feb 2018";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1222,6 +1233,7 @@
 			baseConfigurationReference = 154B42EEDE2A023F0160D275 /* Pods-TAP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7224G6JACN;
 				INFOPLIST_FILE = TAP/Info.plist;
@@ -1231,8 +1243,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
-				PROVISIONING_PROFILE = "1c74b054-5eb5-497a-af17-7381ee416537";
-				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2Development 2 Feb 2018";
+				PROVISIONING_PROFILE = "d181e285-0fe6-4e20-9a77-4c524cb4c7c7";
+				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2ADHoc 2 Feb 2018";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

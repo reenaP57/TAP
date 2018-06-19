@@ -10,7 +10,11 @@ import UIKit
 
 class FavoritesViewController:  ParentViewController {
     
-    @IBOutlet weak var tblFavorite : UITableView!
+    @IBOutlet weak var tblFavorite : UITableView!{
+        didSet {
+            tblFavorite.register(UINib(nibName: "SearchRestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchRestaurantTableViewCell")
+        }
+    }
     
     var arrRestData = [["res_name":"Cafe de perks", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"", "like_status":1],
                        ["res_name":"Dominoz", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1],
@@ -51,7 +55,7 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ((CScreenWidth  * 216)/375.0)
+        return ((CScreenWidth  * 222)/375.0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,6 +74,23 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.btnLike.isSelected = false
             } else{
                 cell.btnLike.isSelected = true
+            }
+            
+            
+            cell.btnLike.touchUpInside { (sender) in
+                
+                //...Open login Popup If user is not logged In OtherWise Like
+                
+//                if cell.btnLike.isSelected {
+//                    self.arrRestData.remove(at: indexPath.row)
+//                    self.tblFavorite.reloadData()
+//                }
+                
+                if cell.btnLike.isSelected {
+                    cell.btnLike.isSelected = false
+                } else {
+                    cell.btnLike.isSelected = true
+                }
             }
             
             return cell

@@ -44,6 +44,7 @@ extension HomeViewController {
     
     @IBAction func btnLocationClicked(sender : UIButton) {
         if let selectLocVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+            selectLocVC.type = .FromHome
             self.navigationController?.pushViewController(selectLocVC, animated: true)
         }
     }

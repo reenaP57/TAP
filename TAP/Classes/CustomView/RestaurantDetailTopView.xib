@@ -94,14 +94,14 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" horizontalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eI2-oJ-fJZ" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                    <rect key="frame" x="15" y="85" width="101" height="27"/>
-                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                    <rect key="frame" x="15" y="85" width="84" height="24"/>
+                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
                                     <state key="normal" title="+91-8866233158">
                                         <color key="titleColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
                                 </button>
                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcW-Ns-1AD" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                    <rect key="frame" x="239" y="81.5" width="81" height="27"/>
+                                    <rect key="frame" x="244" y="81.5" width="81" height="27"/>
                                     <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="81" id="YIE-az-cmp"/>
@@ -110,7 +110,7 @@
                                     <state key="normal" title="View Ratings"/>
                                 </button>
                                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5iN-of-WAe" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                    <rect key="frame" x="148" y="81.5" width="81" height="27"/>
+                                    <rect key="frame" x="153" y="81.5" width="81" height="27"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <accessibility key="accessibilityConfiguration" identifier="1"/>
                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>
@@ -126,6 +126,7 @@
                                 <constraint firstItem="neA-g5-E2m" firstAttribute="leading" secondItem="lgo-5G-0p0" secondAttribute="leading" constant="15" id="5zT-e6-SsL"/>
                                 <constraint firstItem="CnV-mA-KyJ" firstAttribute="leading" secondItem="neA-g5-E2m" secondAttribute="leading" id="C5V-nh-hTn"/>
                                 <constraint firstItem="OnK-HN-QQN" firstAttribute="top" secondItem="lgo-5G-0p0" secondAttribute="top" constant="15" id="Fy0-q0-qqp"/>
+                                <constraint firstItem="5iN-of-WAe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eI2-oJ-fJZ" secondAttribute="trailing" constant="5" id="IOG-9X-0Jn"/>
                                 <constraint firstItem="gcW-Ns-1AD" firstAttribute="leading" secondItem="5iN-of-WAe" secondAttribute="trailing" constant="10" id="Khr-1b-9zF"/>
                                 <constraint firstItem="gcW-Ns-1AD" firstAttribute="width" secondItem="lgo-5G-0p0" secondAttribute="width" multiplier="0.241791" priority="999" id="LT3-Yi-zom"/>
                                 <constraint firstItem="eI2-oJ-fJZ" firstAttribute="top" secondItem="G5f-er-mvt" secondAttribute="bottom" constant="8.5" id="Odz-HA-qyO"/>
@@ -141,7 +142,7 @@
                                 <constraint firstItem="neA-g5-E2m" firstAttribute="top" secondItem="OnK-HN-QQN" secondAttribute="bottom" constant="10" id="tiT-iI-WVI"/>
                                 <constraint firstItem="5zx-FE-GXe" firstAttribute="centerY" secondItem="G5f-er-mvt" secondAttribute="centerY" id="tiz-6u-TTA"/>
                                 <constraint firstItem="5iN-of-WAe" firstAttribute="top" secondItem="5zx-FE-GXe" secondAttribute="bottom" constant="5.5" id="txR-MK-cRe"/>
-                                <constraint firstAttribute="trailing" secondItem="gcW-Ns-1AD" secondAttribute="trailing" constant="15" id="vUf-hp-Gg0"/>
+                                <constraint firstAttribute="trailing" secondItem="gcW-Ns-1AD" secondAttribute="trailing" constant="10" id="vUf-hp-Gg0"/>
                                 <constraint firstItem="5zx-FE-GXe" firstAttribute="leading" secondItem="G5f-er-mvt" secondAttribute="trailing" constant="5" id="z0O-gG-Ash"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
