@@ -81,35 +81,7 @@ extension LoginViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
 
         } else {
- 
-            if (appDelegate?.isFromLoginPop)!
-            {
-                //...From Login popup
-                if appDelegate?.objNavController != nil
-                {
-                    appDelegate?.isFromLoginPop = false
-                    self.navigationController?.popToViewController((appDelegate?.objNavController)!, animated: false)
-                }
-                
-            } else if loginFrom == .FromProfileLogin {
-              //... When user signup from profile Login screen
-                
-                if appDelegate?.tabbarController?.selectedIndex == 4 {
-                    appDelegate?.isGuestUser = false
-                    appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-                    appDelegate?.tabbarController?.selectedIndex = 4
-                    appDelegate?.tabbar?.btnProfile.isSelected = true
-                    appDelegate?.tabbar?.btnHome.isSelected = false
-                    appDelegate?.window?.rootViewController = appDelegate?.tabbarController
-                }
-
-            } else {
-                //... For Normal Login
-                
-                if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
-                    self.navigationController?.pushViewController(selectLocVC, animated: false)
-                }
-            }
+            self.loginUser()
         }
     }
     
@@ -135,6 +107,66 @@ extension LoginViewController {
         if let signUpVC = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController {
             signUpVC.isFromProfileScreen = false
             self.navigationController?.pushViewController(signUpVC, animated: true)
+        }
+    }
+}
+
+
+//MARK:-
+//MARK:- API method
+
+extension LoginViewController {
+    
+    func loginUser() {
+        
+        APIRequest.shared().login(_email: txtEmail.text, _password: strPwd) { (response, error) in
+        
+            if response != nil && error == nil {
+                
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                let status = metaData.valueForInt(key: CJsonStatus)
+                let message = metaData.valueForString(key: CJsonMessage)
+
+                if status == CStatusFour {
+                    
+                    self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: message, btnOneTitle: COk, btnOneTapped: { (action) in
+                    })
+                    
+                } else {
+                    
+                    APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
+                    
+                    if (appDelegate?.isFromLoginPop)!
+                    {
+                        //...From Login popup
+                        if appDelegate?.objNavController != nil
+                        {
+                            appDelegate?.isFromLoginPop = false
+                            self.navigationController?.popToViewController((appDelegate?.objNavController)!, animated: false)
+                        }
+                        
+                    } else if self.loginFrom == .FromProfileLogin {
+                        //... When user signup from profile Login screen
+                        
+                        if appDelegate?.tabbarController?.selectedIndex == 4 {
+                            appDelegate?.isGuestUser = false
+                            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+                            appDelegate?.tabbarController?.selectedIndex = 4
+                            appDelegate?.tabbar?.btnProfile.isSelected = true
+                            appDelegate?.tabbar?.btnHome.isSelected = false
+                            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+                        }
+                        
+                    } else {
+                        //... For Normal Login
+                        
+                        if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
+                            self.navigationController?.pushViewController(selectLocVC, animated: false)
+                        }
+                    }
+                    
+                }
+            }
         }
     }
 }

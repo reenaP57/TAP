@@ -12,6 +12,7 @@ class ProfileHeaderView: UIView {
 
     @IBOutlet weak var vwProfile : UIView!
     @IBOutlet weak var imgVProfile : UIImageView!
+    @IBOutlet weak var imgVPhone : UIImageView!
     @IBOutlet weak var lblUserName : UILabel!
     @IBOutlet weak var lblEmail : UILabel!
     @IBOutlet weak var lblMobileNo : UILabel!

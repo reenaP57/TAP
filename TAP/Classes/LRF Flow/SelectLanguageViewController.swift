@@ -33,6 +33,8 @@ class SelectLanguageViewController: ParentViewController {
     
     func initialize() {
         
+        LocalizationSetLanguage(language: CLanguageEnglish)
+
         if isFromProfile {
             self.title = CChangeLanguage
             btnContinue.setTitle(CDone, for: .normal)
@@ -63,13 +65,15 @@ extension SelectLanguageViewController {
             //...English
             imgVPortuguese.isHidden = true
             imgVEnglish.isHidden = false
+            LocalizationSetLanguage(language: CLanguageEnglish)
             
         } else {
            //... Portuguese
             imgVPortuguese.isHidden = false
             imgVEnglish.isHidden = true
+            LocalizationSetLanguage(language: CLanguagePortuguese)
         }
-        
+  
     }
     
     @IBAction func btnContinueClicked(sender : UIButton) {

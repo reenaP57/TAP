@@ -74,6 +74,7 @@
 		5C21B85120CEAF1000890B42 /* SF UI Text Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5C21B84B20CEAF0E00890B42 /* SF UI Text Regular.otf */; };
 		5C21B85220CEAF1000890B42 /* SF UI Text Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5C21B84C20CEAF0F00890B42 /* SF UI Text Heavy.otf */; };
 		5C21B85420CEAF6400890B42 /* MasterConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21B85320CEAF6300890B42 /* MasterConstant.swift */; };
+		5C2A976120E38A34009E89FD /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A976020E38A34009E89FD /* APIRequest.swift */; };
 		5C2B9A9F20D229D300C17F1F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9A9E20D229D300C17F1F /* RatingView.swift */; };
 		5C2B9AA220D22A8100C17F1F /* SelectLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA020D22A8000C17F1F /* SelectLocationTableViewCell.swift */; };
 		5C2B9AA320D22A8100C17F1F /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2B9AA120D22A8000C17F1F /* RestaurantTableViewCell.swift */; };
@@ -228,6 +229,7 @@
 		5C21B84B20CEAF0E00890B42 /* SF UI Text Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF UI Text Regular.otf"; sourceTree = "<group>"; };
 		5C21B84C20CEAF0F00890B42 /* SF UI Text Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF UI Text Heavy.otf"; sourceTree = "<group>"; };
 		5C21B85320CEAF6300890B42 /* MasterConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterConstant.swift; sourceTree = "<group>"; };
+		5C2A976020E38A34009E89FD /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5C2B9A9E20D229D300C17F1F /* RatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		5C2B9AA020D22A8000C17F1F /* SelectLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationTableViewCell.swift; sourceTree = "<group>"; };
 		5C2B9AA120D22A8000C17F1F /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 		5C944F9420CAA51700097FC4 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				5C2A976020E38A34009E89FD /* APIRequest.swift */,
 				5C944F1820CAA1FC00097FC4 /* AppDelegate.swift */,
 				5C944F9520CAA52D00097FC4 /* ApplicationConfig.swift */,
 				5C944F9720CAA54000097FC4 /* ApplicationConstants.swift */,
@@ -945,6 +948,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C944F2120CAA1FC00097FC4 /* TAP.xcdatamodeld in Sources */,
+				5C2A976120E38A34009E89FD /* APIRequest.swift in Sources */,
 				5C1190D920D12E00003166EE /* RatingViewController.swift in Sources */,
 				5C21B80620CEAE2C00890B42 /* CoreDataContext+Extension.swift in Sources */,
 				5C3DBF8120CFFFA800F9E2E4 /* ParallaxHeaderView.swift in Sources */,

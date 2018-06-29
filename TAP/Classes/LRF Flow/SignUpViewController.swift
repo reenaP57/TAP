@@ -13,13 +13,7 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtFullName : UITextField!
     @IBOutlet weak var txtMobileNo : UITextField!
-    @IBOutlet weak var txtCountryCode : UITextField!{
-        didSet {
-            txtCountryCode.setPickerData(arrPickerData: ["+91","+65","+79"], selectedPickerDataHandler: { (selecte, index, component) in
-            }, defaultPlaceholder: "")
-        }
-    }
-    
+    @IBOutlet weak var txtCountryCode : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
     @IBOutlet weak var txtConfirmPassword : GenericTextField!
     @IBOutlet weak var imgVProfile : UIImageView!
@@ -28,6 +22,8 @@ class SignUpViewController: ParentViewController {
     var strPwd = String()
     var strConfirmPwd = String()
     var isFromProfileScreen : Bool?
+    var countryID = Int()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +53,18 @@ class SignUpViewController: ParentViewController {
     
     func initialize() {
         self.title = CSignUp
+        
+        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: true)
+        let arrCountryCode = arrCountry?.value(forKeyPath: "country_code") as? [Any]
+        
+        if (arrCountryCode?.count)! > 0 {
+
+            txtCountryCode.setPickerData(arrPickerData: arrCountryCode!, selectedPickerDataHandler: { (select, index, component) in
+
+                 let dict = arrCountry![index] as AnyObject
+                countryID = dict.value(forKey: "country_id") as! Int
+            }, defaultPlaceholder: "")
+        }
     }
 
 }
@@ -137,23 +145,7 @@ extension SignUpViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
        
         } else {
-            
-            if (appDelegate?.isFromLoginPop)! || isFromProfileScreen!
-            {
-                if let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                    
-                    if isFromProfileScreen!
-                    {
-                        loginVC.loginFrom = .FromProfileLogin
-                    }
-                    
-                    self.navigationController?.pushViewController(loginVC, animated: false)
-                }
-                
-            } else {
-                self.navigationController?.popViewController(animated: true)
-            }
-            
+            self.signUp()
         }
     }
     
@@ -163,6 +155,68 @@ extension SignUpViewController {
             
             cmsVC.cmsEnum = .TermsCondition
             self.navigationController?.pushViewController(cmsVC, animated: true)
+        }
+    }
+}
+
+
+//MARK:-
+//MARK:- API methods
+
+extension SignUpViewController {
+    
+    func signUp() {
+        
+        var dict = [String : AnyObject]()
+        
+        dict[CName] = txtFullName.text as AnyObject
+        dict[CEmail] = txtEmail.text as AnyObject
+        dict[CPassword] = strPwd as AnyObject
+            
+        if txtMobileNo.text != "" {
+            dict[CMobile_no] = (txtMobileNo.text ?? "") as AnyObject
+            dict[CCountry_id] = countryID as AnyObject
+        }
+        
+        
+        APIRequest.shared().signUp(dict, _imgData: imgData) { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                print("Response : ",response as Any)
+                
+                APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                let message  = metaData.valueForString(key: CJsonMessage)
+                let status = metaData.valueForInt(key: CJsonStatus)
+                
+                if status == CStatusFour {
+                    
+                    self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: message, btnOneTitle: COk, btnOneTapped: { (action) in
+                        self.navigateScreen()
+                    })
+    
+                } else {
+                    self.navigateScreen()
+                }
+            }
+        }
+    }
+    
+    func navigateScreen() {
+     
+        if (appDelegate?.isFromLoginPop)! || self.isFromProfileScreen!
+        {
+            if let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                
+                if self.isFromProfileScreen! {
+                    loginVC.loginFrom = .FromProfileLogin
+                }
+                self.navigationController?.pushViewController(loginVC, animated: false)
+            }
+            
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }

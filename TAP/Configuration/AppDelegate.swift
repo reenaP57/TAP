@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var isGuestUser : Bool = false
     var objNavController = ParentViewController()
     var isFromLoginPop : Bool = false
+    var loginUser : TblUser?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
         GMSServices.provideAPIKey(CGooglePlacePickerKey)
         
-        
+        self.loadCountryList()
         self.initSelectLanguageViewController()
         return true
     }
@@ -42,11 +43,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initSelectLanguageViewController()
     {
-        //        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-        //        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
         
-        let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
-        self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+        if CUserDefaults.object(forKey: UserDefaultLoginUserToken) == nil {
+            let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
+            self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+        } else {
+            
+            loginUser =  TblUser.findOrCreate(dictionary: ["user_id" : CUserDefaults.object(forKey: UserDefaultLoginUserID) as Any]) as? TblUser
+            
+            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+
+        }
+        
+  
     }
     
     func hideTabBar() {
@@ -62,6 +72,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabbarController = nil
         tabbar = nil
         
+        CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
+        CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
+
         guard let selectLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController else{
             return
         }
@@ -159,6 +172,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // MARK:-
+    // MARK:- Country List API
+    
+    
+    func loadCountryList(){
+        
+        var timestamp : TimeInterval = 0
+        
+        if CUserDefaults.value(forKey: UserDefaultTimestamp) != nil {
+            timestamp = CUserDefaults.value(forKey: UserDefaultTimestamp) as! TimeInterval
+        }
+        
+        
+        APIRequest.shared().getCountryList(_timestamp: timestamp as AnyObject, completion: { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                let metaData = response?.value(forKey: CJsonMeta) as? [String : AnyObject]
+                
+                CUserDefaults.setValue(metaData?["new_timestamp"], forKey: UserDefaultTimestamp)
+                CUserDefaults.synchronize()
+            }
+        })
+    }
+    
     
     
     // MARK: - Core Data stack

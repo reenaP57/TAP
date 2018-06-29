@@ -13,6 +13,7 @@ import Foundation
 let CYes                = CLocalize(text: "Yes")
 let CNo                 = CLocalize(text: "No")
 let COk                 = CLocalize(text: "Ok")
+let CCancel             = CLocalize(text: "Cancel")
 
 
 //LRF
@@ -88,14 +89,14 @@ let CValidMobileNo               =  CLocalize(text:"Please enter valid Mobile Nu
 let CSelectRating                = CLocalize(text:"Please select ratings.")
 let CBlankReview                 = CLocalize(text:"Please enter review.")
 
-let CBlankOldPassword                 = CLocalize(text:"Please enter your Old Password.")
-let CBlankNewPassword                 = CLocalize(text:"Please enter your New Password.")
+let CBlankOldPassword            = CLocalize(text:"Please enter your Old Password.")
+let CBlankNewPassword            = CLocalize(text:"Please enter your New Password.")
 
 
 
 let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not support mail")
 
-
+let CMessaseProfileUpdated       = CLocalize(text:"Your profile updated successfully.")
 
 
 

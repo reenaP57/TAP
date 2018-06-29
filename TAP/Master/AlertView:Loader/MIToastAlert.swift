@@ -22,7 +22,7 @@ class MIToastAlert {
         return miToastAlert
     }
     
-    fileprivate static var animationDuration:TimeInterval = 1.0
+    fileprivate static var animationDuration:TimeInterval = 2.0
     fileprivate static var viewRemovingDuration:TimeInterval = 2.5
     fileprivate static var timer = Timer()
 }
@@ -42,7 +42,7 @@ extension MIToastAlert {
         let toastAlertView = UIView()
         toastAlertView.tag = 10000
         toastAlertView.layer.cornerRadius = 3.5
-        toastAlertView.backgroundColor = CRGBA(r: 0.0, g: 0.0, b: 0.0, a: 0.0)
+        toastAlertView.backgroundColor = CColorNavRed  //CRGBA(r: 0.0, g: 0.0, b: 0.0, a: 0.0)
         toastAlertView.translatesAutoresizingMaskIntoConstraints = false
         return toastAlertView
     }()

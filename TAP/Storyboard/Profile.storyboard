@@ -227,7 +227,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9k-ht-aKa">
                                 <rect key="frame" x="147" y="45" width="81" height="81"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download-1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2sq-CL-SQY">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="2sq-CL-SQY">
                                         <rect key="frame" x="5" y="5" width="71" height="71"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V3B-Lt-qqx">
@@ -265,7 +265,7 @@
                                             <action selector="focusOnTextfield:" destination="h6g-tx-wQr" eventType="touchUpInside" id="CFh-6K-WWk"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Michal Greg" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PVp-bW-lGw" customClass="GenericTextField" customModule="Ta_Pronto">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PVp-bW-lGw" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -309,7 +309,7 @@
                                             <action selector="focusOnTextfield:" destination="h6g-tx-wQr" eventType="touchUpInside" id="KBt-GY-Uvy"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="michal@gmail.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1xW-Ga-YU1" customClass="GenericTextField" customModule="Ta_Pronto">
+                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1xW-Ga-YU1" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="15" y="31" width="305" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -351,14 +351,14 @@
                                             <action selector="focusOnTextfield:" destination="h6g-tx-wQr" eventType="touchUpInside" id="yIZ-96-Qt6"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="7867564534" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ukv-ee-msj" customClass="GenericTextField" customModule="Ta_Pronto">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ukv-ee-msj" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="60" y="31" width="265" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+91" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uLp-rd-HXe" customClass="GenericTextField" customModule="Ta_Pronto">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+91" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uLp-rd-HXe" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="15" y="31" width="45" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -694,7 +694,7 @@
     </scenes>
     <resources>
         <image name="arrow" width="9" height="14"/>
-        <image name="download-1.jpg" width="700" height="500"/>
         <image name="logo_red" width="192" height="34"/>
+        <image name="user" width="75" height="75"/>
     </resources>
 </document>

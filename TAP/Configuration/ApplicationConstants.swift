@@ -62,3 +62,32 @@ let CColorNavRedShadow       =  CRGBA(r: 191, g: 0, b: 0, a: 0.7)
 let CColorCement             =  CRGB(r: 212.0, g: 212.0, b: 212.0)
 let CColorLightGray          =  CRGB(r: 172.0, g: 172.0, b: 172.0)
 
+//MARK:-
+//MARK:- UserDefaults Keys
+
+let UserDefaultLoginUserToken       = "UserDefaultLoginUserToken"
+let UserDefaultLoginUserID          = "UserDefaultLoginUserID"
+let UserDefaultTimestamp            = "UserDefaultTimestamp"
+
+//MARK:-
+//MARK:- Application Language
+
+let CLanguagePortuguese         = "port"
+let CLanguageEnglish            = "en"
+
+
+//MARK:-
+//MARK:- API Parameter
+
+let CId                 = "id"
+let CName               = "name"
+let CEmail              = "email"
+let CMobile_no          = "mobile_no"
+let CPassword           = "password"
+let CImage              = "image"
+let CIs_notify          = "is_notify"
+let CCountry_id         = "country_id"
+let CCountry_code       = "country_code"
+let CCountry_name       = "country_name"
+let CStatus_id          = "status_id"
+let CTimestamp          = "timestamp"

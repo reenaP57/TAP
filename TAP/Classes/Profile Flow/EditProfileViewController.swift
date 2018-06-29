@@ -13,13 +13,8 @@ class EditProfileViewController: ParentViewController {
     @IBOutlet weak var txtName : UITextField!
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtMobileNo : UITextField!
-    @IBOutlet weak var txtCountryCode : UITextField!{
-        didSet {
-            txtCountryCode.setPickerData(arrPickerData: ["+91","+65","+79"], selectedPickerDataHandler: { (selecte, index, component) in
-            }, defaultPlaceholder: "")
-        }
-    }
-    
+    @IBOutlet weak var txtCountryCode : UITextField!
+
     @IBOutlet weak var imgVProfile : UIImageView!{
         didSet {
             imgVProfile.layer.cornerRadius = imgVProfile.CViewHeight/2
@@ -33,6 +28,9 @@ class EditProfileViewController: ParentViewController {
         }
     }
 
+    fileprivate var imgData = Data()
+    var isPicUpdated : Bool = false
+    var countryID = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +49,7 @@ class EditProfileViewController: ParentViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        self.view.layoutIfNeeded()
         vwImgProfile.layer.cornerRadius = vwImgProfile.CViewHeight / 2
         imgVProfile.layer.cornerRadius = imgVProfile.CViewHeight / 2
         
@@ -64,8 +63,33 @@ class EditProfileViewController: ParentViewController {
     
     func initialize() {
         self.title = CEditProfile
+        
+        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: true)
+        let arrCountryCode = arrCountry?.value(forKeyPath: "country_code") as? [Any]
+        
+        if (arrCountryCode?.count)! > 0 {
+            
+            txtCountryCode.setPickerData(arrPickerData: arrCountryCode!, selectedPickerDataHandler: { (select, index, component) in
+                
+                let dict = arrCountry![index] as AnyObject
+                countryID = dict.value(forKey: "country_id") as! Int
+            }, defaultPlaceholder: "")
+        }
+        
+        self.prefilledUserDetail()
     }
 
+    func prefilledUserDetail() {
+        
+        txtName.text = appDelegate?.loginUser?.name
+        txtEmail.text = appDelegate?.loginUser?.email
+        
+        if appDelegate?.loginUser?.profile_image != nil {
+            imgVProfile.sd_setImage(with: URL(string: (appDelegate?.loginUser?.profile_image)!), placeholderImage: nil)
+            imgData = UIImageJPEGRepresentation(imgVProfile.image!, 0.5)!
+        }
+        
+    }
 }
 
 
@@ -94,7 +118,8 @@ extension EditProfileViewController {
             
             if let selectedImage = image {
                 imgVProfile.image = selectedImage
-               // self.imgData = UIImageJPEGRepresentation(selectedImage, 0.5)!
+                self.imgData = UIImageJPEGRepresentation(selectedImage, 0.5)!
+                isPicUpdated = true
             }
         }
     }
@@ -112,7 +137,36 @@ extension EditProfileViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankCountryCodeMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else {
-            self.navigationController?.popViewController(animated: true)
+            self.editProfile()
+        }
+    }
+}
+
+
+//MARK:-
+//MARK:-  API Method
+
+extension EditProfileViewController {
+    
+    func editProfile() {
+        
+        var dict = [String : AnyObject]()
+        
+        dict[CName] = txtName.text as AnyObject
+        
+        if txtMobileNo.text != "" {
+            dict[CMobile_no] = "\(txtCountryCode.text ?? "")\(txtMobileNo.text ?? "")" as AnyObject
+        }
+        
+        APIRequest.shared().editProfile(_param: dict, _imgData: imgData) { (response, error) in
+        
+            if response != nil && error == nil {
+                APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
+                
+                self.navigationController?.popViewController(animated: true)
+                CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMessaseProfileUpdated, btnOneTitle: COk, btnOneTapped: { (action) in
+                })
+            }
         }
     }
 }

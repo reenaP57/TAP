@@ -27,6 +27,7 @@ class ProfileViewController:ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.prefilledUserDetail()
         appDelegate?.showTabBar()
     }
     
@@ -44,6 +45,23 @@ class ProfileViewController:ParentViewController {
         tblSetting.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
     }
     
+    func prefilledUserDetail() {
+        
+        headerView.lblEmail.text = appDelegate?.loginUser?.email
+        headerView.lblUserName.text = appDelegate?.loginUser?.name
+        
+        if appDelegate?.loginUser?.mobile_no != "" {
+            headerView.lblMobileNo.text = appDelegate?.loginUser?.mobile_no
+        } else {
+            headerView.imgVPhone.hide(byHeight: true)
+        }
+        
+        if appDelegate?.loginUser?.profile_image != nil {
+            headerView.imgVProfile.sd_setImage(with: URL(string: (appDelegate?.loginUser?.profile_image)!), placeholderImage: nil)
+        }
+        
+    }
+    
 }
 
 
@@ -57,6 +75,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        self.prefilledUserDetail()
         return headerView
     }
     

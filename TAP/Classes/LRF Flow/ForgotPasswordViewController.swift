@@ -50,7 +50,18 @@ extension ForgotPasswordViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidEmailMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else {
-            self.navigationController?.popViewController(animated: true)
+            
+            APIRequest.shared().forgotPasswrd(_email: txtEmail.text!) { (response, error) in
+            
+                if response != nil && error == nil {
+                    
+                    let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                    let message = metaData.valueForString(key: CJsonMessage)
+                    
+                    self.navigationController?.popViewController(animated: true)
+                    MIToastAlert.shared.showToastAlert(position: .bottom, message: message)
+                }
+            }
         }
     }
 }
