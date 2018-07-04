@@ -63,7 +63,7 @@ extension TabbarViewController {
         guard let profileLoginVC = CProfile_SB.instantiateViewController(withIdentifier: "ProfileLoginViewController") as? ProfileLoginViewController else { return }
         let profileLoginNav = UINavigationController.rootViewController(viewController: profileLoginVC)
         
-        if (appDelegate?.isGuestUser)! {
+        if appDelegate?.loginUser?.user_id == nil {
             self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileLoginNav], animated: true)
         } else{
             self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileNav], animated: true)

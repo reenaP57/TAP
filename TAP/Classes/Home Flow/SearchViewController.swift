@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: ParentViewController {
+class SearchViewController: ParentViewController, customSearchViewDelegate {
     
     @IBOutlet weak var tblSearch : UITableView! {
         didSet {
@@ -18,14 +18,17 @@ class SearchViewController: ParentViewController {
     
     @IBOutlet weak var lblResultCount : UILabel!
     @IBOutlet weak var cnTblBottom : NSLayoutConstraint!
+    @IBOutlet weak var activityLoader : UIActivityIndicatorView!
+    
     var vwCustomSearch : CustomSearchView?
 
     var isFromOther : Bool = false
+    var arrRestData = [[String : AnyObject]]()
+    var refreshControl = UIRefreshControl()
+    var apiTask : URLSessionTask?
     
-    var arrRestData = [["res_name":"Cafe de perks", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"", "like_status":0],
-                       ["res_name":"Dominoz", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1],
-                       ["res_name":"Barbeque Nation", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1]]
-    
+    var currentPage : Int = 1
+    var lastPage : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +51,11 @@ class SearchViewController: ParentViewController {
     
     func initialize() {
         self.setCustomSearchBar()
+        
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl.tintColor = CColorNavRed
+        tblSearch.pullToRefreshControl = refreshControl
+        
     }
     
     func setCustomSearchBar() {
@@ -56,6 +64,8 @@ class SearchViewController: ParentViewController {
         {
             customeView.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: 44)
             customeView.searchBar.placeholder = CSearchRestaurant
+            customeView.delegate = self
+            vwCustomSearch = customeView
             
             if isFromOther {
                 cnTblBottom.constant = 0
@@ -76,7 +86,29 @@ class SearchViewController: ParentViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+    }
+}
 
+
+//MARK:-
+//MARK:- Custom SearchBar Delegate
+
+extension SearchViewController {
+
+    func textDidChange(text : String) {
+       currentPage = 1
+       lblResultCount.text = ""
+       self.loadSearchRestaurantList(search: text, isRefresh: false)
+    }
+    
+    func clearSearchText() {
+        lblResultCount.text = ""
+        arrRestData.removeAll()
+        tblSearch.isHidden = true
+        tblSearch.reloadData()
+    }
+
+    func showNextScreen() {
     }
 }
 
@@ -98,15 +130,30 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SearchRestaurantTableViewCell") as? SearchRestaurantTableViewCell {
             
-            let dict = arrRestData[indexPath.row]
+            var dict = arrRestData[indexPath.row]
             
-            cell.lblRestName.text = dict.valueForString(key: "res_name")
-            cell.lblResLocation.text = dict.valueForString(key: "res_location")
-            cell.lblCuisines.text = dict.valueForString(key: "Cuisine")
-            cell.lblRating.text = dict.valueForString(key: "rating")
-            cell.lblTime.text = dict.valueForString(key: "time")
+            cell.lblRestName.text = dict.valueForString(key: CName)
+            cell.lblResLocation.text = dict.valueForString(key: CAddress)
+            cell.lblRating.text = "\(dict.valueForDouble(key: CAvg_rating) ?? 0.0)"
+            cell.vwRating.rating = (dict.valueForDouble(key: CAvg_rating))!
             
-            if dict.valueForInt(key: "like_status") == 0 {
+            cell.imgVRest.sd_setShowActivityIndicatorView(true)
+            cell.imgVRest.sd_setImage(with: URL(string: (dict.valueForString(key: CImage))), placeholderImage: nil)
+            
+            let arrCuisine = dict.valueForJSON(key: CCuisine) as? [[String : AnyObject]]
+            let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
+            cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
+            
+            
+            if dict.valueForInt(key: COpen_Close_Status) == 0 {
+                cell.lblClosed.hide(byWidth: false)
+                cell.lblTime.text = "Open at \(dict.valueForString(key: COpen_time))"
+            } else {
+                cell.lblClosed.hide(byWidth: true)
+            }
+            
+            
+            if dict.valueForInt(key: CFav_status) == 0 {
                 cell.btnLike.isSelected = false
             } else{
                 cell.btnLike.isSelected = true
@@ -116,12 +163,22 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 //...Open login Popup If user is not logged In OtherWise Like
                 
-           //     appDelegate?.openLoginPopup(viewController: self.viewController!)
-                
-                if cell.btnLike.isSelected {
-                    cell.btnLike.isSelected = false
-                } else {
-                    cell.btnLike.isSelected = true
+                if appDelegate?.loginUser?.user_id == nil{
+                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                } else{
+                    if cell.btnLike.isSelected {
+                        cell.btnLike.isSelected = false
+                    } else {
+                        cell.btnLike.isSelected = true
+                    }
+                    
+                    appDelegate?.updateFavouriteStatus(restaurant_id: dict.valueForInt(key: CId)!, sender: cell.btnLike, completionBlock: { (response) in
+                        
+                        let data = response.value(forKey: CJsonData) as! [String : AnyObject]
+                        dict[CFav_status] = data.valueForInt(key: CIs_favourite) as AnyObject
+                        self.arrRestData[indexPath.row] = dict
+                        self.tblSearch.reloadRows(at: [indexPath], with: .none)
+                    })
                 }
             }
             return cell
@@ -130,3 +187,77 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
 }
+
+
+//MARK:-
+//MARK:- API Method
+
+extension SearchViewController {
+    
+    @objc func pullToRefresh() {
+        
+        currentPage = 1
+        refreshControl.beginRefreshing()
+        self.loadSearchRestaurantList(search: (vwCustomSearch?.searchBar.text)!, isRefresh: true)
+    }
+    
+    func loadSearchRestaurantList(search: String, isRefresh : Bool) {
+        
+        if apiTask?.state == URLSessionTask.State.running {
+            return
+        }
+        
+        let dict = [CSearch : search,
+                    CPage : currentPage] as [String : AnyObject]
+        
+        if !isRefresh {
+            tblSearch.isHidden = true
+            activityLoader.startAnimating()
+        }
+        
+        apiTask = APIRequest.shared().searchRestaurantOrCuisine(param: dict, completion: { (response, error) in
+            
+            self.apiTask?.cancel()
+            self.activityLoader.stopAnimating()
+            self.refreshControl.endRefreshing()
+            
+            
+            if response != nil && error == nil {
+                
+                print("Response :",response as Any)
+                
+                let arrData = response?.value(forKey: CJsonData) as! [[String : AnyObject]]
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                
+                if self.currentPage == 1 || arrData.count == 0 {
+                    self.arrRestData.removeAll()
+                }
+                
+                
+                if arrData.count > 0 {
+                   
+                    self.arrRestData.removeAll()
+                    for item in arrData {
+                        self.arrRestData.append(item)
+                    }
+                }
+                
+                self.lastPage = metaData.valueForInt(key: CLastPage)!
+                
+                if metaData.valueForInt(key: CCurrentPage)! <= self.lastPage {
+                    self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
+                }
+                
+                if self.arrRestData.count > 0 {
+                    self.tblSearch.isHidden = false
+                }
+                
+                self.lblResultCount.text = "\(metaData.valueForInt(key: "total")!) search results found"
+                self.tblSearch.reloadData()
+            }
+        })
+        
+    }
+}
+
+

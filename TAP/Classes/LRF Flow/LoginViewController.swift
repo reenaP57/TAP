@@ -46,6 +46,11 @@ class LoginViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
+        
+        if IS_iPhone_Simulator {
+            txtEmail.text = "bhavika.mi@mailinator.com"
+            //txtPassword.text = "abc1234"
+        }
     }
 
 }
@@ -86,8 +91,6 @@ extension LoginViewController {
     }
     
     @IBAction func btnGuestUserClicked(sender : UIButton) {
-        
-        appDelegate?.isGuestUser = true
         
         if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
             self.navigationController?.pushViewController(selectLocVC, animated: false)
@@ -149,7 +152,6 @@ extension LoginViewController {
                         //... When user signup from profile Login screen
                         
                         if appDelegate?.tabbarController?.selectedIndex == 4 {
-                            appDelegate?.isGuestUser = false
                             appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
                             appDelegate?.tabbarController?.selectedIndex = 4
                             appDelegate?.tabbar?.btnProfile.isSelected = true

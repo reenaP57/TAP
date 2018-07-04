@@ -15,20 +15,24 @@ class RestaurantTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
     @IBOutlet weak var collVwRest : UICollectionView!
 
     var arrRestData = [Any]()
-
+    var strType = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        arrRestData = [["res_name":"Cafe de perks", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"", "like_status":0],
-                       ["res_name":"Dominoz", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1],
-                       ["res_name":"Barbeque Nation", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1]]
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
 
+    func loadRestaurantDetail(arrDetail : [[String : AnyObject]], type : String) {
+        
+        arrRestData = arrDetail
+        strType = type
+        collVwRest.reloadData()
+    }
 }
+
 
 
 //MARK:-
@@ -56,15 +60,31 @@ extension RestaurantTableViewCell {
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCollectionViewCell", for: indexPath) as? RestaurantCollectionViewCell {
             
-            let dict = arrRestData[indexPath.row] as? [String : AnyObject]
+            var dict = arrRestData[indexPath.row] as? [String : AnyObject]
             
-            cell.lblRestName.text = dict?.valueForString(key: "res_name")
-            cell.lblResLocation.text = dict?.valueForString(key: "res_location")
-            cell.lblCuisines.text = dict?.valueForString(key: "Cuisine")
-            cell.lblRating.text = dict?.valueForString(key: "rating")
-            cell.lblTime.text = dict?.valueForString(key: "time")
+            cell.lblRestName.text = dict?.valueForString(key: CName)
+            cell.lblResLocation.text = dict?.valueForString(key: CAddress)
+            cell.lblRating.text = "\(dict?.valueForDouble(key: CAvg_rating) ?? 0.0)"
+            cell.vwRating.rating = (dict?.valueForDouble(key: CAvg_rating))!
             
-            if dict?.valueForInt(key: "like_status") == 0 {
+            cell.imgVRest.sd_setShowActivityIndicatorView(true)
+            cell.imgVRest.sd_setImage(with: URL(string: (dict?.valueForString(key: CImage))!), placeholderImage: nil)
+            
+            let arrCuisine = dict?.valueForJSON(key: CCuisine) as? [[String : AnyObject]]
+            let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
+            cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
+            
+            
+            if dict?.valueForInt(key: COpen_Close_Status) == 0 {
+                cell.lblClosed.hide(byWidth: false)
+                cell.lblTime.text = "Open at \(dict?.valueForString(key: COpen_time) ?? "")"
+            } else {
+                cell.lblClosed.hide(byWidth: true)
+                cell.lblTime.text = ""
+            }
+            
+            
+            if dict?.valueForInt(key: CFav_status) == 0 {
                 cell.btnLike.isSelected = false
             } else{
                 cell.btnLike.isSelected = true
@@ -75,13 +95,19 @@ extension RestaurantTableViewCell {
                 
                 //...Open login Popup If user is not logged In OtherWise Like
                 
-                appDelegate?.openLoginPopup(viewController: self.viewController!)
-                
-//                if cell.btnLike.isSelected {
-//                    cell.btnLike.isSelected = false
-//                } else {
-//                    cell.btnLike.isSelected = true
-//                }
+                if appDelegate?.loginUser?.user_id == nil{
+                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                } else{
+                    
+                    appDelegate?.updateFavouriteStatus(restaurant_id: (dict?.valueForInt(key: CId))!, sender: cell.btnLike, completionBlock: { (response) in
+                        
+                        let data = response.value(forKey: CJsonData) as! [String : AnyObject]
+                        
+                        dict![CFav_status] = data.valueForInt(key: CIs_favourite) as AnyObject
+                        self.arrRestData[indexPath.row] = dict as Any
+                        self.collVwRest.reloadItems(at: [indexPath])
+                    })
+                }
             }
             
             
@@ -93,7 +119,11 @@ extension RestaurantTableViewCell {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let dict = arrRestData[indexPath.row] as? [String : AnyObject]
+        
         if let resDetailVC = CMain_SB.instantiateViewController(withIdentifier: "RestaurantDetailViewController") as? RestaurantDetailViewController {
+            resDetailVC.restaurantID = dict?.valueForInt(key: CId)
+            resDetailVC.strType = strType
             self.viewController?.navigationController?.pushViewController(resDetailVC, animated: true)
         }
     }

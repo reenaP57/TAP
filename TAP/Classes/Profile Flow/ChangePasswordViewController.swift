@@ -90,7 +90,27 @@ extension ChangePasswordViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMisMatchMessage, btnOneTitle:COk , btnOneTapped: nil)
             
         } else {
-            self.navigationController?.popViewController(animated: true)
+            self.changePassword()
+        }
+    }
+}
+
+
+//MARK:-
+//MARK:- API Method
+
+extension ChangePasswordViewController {
+    
+    func changePassword() {
+        
+        APIRequest.shared().changePassword(oldPwd: strPwd, newPwd: strNewPwd) { (response, error) in
+        
+            if response != nil && error == nil {
+                self.navigationController?.popViewController(animated: true)
+                CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMessaseChangePassword, btnOneTitle: COk, btnOneTapped: { (action) in
+                })
+            }
+            
         }
     }
 }

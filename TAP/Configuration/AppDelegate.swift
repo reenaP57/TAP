@@ -12,17 +12,20 @@ import IQKeyboardManagerSwift
 import GooglePlaces
 import GoogleMaps
 import MessageUI
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
     var window: UIWindow?
     var tabbarController : TabbarViewController?
     var tabbar : TabBarView?
-    var isGuestUser : Bool = false
     var objNavController = ParentViewController()
     var isFromLoginPop : Bool = false
     var loginUser : TblUser?
+    
+    var locManager = CLLocationManager()
+    var countryCode = String()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -30,6 +33,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
         GMSServices.provideAPIKey(CGooglePlacePickerKey)
+        
+        locManager.delegate = self
+        
+        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            locManager.requestWhenInUseAuthorization()
+        }else{
+            locManager.startUpdatingLocation()
+        }
+        
+//        locManager.requestWhenInUseAuthorization()
+//
+//        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+//            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+//            currentLocation = locManager.location
+//        }
+        
         
         self.loadCountryList()
         self.initSelectLanguageViewController()
@@ -43,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initSelectLanguageViewController()
     {
-        
         if CUserDefaults.object(forKey: UserDefaultLoginUserToken) == nil {
             let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
             self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
@@ -55,8 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDelegate?.window?.rootViewController = appDelegate?.tabbarController
 
         }
-        
-  
     }
     
     func hideTabBar() {
@@ -74,7 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
         CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
-
+        CUserDefaults.synchronize()
+        
         guard let selectLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController else{
             return
         }
@@ -197,6 +214,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
+    
+    // MARK:-
+    // MARK:- Location Delegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        switch status {
+            
+        case .authorizedAlways , .authorizedWhenInUse:
+            self.locManager.startUpdatingLocation()
+            
+        case .denied , .notDetermined , .restricted:
+            print("denied")
+            self.locManager.requestWhenInUseAuthorization()
+            self.locManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation: CLLocation = locations[0]
+
+        CUserDefaults.set(userLocation.coordinate.latitude, forKey: CLatitude)
+        CUserDefaults.set(userLocation.coordinate.longitude, forKey: CLongitude)
+        CUserDefaults.synchronize()
+        
+        let geocoder = CLGeocoder()
+        
+        geocoder.reverseGeocodeLocation(userLocation) { (placemark, error) in
+            
+            let placeMark = placemark![0]
+            self.countryCode = placeMark.isoCountryCode!
+        }
+        
+    }
+    
+    
+    // MARK:-
+    // MARK:- Common Api
+    
+    func updateFavouriteStatus(restaurant_id : Int, sender : UIButton, completionBlock : @escaping ((AnyObject) -> Void)) {
+        
+        
+        
+        if sender.isSelected {
+            sender.isSelected = false
+        } else {
+            
+            sender.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+            
+            UIView.animate(withDuration: 2.0, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 6.0, options: .allowUserInteraction, animations: {
+                sender.transform = .identity
+                sender.isSelected = true
+            }, completion: nil)
+        }
+        
+        
+        APIRequest.shared().favouriteRestaurant(param: [CRestaurant_id : restaurant_id, CIs_favourite :sender.isSelected ? CFavourite : CUnfavourite] as [String : AnyObject], completion: { (response, error) in
+            
+            if response != nil && error == nil {
+                completionBlock(response as AnyObject)
+            } else {
+                sender.isSelected = !sender.isSelected
+            }
+        })
+        
+    }
+    
     
     
     

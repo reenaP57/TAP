@@ -8,8 +8,10 @@
 
 import UIKit
 
-protocol customSearchViewDelegate : class {
-    func showNextScreen()
+@objc protocol customSearchViewDelegate : class {
+    @objc optional func showNextScreen()
+    @objc optional func textDidChange(text : String)
+    @objc optional func clearSearchText()
 }
 
 class CustomSearchView: UIView, UISearchBarDelegate {
@@ -80,6 +82,7 @@ class CustomSearchView: UIView, UISearchBarDelegate {
             searchBar.text = ""
             searchBar.resignFirstResponder()
             btnClear.hide(byWidth: true)
+            delegate?.clearSearchText!()
         }
     }
 
@@ -87,10 +90,13 @@ class CustomSearchView: UIView, UISearchBarDelegate {
     //MARK:-
     //MARK:- UISearchBar delegate
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        delegate?.showNextScreen()
+        delegate?.showNextScreen!()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        
+        delegate?.textDidChange!(text : searchText)
+        
         if searchText.count == 0  {
             searchBar.resignFirstResponder()
             btnClear.hide(byWidth: true)

@@ -483,8 +483,8 @@
                                             <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBd-Ad-8AQ" customClass="GenericView" customModule="Ta_Pronto">
                                                 <rect key="frame" x="20" y="275" width="335" height="65"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hu-bA-TBN" customClass="GenericLabel" customModule="Ta_Pronto">
-                                                        <rect key="frame" x="15" y="13" width="101" height="17"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number (Optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hu-bA-TBN" customClass="GenericLabel" customModule="Ta_Pronto">
+                                                        <rect key="frame" x="15" y="13" width="170.5" height="17"/>
                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -502,7 +502,7 @@
                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+91" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E1x-xQ-Hh6" customClass="GenericTextField" customModule="Ta_Pronto">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E1x-xQ-Hh6" customClass="GenericTextField" customModule="Ta_Pronto">
                                                         <rect key="frame" x="15" y="31" width="45" height="26"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -1033,8 +1033,8 @@ registered email address.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gurukul Road" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzE-nK-mB0" customClass="GenericLabel" customModule="Ta_Pronto">
-                                                    <rect key="frame" x="20" y="0.0" width="335" height="51"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gurukul Road" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzE-nK-mB0" customClass="GenericLabel" customModule="Ta_Pronto">
+                                                    <rect key="frame" x="20" y="5" width="335" height="41"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1047,9 +1047,9 @@ registered email address.</string>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gke-sk-UgE" firstAttribute="top" secondItem="hzE-nK-mB0" secondAttribute="bottom" id="Bgj-GS-7jP"/>
+                                                <constraint firstItem="gke-sk-UgE" firstAttribute="top" secondItem="hzE-nK-mB0" secondAttribute="bottom" constant="5" id="Bgj-GS-7jP"/>
                                                 <constraint firstAttribute="bottom" secondItem="gke-sk-UgE" secondAttribute="bottom" constant="0.5" id="JEz-oj-RC6"/>
-                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="top" secondItem="Zny-f9-he0" secondAttribute="top" id="UjG-WR-Z2a"/>
+                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="top" secondItem="Zny-f9-he0" secondAttribute="top" constant="5" id="UjG-WR-Z2a"/>
                                                 <constraint firstAttribute="trailing" secondItem="gke-sk-UgE" secondAttribute="trailing" constant="20" id="WGC-aA-dwV"/>
                                                 <constraint firstItem="gke-sk-UgE" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="YZU-pY-MQK"/>
                                                 <constraint firstItem="hzE-nK-mB0" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="h5f-IX-DAT"/>

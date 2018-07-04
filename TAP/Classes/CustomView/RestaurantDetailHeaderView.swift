@@ -8,21 +8,32 @@
 
 import UIKit
 
+protocol selectCategoryProtocol : class {
+    func selectCategory(categoryID : String)
+}
+
 class RestaurantDetailHeaderView: UIView {
 
+    var delegate : selectCategoryProtocol?
+    
     @IBOutlet weak var collCategory : UICollectionView! {
         didSet {
             collCategory.register(UINib(nibName: "RestaurantCategoryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RestaurantCategoryCollectionViewCell")
         }
     }
     
-    var arrCategoryDetail = ["Most Popular","Veg Roll","Chicken Roll","Burgers","Sandwich","Pizza"]
+    var arrCategoryDetail = [[String : Any]]()
+    var categoryID : String?
     
-   
-    func loadCategoryList(arrCategory : [Any]) {
+    
+    func loadCategoryList(arrCategory : [[String : Any]]) {
         
-        arrCategoryDetail = arrCategory as! [String]
+        arrCategoryDetail = arrCategory
         collCategory.reloadData()
+        
+        if arrCategoryDetail.count > 0{
+            collCategory.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
+        }
     }
 }
 
@@ -39,7 +50,8 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let fontToResize =  CFontSFUIText(size: 12 , type: .Regular).setUpAppropriateFont()
-        let strCategoryName = arrCategoryDetail[indexPath.row]
+        let dict = arrCategoryDetail[indexPath.row]
+        let strCategoryName = dict.valueForString(key: CDish_category_name)
         return CGSize(width: strCategoryName.size(withAttributes: [NSAttributedStringKey.font: fontToResize as Any]).width + 32, height: collectionView.CViewHeight)
     }
     
@@ -48,9 +60,13 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCategoryCollectionViewCell", for: indexPath) as? RestaurantCategoryCollectionViewCell {
             
-            cell.lblCategory.text = arrCategoryDetail[indexPath.row]
+            let dict = arrCategoryDetail[indexPath.row]
+            cell.lblCategory.text = dict.valueForString(key: CDish_category_name)
+            cell.accessibilityLabel = "\(dict["dish_category_id"] ?? "")"
             
-            if cell.isSelected {
+            
+            if cell.accessibilityLabel == categoryID
+            {
                 cell.lblCategory.backgroundColor = CColorNavRed
                 cell.lblCategory.textColor = .white
                 cell.lblCategory.layer.borderWidth = 0.0
@@ -77,13 +93,13 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
             cell.lblCategory.textColor = .white
             cell.lblCategory.layer.borderWidth = 0.0
             cell.lblCategory.layer.borderColor = UIColor.clear.cgColor
-            cell.isSelected = true
-            self.collCategory.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//            if (delegate != nil)
-//            {
-//                self.collectionCategory.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                delegate?.selectedCategory(strDishCategoryId: cell.accessibilityLabel ?? "")
-//            }
+            categoryID = cell.accessibilityLabel
+            
+            if delegate != nil {
+                delegate?.selectCategory(categoryID: cell.accessibilityLabel ?? "")
+                self.collCategory.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            }
+
         }
         
     }
@@ -96,7 +112,6 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
             cell.lblCategory.textColor = .black
             cell.lblCategory.layer.borderWidth = 1.0
             cell.lblCategory.layer.borderColor = CColorCement.cgColor
-            cell.isSelected = false
         }
     }
 }

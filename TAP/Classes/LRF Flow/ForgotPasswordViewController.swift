@@ -59,7 +59,8 @@ extension ForgotPasswordViewController {
                     let message = metaData.valueForString(key: CJsonMessage)
                     
                     self.navigationController?.popViewController(animated: true)
-                    MIToastAlert.shared.showToastAlert(position: .bottom, message: message)
+                    CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: message, btnOneTitle: COk, btnOneTapped: { (action) in
+                    })
                 }
             }
         }

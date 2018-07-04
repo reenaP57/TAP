@@ -42,18 +42,43 @@ class CMSViewController: ParentViewController {
             self.title = CPrivacyPolicy
         }
         
-        self.cms()
+        self.getCMSData()
     }
 
     func cms()
     {
+        
+        
         let str = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." as String
         
 //        let myURL = URL(string: "https://www.apple.com")
 //        let myRequest = URLRequest(url: myURL!)
 //        self.webVw.loadRequest(myRequest)
         
-         self.webContent.loadHTMLString(str, baseURL: nil)
+        
+    }
+    
+    func getCMSData() {
+        
+        APIRequest.shared().cms { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                let data = response?.value(forKey: CJsonData) as? [[String : AnyObject]]
+                var content = ""
+                
+                switch self.cmsEnum {
+                case .AboutUs :
+                    content = data![0]["cms_desc"] as! String
+                case .TermsCondition :
+                    content = data![1]["cms_desc"] as! String
+                case .PrivacyPolicy :
+                    content = data![2]["cms_desc"] as! String
+                }
+                
+                self.webContent.loadHTMLString(content, baseURL: nil)
+            }
+        }
     }
 }
 

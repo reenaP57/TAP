@@ -11,8 +11,16 @@ import UIKit
 class PromotionViewController: ParentViewController {
 
     @IBOutlet weak var tblPromotion : UITableView!
+    @IBOutlet weak var activityLoader : UIActivityIndicatorView!
+    @IBOutlet weak var lblNoData : UILabel!
+
+    var refreshControl = UIRefreshControl()
+    var apiTask : URLSessionTask?
+    var arrPromotion = [[String : AnyObject]]()
+    var restaurantID : Int?
     
-    var arrOffers = [Any]()
+    var currentPage = 1
+    var lastPage = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +49,11 @@ class PromotionViewController: ParentViewController {
         
         tblPromotion.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
 
-        arrOffers = [["offer":"Buy 1 Get 1 Free"],["offer":"Buy 1 Get 1 Free Buy 1 Get 1 Free Buy 1 Get 1 Free Buy 1 Get 1 Free Buy 1 Get 1 Free Buy 1 Get 1 Free Buy 1 Get 1 Free##"],["offer":"15% off in this summer"]]
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl.tintColor = CColorNavRed
+        tblPromotion.pullToRefreshControl = refreshControl
+        
+        self.loadPromotionList(isRefresh: false)
     }
 
 }
@@ -53,7 +65,7 @@ class PromotionViewController: ParentViewController {
 extension PromotionViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrOffers.count
+        return arrPromotion.count
     }
     
     
@@ -69,8 +81,23 @@ extension PromotionViewController : UITableViewDelegate, UITableViewDataSource {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PromotionTableViewCell") as? PromotionTableViewCell {
             
-            let dict = arrOffers[indexPath.row] as? [String : AnyObject]
-            cell.lblOffer.text = dict?.valueForString(key: "offer")
+            let dict = arrPromotion[indexPath.row]
+            cell.lblOffer.text = dict.valueForString(key: CName)
+           
+        
+            cell.imgVOffer.sd_setShowActivityIndicatorView(true)
+            cell.imgVOffer.sd_setImage(with: URL(string: (dict.valueForString(key: CImage))), placeholderImage: nil)
+            
+            if indexPath == tblPromotion.lastIndexPath() {
+                
+                //...Load More
+                if currentPage < lastPage {
+                    
+                    if apiTask?.state == URLSessionTask.State.running {
+                        self.loadPromotionList(isRefresh: false)
+                    }
+                }
+            }
             
             return cell
         }
@@ -80,4 +107,66 @@ extension PromotionViewController : UITableViewDelegate, UITableViewDataSource {
 }
 
 
+//MARK:-
+//MARK:- API Method
+
+extension PromotionViewController {
+    
+    @objc func pullToRefresh(){
+        
+        currentPage = 1
+        refreshControl.beginRefreshing()
+        self.loadPromotionList(isRefresh: true)
+    }
+    
+    func loadPromotionList(isRefresh : Bool) {
+        
+        if apiTask?.state == URLSessionTask.State.running {
+            return
+        }
+        
+        if !isRefresh {
+            tblPromotion.isHidden = true
+            activityLoader.startAnimating()
+        }
+        
+        let dict = [CRestaurant_id : restaurantID,
+                    CPage : currentPage,
+                    CPerPage : CLimit] as [String : AnyObject]
+        
+        apiTask = APIRequest.shared().promotionList(param: dict, completion: { (response, error) in
+        
+            self.apiTask?.cancel()
+            self.refreshControl.endRefreshing()
+            self.activityLoader.stopAnimating()
+            
+            if response != nil && error == nil {
+                                
+                let arrData = response?.value(forKey: CJsonData) as! [[String : AnyObject]]
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                
+                if self.currentPage == 1 {
+                    self.arrPromotion.removeAll()
+                }
+                
+                if arrData.count > 0 {
+                    for item in arrData {
+                        self.arrPromotion.append(item)
+                    }
+                }
+                
+                self.lastPage = metaData.valueForInt(key: CLastPage)!
+                
+                if metaData.valueForInt(key: CCurrentPage)! < self.lastPage {
+                    self.currentPage = metaData.valueForInt(key: CCurrentPage)!
+                }
+                
+                self.tblPromotion.isHidden = self.arrPromotion.count == 0
+                self.lblNoData.isHidden = self.arrPromotion.count != 0
+                
+                self.tblPromotion.reloadData()
+            }
+        })
+    }
+}
 

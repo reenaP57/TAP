@@ -64,8 +64,8 @@ class EditProfileViewController: ParentViewController {
     func initialize() {
         self.title = CEditProfile
         
-        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: true)
-        let arrCountryCode = arrCountry?.value(forKeyPath: "country_code") as? [Any]
+        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: false)
+        let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
         
         if (arrCountryCode?.count)! > 0 {
             
@@ -73,16 +73,52 @@ class EditProfileViewController: ParentViewController {
                 
                 let dict = arrCountry![index] as AnyObject
                 countryID = dict.value(forKey: "country_id") as! Int
+                
+                let countryCode = dict.value(forKey: "country_code") as? String
+                
+                if countryCode?.first == "+" {
+                    txtCountryCode.text = countryCode
+                } else{
+                    txtCountryCode.text = "+\(countryCode ?? "")"
+                }
+                
             }, defaultPlaceholder: "")
         }
         
         self.prefilledUserDetail()
     }
 
+    func getCountryCodeFromId() -> String
+    {
+        var countryCode = ""
+        
+        let arrCountry = TblCountryList.fetch(predicate: NSPredicate(format: "%K == %d", "country_id", (appDelegate?.loginUser?.country_id)!), orderBy: "country_name", ascending: true)
+        if (arrCountry?.count)! > 0
+        {
+            let objCountry = arrCountry![0] as? TblCountryList
+            countryCode = (objCountry?.country_code!)!
+        }
+      
+        return countryCode
+    }
+    
     func prefilledUserDetail() {
         
         txtName.text = appDelegate?.loginUser?.name
         txtEmail.text = appDelegate?.loginUser?.email
+        
+        if appDelegate?.loginUser?.mobile_no != "" {
+            
+            let firstLetter = self.getCountryCodeFromId().first
+            
+            if firstLetter == "+" {
+                txtCountryCode.text = self.getCountryCodeFromId()
+            } else{
+                txtCountryCode.text = "+\(self.getCountryCodeFromId())"
+            }
+            
+            txtMobileNo.text = appDelegate?.loginUser?.mobile_no
+        }
         
         if appDelegate?.loginUser?.profile_image != nil {
             imgVProfile.sd_setImage(with: URL(string: (appDelegate?.loginUser?.profile_image)!), placeholderImage: nil)

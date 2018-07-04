@@ -25,7 +25,18 @@ let CAPITagLogin                       = "login"
 let CAPITagForgotPassword              = "forgot-password"
 let CAPITagEditProfile                 = "edit-profile"
 let CAPITagCountry                     = "country"
-
+let CAPITagChangePassword              = "change-password"
+let CAPITagNotificationStatus          = "notification-on-off"
+let CAPITagCMS                         = "cms"
+let CAPITagRestaurantMainList          = "restaurant-main-list"
+let CAPITagRestaurantList              = "restaurant-list"
+let CAPITagSearchRestaurant            = "search-restaurant"
+let CAPITagAddFavouriteRestaurant      = "add-favourite-restaurant"
+let CAPITagFavouriteRestaurantList     = "favourite-restaurant-list"
+let CAPITagPromotionList               = "promotion-list"
+let CAPITagRestaurantDetails           = "restaurant-details"
+let CAPITagRestaurantRating            = "restaurant-rating"
+let CAPITagRestaurantUpdateDetail      = "restaurant-update-detail"
 
 let CJsonResponse           = "response"
 let CJsonMessage            = "message"
@@ -35,7 +46,7 @@ let CJsonTitle              = "title"
 let CJsonData               = "data"
 let CJsonMeta               = "meta"
 
-let CLimit                  = 20
+let CLimit                  = 10
 
 let CStatusZero             = 0
 let CStatusOne              = 1
@@ -69,11 +80,13 @@ class Networking: NSObject
     
     var headers:[String: String] {
         if UserDefaults.standard.value(forKey: UserDefaultLoginUserToken) != nil {
-            return ["Authorization" : "Bearer \((CUserDefaults.value(forKey: UserDefaultLoginUserToken)) as? String ?? "")","Accept":"application/json","Accept-Language" : Localization.sharedInstance.getLanguage()]
+            return ["Authorization" : "Bearer \((CUserDefaults.value(forKey: UserDefaultLoginUserToken)) as? String ?? "")","Accept-Language" : Localization.sharedInstance.getLanguage()]
         } else {
             return ["Accept" : "application/json","Accept-Language" : Localization.sharedInstance.getLanguage()]
         }
     }
+    
+    //"Accept":"application/json"
 
     var loggingEnabled = true
     var activityCount = 0
@@ -622,6 +635,41 @@ class APIRequest: NSObject {
 
 extension APIRequest {
     
+    
+    //TODO:
+    //TODO: --------------General API--------------
+    //TODO:
+    
+    func getCountryList(_timestamp : AnyObject, completion: @escaping ClosureCompletion) {
+        
+        _ = Networking.sharedInstance.GET(apiTag: CAPITagCountry, param: [CTimestamp :_timestamp], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: false, responseobject: response, strApiTag: CAPITagCountry) {
+                
+                self.saveCountryList(response: response as! [String : AnyObject])
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCountry, error: error)
+        })
+        
+    }
+    
+    func cms(completion : @escaping ClosureCompletion) {
+ 
+        _ = Networking.sharedInstance.GET(apiTag: CAPITagCMS, param: [:], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagCMS) {
+                completion(response, nil)
+            }
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCMS, error: error)
+        })
+    }
+    
+    
+    
     //TODO:
     //TODO: --------------LRF API--------------
     //TODO:
@@ -715,22 +763,184 @@ extension APIRequest {
 
     }
     
-    func getCountryList(_timestamp : AnyObject, completion: @escaping ClosureCompletion) {
+    
+    func changePassword(oldPwd : String, newPwd : String, completion : @escaping ClosureCompletion) {
         
-        _ = Networking.sharedInstance.GET(apiTag: CAPITagCountry, param: [CTimestamp :_timestamp], successBlock: { (task, response) in
-          
-            if self.checkResponseStatusAndShowAlert(showAlert: false, responseobject: response, strApiTag: CAPITagCountry) {
-                
-                self.saveCountryList(response: response as! [String : AnyObject])
+        MILoader.shared.showLoader(type: .circularRing, message: "")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagChangePassword, param: [CPassword : newPwd as AnyObject, COldPassword : oldPwd as AnyObject] , successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagChangePassword) {
                 completion(response, nil)
             }
             
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCountry, error: error)
+            
+            MILoader.shared.hideLoader()
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagChangePassword, error: error)
+        })
+    }
+    
+    func changeNotificationStatus(isNotify : Bool, completion : @escaping ClosureCompletion){
+     
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagNotificationStatus, param: [CIs_notify  : isNotify as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagNotificationStatus){
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagNotificationStatus, error: error)
         })
         
     }
     
+    
+    //TODO:
+    //TODO: --------------HOME FLOW API--------------
+    //TODO:
+    
+    
+    func restaurantList (completion : @escaping ClosureCompletion) {
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantMainList, param: [CLatitude : 23.0524 as AnyObject, CLongitude : 72.5337 as AnyObject, CCountry_id : appDelegate!.countryCode as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantMainList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantMainList, error: error)
+        })
+    }
+    
+    func moreRestaurantList (param : [String : AnyObject], completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        var dict = [String : AnyObject]()
+        
+        dict = param
+        dict[CPerPage] = CLimit as AnyObject
+        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
+        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
+        dict[CCountry_id] = appDelegate?.countryCode as AnyObject
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantList, param: dict, successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantList, error: error)
+        })!
+    }
+    
+    func searchRestaurantOrCuisine(param : [String : AnyObject], completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        var dict = [String : AnyObject]()
+        
+        dict = param
+        dict[CPerPage] = CLimit as AnyObject
+        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
+        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
+        dict[CCountry_id] = appDelegate?.countryCode as AnyObject
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagSearchRestaurant, param: dict, successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagSearchRestaurant){
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
+        })!
+    }
+    
+    func restaurantDetail(restaurant_id : Int, completion : @escaping ClosureCompletion){
+    
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantDetails, param: [CRestaurant_id : restaurant_id as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantDetails){
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantDetails, error: error)
+        })
+        
+    }
+    
+    func favouriteRestaurant(param : [String : AnyObject], completion : @escaping ClosureCompletion) {
+        
+        var dict = [String : AnyObject]()
+        
+        dict = param
+//        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
+//        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddFavouriteRestaurant, param: dict, successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagAddFavouriteRestaurant) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddFavouriteRestaurant, error: error)
+        })
+    }
+    
+    func favouriteRestaurantList(page : Int, completion : @escaping ClosureCompletion) -> URLSessionTask {
+      
+        return Networking.sharedInstance.POST(apiTag: CAPITagFavouriteRestaurantList, param: [CPage:page as AnyObject, CPerPage : CLimit as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagFavouriteRestaurantList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagFavouriteRestaurantList, error: error)
+        })!
+    }
+    
+    func promotionList(param: [String : AnyObject], completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagPromotionList, param: param, successBlock: { (task, response) in
+           
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagPromotionList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagPromotionList, error: error)
+        })!
+    }
+    
+    func restaurantRatingList(restaurant_id : Int, page : Int, completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantRating, param: [CRestaurant_id : restaurant_id as AnyObject, CPage : page as AnyObject, CPerPage : CLimit as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantRating) {
+                completion(response, nil)
+            }
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
+        })!
+    }
+    
+    func updateRestaurantDetail (restaurant_id : Int, completion : @escaping ClosureCompletion) {
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantUpdateDetail, param: [CRestaurant_id : restaurant_id as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantUpdateDetail) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantUpdateDetail, error: error)
+        })
+    }
 }
 
 
@@ -767,6 +977,7 @@ extension APIRequest {
         tblUser.mobile_no = dictUser.valueForString(key: CMobile_no)
         tblUser.is_notify = dictUser.valueForBool(key: CIs_notify)
         tblUser.profile_image = dictUser.valueForString(key: CImage)
+        tblUser.country_id = Int16(dictUser.valueForInt(key: CCountry_id)!)
         
         CoreData.saveContext()
         
@@ -779,11 +990,12 @@ extension APIRequest {
         
         for item in data! {
             
-            let tblCountry = TblCountryList.findOrCreate(dictionary: ["country_id":item.valueForInt(key: CId)!]) as! TblCountryList
+            let tblCountry = TblCountryList.findOrCreate(dictionary: ["country_id":Int16(item.valueForInt(key: CId)!)]) as! TblCountryList
             
             tblCountry.country_code = item.valueForString(key: CCountry_code)
             tblCountry.country_name = item.valueForString(key: CCountry_name)
             tblCountry.status_id = Int16(item.valueForInt(key: CStatus_id)!)
+            tblCountry.country_with_code = "\(item.valueForString(key: "country_name")) (\(item.valueForString(key: "country_code")))"
         }
         
         CoreData.saveContext()

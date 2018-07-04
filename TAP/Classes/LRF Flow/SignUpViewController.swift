@@ -55,7 +55,7 @@ class SignUpViewController: ParentViewController {
         self.title = CSignUp
         
         let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: true)
-        let arrCountryCode = arrCountry?.value(forKeyPath: "country_code") as? [Any]
+        let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
         
         if (arrCountryCode?.count)! > 0 {
 

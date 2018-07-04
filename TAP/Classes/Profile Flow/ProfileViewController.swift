@@ -96,6 +96,8 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
             cell.imgVArrow.isHidden = false
             cell.lblTitle.textColor = CColorLightBlack
             
+            cell.switchNotiy.isOn = (appDelegate?.loginUser?.is_notify)!
+            
             if indexPath.row == arrSetting.count - 1 {
                 cell.lblTitle.textColor = CColorNavRed
                 cell.switchNotiy.isHidden = true
@@ -107,6 +109,8 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.imgVArrow.isHidden = true
             }
             
+            cell.switchNotiy.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
+       
             return cell
         }
         
@@ -181,5 +185,27 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK:-
+//MARK:- Change Notification Status
+
+extension ProfileViewController {
+    
+    @objc func switchChanged(sender : UISwitch) {
+        
+        if sender.isOn {
+            sender.isOn = true
+        } else {
+            sender.isOn = false
+        }
+        
+        APIRequest.shared().changeNotificationStatus(isNotify: sender.isOn) { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
+            }
+        }
+    }
+}
 
 

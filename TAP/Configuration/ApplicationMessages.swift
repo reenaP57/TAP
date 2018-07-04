@@ -14,7 +14,7 @@ let CYes                = CLocalize(text: "Yes")
 let CNo                 = CLocalize(text: "No")
 let COk                 = CLocalize(text: "Ok")
 let CCancel             = CLocalize(text: "Cancel")
-
+let CClose              = CLocalize(text: "CLOSE")
 
 //LRF
 
@@ -34,7 +34,7 @@ let CNewArrival         =  CLocalize(text: "New Arrival")
 let CRatings            = CLocalize(text: "Ratings")
 let CPromotions         = CLocalize(text: "Promotions")
 let CSearchRestaurant   = CLocalize(text: "Search restaurant or cusine")
-
+let CClearCartAndAdd      = CLocalize(text: "CLEAR CART & ADD")
 
 //Order
 
@@ -97,8 +97,9 @@ let CBlankNewPassword            = CLocalize(text:"Please enter your New Passwor
 let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not support mail")
 
 let CMessaseProfileUpdated       = CLocalize(text:"Your profile updated successfully.")
+let CMessaseChangePassword       = CLocalize(text:"Password updated successfully.")
 
-
+let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
 
 
 

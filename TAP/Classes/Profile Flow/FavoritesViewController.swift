@@ -15,10 +15,15 @@ class FavoritesViewController:  ParentViewController {
             tblFavorite.register(UINib(nibName: "SearchRestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchRestaurantTableViewCell")
         }
     }
-    
-    var arrRestData = [["res_name":"Cafe de perks", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"", "like_status":1],
-                       ["res_name":"Dominoz", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1],
-                       ["res_name":"Barbeque Nation", "res_location":"Alpha One Mall", "Cuisine":"Rolls - Desserts - Fast Food", "rating":"4.0", "time":"Opens at 7 PM", "like_status":1]]
+    @IBOutlet weak var activityLoader : UIActivityIndicatorView!
+    @IBOutlet weak var lblNoData : UILabel!
+
+   
+    var refreshControl = UIRefreshControl()
+    var arrRestData = [[String : AnyObject]]()
+    var apiTask : URLSessionTask?
+    var currentPage = 1
+    var lastPage = 0
     
     
     override func viewDidLoad() {
@@ -41,6 +46,12 @@ class FavoritesViewController:  ParentViewController {
     
     func initialize() {
         self.title = CMyFavourite
+        
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl.tintColor = CColorNavRed
+        tblFavorite.pullToRefreshControl = refreshControl
+        
+        self.loadFavouriteRestaurant(isRefresh: false)
     }
     
 }
@@ -64,13 +75,28 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
             
             let dict = arrRestData[indexPath.row]
             
-            cell.lblRestName.text = dict.valueForString(key: "res_name")
-            cell.lblResLocation.text = dict.valueForString(key: "res_location")
-            cell.lblCuisines.text = dict.valueForString(key: "Cuisine")
-            cell.lblRating.text = dict.valueForString(key: "rating")
-            cell.lblTime.text = dict.valueForString(key: "time")
+            cell.lblRestName.text = dict.valueForString(key: CName)
+            cell.lblResLocation.text = dict.valueForString(key: CAddress)
+            cell.lblRating.text = "\(dict.valueForDouble(key: CAvg_rating) ?? 0.0)"
+            cell.vwRating.rating = (dict.valueForDouble(key: CAvg_rating))!
             
-            if dict.valueForInt(key: "like_status") == 0 {
+            cell.imgVRest.sd_setShowActivityIndicatorView(true)
+            cell.imgVRest.sd_setImage(with: URL(string: (dict.valueForString(key: CImage))), placeholderImage: nil)
+            
+            let arrCuisine = dict.valueForJSON(key: CCuisine) as? [[String : AnyObject]]
+            let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
+            cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
+            
+            
+            if dict.valueForInt(key: COpen_Close_Status) == 0 {
+                cell.lblClosed.hide(byWidth: false)
+                cell.lblTime.text = "Open at \(dict.valueForString(key: COpen_time) )"
+            } else {
+                cell.lblClosed.hide(byWidth: true)
+            }
+            
+            
+            if dict.valueForInt(key: CFav_status) == 0 {
                 cell.btnLike.isSelected = false
             } else{
                 cell.btnLike.isSelected = true
@@ -81,15 +107,33 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 //...Open login Popup If user is not logged In OtherWise Like
                 
-//                if cell.btnLike.isSelected {
-//                    self.arrRestData.remove(at: indexPath.row)
-//                    self.tblFavorite.reloadData()
-//                }
+                if appDelegate?.loginUser?.user_id == nil{
+                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                } else{
+                    
+                    appDelegate?.updateFavouriteStatus(restaurant_id: dict.valueForInt(key: CId)!, sender: cell.btnLike, completionBlock: { (response) in
+                        
+                        self.arrRestData.remove(at: indexPath.row)
+                        
+                        if self.arrRestData.count == 0 {
+                           self.tblFavorite.reloadRows(at: [indexPath], with: .none)
+                        } else {
+                            self.tblFavorite.reloadData()
+                        }
+                        
+                    })
+                    
+                }
+            }
+            
+            if indexPath == tblFavorite.lastIndexPath() {
                 
-                if cell.btnLike.isSelected {
-                    cell.btnLike.isSelected = false
-                } else {
-                    cell.btnLike.isSelected = true
+                //...Load More
+                if currentPage < lastPage {
+                    
+                    if apiTask?.state == URLSessionTask.State.running {
+                        self.loadFavouriteRestaurant(isRefresh: false)
+                    }
                 }
             }
             
@@ -98,4 +142,75 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
         
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let dict = arrRestData[indexPath.row]
+        
+        if let resDetailVC = CMain_SB.instantiateViewController(withIdentifier: "RestaurantDetailViewController") as? RestaurantDetailViewController {
+            resDetailVC.restaurantID = dict.valueForInt(key: CId)
+            self.viewController?.navigationController?.pushViewController(resDetailVC, animated: true)
+        }
+    }
 }
+
+
+//MARK:-
+//MARK:- API method
+
+extension FavoritesViewController {
+    
+    @objc func pullToRefresh() {
+     
+        currentPage = 1
+        refreshControl.beginRefreshing()
+        self.loadFavouriteRestaurant(isRefresh: true)
+    }
+    
+    func loadFavouriteRestaurant(isRefresh : Bool) {
+        
+        if apiTask?.state == URLSessionTask.State.running {
+            return
+        }
+        
+        if !isRefresh{
+            tblFavorite.isHidden = true
+            activityLoader.startAnimating()
+        }
+        
+        apiTask = APIRequest.shared().favouriteRestaurantList(page : currentPage, completion: { (response, error) in
+        
+            self.apiTask?.cancel()
+            self.activityLoader.stopAnimating()
+            self.refreshControl.endRefreshing()
+            
+            if response != nil && error == nil {
+                
+                let arrData = response?.value(forKey: CJsonData) as! [[String : AnyObject]]
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                
+                if self.currentPage == 1 {
+                    self.arrRestData.removeAll()
+                }
+                
+                if arrData.count > 0 {
+                    for item in arrData {
+                        self.arrRestData.append(item)
+                    }
+                }
+                
+                self.lastPage = metaData.valueForInt(key: CLastPage)!
+                
+                if metaData.valueForInt(key: CCurrentPage)! <= self.lastPage {
+                    self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
+                }
+                
+                self.tblFavorite.isHidden = self.arrRestData.count == 0
+                self.lblNoData.isHidden = self.arrRestData.count != 0
+                self.tblFavorite.reloadData()
+            }
+            
+        })
+    }
+}
+

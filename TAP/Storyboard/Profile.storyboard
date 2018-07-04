@@ -339,8 +339,8 @@
                             <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXt-uP-18M" customClass="GenericView" customModule="Ta_Pronto">
                                 <rect key="frame" x="20" y="296" width="335" height="65"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvE-Av-SNk" customClass="GenericLabel" customModule="Ta_Pronto">
-                                        <rect key="frame" x="15" y="13" width="101" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number (Optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvE-Av-SNk" customClass="GenericLabel" customModule="Ta_Pronto">
+                                        <rect key="frame" x="15" y="13" width="170.5" height="17"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -358,7 +358,7 @@
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+91" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uLp-rd-HXe" customClass="GenericTextField" customModule="Ta_Pronto">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uLp-rd-HXe" customClass="GenericTextField" customModule="Ta_Pronto">
                                         <rect key="frame" x="15" y="31" width="45" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -643,17 +643,35 @@
                                     <outlet property="delegate" destination="Aim-0T-0a3" id="C1r-dV-wZg"/>
                                 </connections>
                             </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not favourite any restaurant." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1C0-vc-YIU">
+                                <rect key="frame" x="20" y="0.0" width="335" height="667"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ELy-RS-dlj">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="1C0-vc-YIU" firstAttribute="top" secondItem="LeM-Ov-C2A" secondAttribute="top" id="E6B-ay-trD"/>
                             <constraint firstItem="C4r-uv-bA5" firstAttribute="top" secondItem="tmz-23-UKe" secondAttribute="top" constant="20" id="Epv-4g-clE"/>
+                            <constraint firstItem="tmz-23-UKe" firstAttribute="trailing" secondItem="1C0-vc-YIU" secondAttribute="trailing" constant="20" id="Nyc-J5-dFv"/>
                             <constraint firstItem="C4r-uv-bA5" firstAttribute="leading" secondItem="tmz-23-UKe" secondAttribute="leading" id="Qa7-Oj-4VY"/>
+                            <constraint firstItem="1C0-vc-YIU" firstAttribute="bottom" secondItem="tmz-23-UKe" secondAttribute="bottom" id="T5k-bo-1Nq"/>
                             <constraint firstItem="C4r-uv-bA5" firstAttribute="trailing" secondItem="tmz-23-UKe" secondAttribute="trailing" id="bYM-gJ-FQw"/>
                             <constraint firstItem="C4r-uv-bA5" firstAttribute="bottom" secondItem="tmz-23-UKe" secondAttribute="bottom" id="eyT-Ds-zd7"/>
+                            <constraint firstItem="1C0-vc-YIU" firstAttribute="leading" secondItem="tmz-23-UKe" secondAttribute="leading" constant="20" id="gHm-CZ-7dh"/>
+                            <constraint firstItem="ELy-RS-dlj" firstAttribute="centerX" secondItem="LeM-Ov-C2A" secondAttribute="centerX" id="xHc-Gx-dX5"/>
+                            <constraint firstItem="ELy-RS-dlj" firstAttribute="centerY" secondItem="LeM-Ov-C2A" secondAttribute="centerY" id="xSE-hX-XdG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tmz-23-UKe"/>
                     </view>
                     <connections>
+                        <outlet property="activityLoader" destination="ELy-RS-dlj" id="FGY-Te-RNK"/>
+                        <outlet property="lblNoData" destination="1C0-vc-YIU" id="dro-1C-zW8"/>
                         <outlet property="tblFavorite" destination="C4r-uv-bA5" id="aZv-PP-68L"/>
                     </connections>
                 </viewController>

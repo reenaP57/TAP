@@ -68,12 +68,26 @@ let CColorLightGray          =  CRGB(r: 172.0, g: 172.0, b: 172.0)
 let UserDefaultLoginUserToken       = "UserDefaultLoginUserToken"
 let UserDefaultLoginUserID          = "UserDefaultLoginUserID"
 let UserDefaultTimestamp            = "UserDefaultTimestamp"
+let kNotificationUpdateFavStatus    = "UpdateFavouriteStatus"
+
 
 //MARK:-
 //MARK:- Application Language
 
 let CLanguagePortuguese         = "port"
 let CLanguageEnglish            = "en"
+
+
+//MARK:-
+//MARK:- Type
+
+
+let CNearBy = 1
+let CPopular = 2
+let CRecentlyAdded = 3
+
+let CUnfavourite = "0"
+let CFavourite = "1"
 
 
 //MARK:-
@@ -91,3 +105,35 @@ let CCountry_code       = "country_code"
 let CCountry_name       = "country_name"
 let CStatus_id          = "status_id"
 let CTimestamp          = "timestamp"
+let COldPassword        = "old_password"
+let CFav_status         = "fav_status"
+let COpen_Close_Status  = "open_close_status"
+let CAvg_rating         = "avg_rating"
+let CAddress            = "address"
+let CCuisine            = "cuisine"
+let CClose_Status       = "close_status"
+let CLatitude           = "latitude"
+let CLongitude          = "longitude"
+let COpen_time          = "open_time"
+let CRestaurant_type    = "restaurant_type"
+let CLastPage           = "last_page"
+let CCurrentPage        = "current_page"
+let CPage               = "page"
+let CPerPage            = "per_page"
+let CSearch             = "search"
+let CRestaurant_id      = "restaurant_id"
+let CIs_favourite       = "is_favourite"
+let CNo_person_rated    = "no_person_rated"
+let CContact_no         = "contact_no"
+let CDish_name          = "dish_name"
+let CDish_image         = "dish_image"
+let CDish_ingredients   = "dish_ingredients"
+let CDish_price         = "dish_price"
+let CQuantity           = "quantity"
+let CDish_category_name = "dish_category_name"
+let CDish_category_id   = "dish_category_id"
+let CRating             = "rating"
+let CRating_note        = "rating_note"
+let CType               = "type"
+let CTax_percent        = "tax_percent"
+let CAdditional_tax     = "additional_tax"

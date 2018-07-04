@@ -11,8 +11,16 @@ import UIKit
 class RatingViewController: ParentViewController {
 
     @IBOutlet weak var tblRating : UITableView!
+    @IBOutlet weak var activityLoader : UIActivityIndicatorView!
+    @IBOutlet weak var lblNoData : UILabel!
+
+    var restaurantID : Int?
+    var refreshControl = UIRefreshControl()
+    var apiTask : URLSessionTask?
+    var arrRating = [[String : AnyObject]]()
+    var currentPage = 1
+    var lastPage = 0
     
-    var arrRating = [Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +45,11 @@ class RatingViewController: ParentViewController {
         
         tblRating.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
         
-        arrRating = [["username":"Liam_Martine","rating":3.0, "review":"Maxican style tomato salsa, spicy chill sauce cheese cream..."],
-                     ["username":"John Doe","rating":5.0, "review":"Maxican style tomato salsa, spicy chill sauce cheese cream..."],
-                     ["username":"Samantha Martin","rating":1.0, "review":"Maxican style tomato salsa, spicy chill sauce cheese cream..."]]
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl.tintColor = CColorNavRed
+        tblRating.pullToRefreshControl = refreshControl
+        
+        self.loadRatingList(isRefresh: false)
     }
     
 }
@@ -66,15 +76,89 @@ extension RatingViewController : UITableViewDelegate, UITableViewDataSource {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RatingTableViewCell") as? RatingTableViewCell {
             
-            let dict = arrRating[indexPath.row] as? [String : AnyObject]
-            cell.lblUserName.text = dict?.valueForString(key: "username")
-            cell.lblRating.text = "\(dict?.valueForDouble(key: "rating") ?? 0.0)"
-            cell.lblReview.text = dict?.valueForString(key: "review")
-            cell.vwRating.rating = (dict?.valueForDouble(key: "rating"))!
+            let dict = arrRating[indexPath.row]
+            cell.lblUserName.text = dict.valueForString(key: CName)
+            cell.lblRating.text = "\(dict.valueForDouble(key: CRating) ?? 0.0)"
+            cell.lblReview.text = dict.valueForString(key: CRating_note)
+            cell.vwRating.rating = (dict.valueForDouble(key: CRating))!
 
+            cell.imgVProfile.sd_setShowActivityIndicatorView(true)
+            cell.imgVProfile.sd_setImage(with: URL(string: (dict.valueForString(key: CImage))), placeholderImage: nil)
+            
+            if indexPath == tblRating.lastIndexPath() {
+                
+                //...Load More
+                if currentPage < lastPage {
+                    
+                    if apiTask?.state == URLSessionTask.State.running {
+                        self.loadRatingList(isRefresh: false)
+                    }
+                }
+            }
+            
             return cell
         }
         
         return UITableViewCell()
+    }
+}
+
+//MARK:-
+//MARK:- API Method
+
+extension RatingViewController {
+    
+    @objc func pullToRefresh() {
+        currentPage = 1
+        refreshControl.beginRefreshing()
+        self.loadRatingList(isRefresh: true)
+    }
+    
+    func loadRatingList (isRefresh : Bool) {
+        
+        if apiTask?.state == URLSessionTask.State.running {
+            return
+        }
+        
+        if !isRefresh {
+            tblRating.isHidden = true
+            activityLoader.startAnimating()
+        }
+        
+        apiTask = APIRequest.shared().restaurantRatingList(restaurant_id: restaurantID!, page: currentPage, completion: { (response, error) in
+        
+            self.apiTask?.cancel()
+            self.refreshControl.endRefreshing()
+            self.activityLoader.stopAnimating()
+            
+            
+            if response != nil && error == nil {
+                
+                let arrData = response?.value(forKey: CJsonData) as! [[String : AnyObject]]
+                let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                
+                if self.currentPage == 1 {
+                    self.arrRating.removeAll()
+                }
+                
+                if arrData.count > 0 {
+                    for item in arrData {
+                        self.arrRating.append(item)
+                    }
+                }
+                
+                self.lastPage = metaData.valueForInt(key: CLastPage)!
+                
+                if metaData.valueForInt(key: CCurrentPage)! < self.lastPage {
+                    self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
+                }
+                
+                self.tblRating.isHidden = self.arrRating.count == 0
+                self.lblNoData.isHidden = self.arrRating.count != 0
+                self.tblRating.reloadData()
+            }
+            
+        })
+        
     }
 }

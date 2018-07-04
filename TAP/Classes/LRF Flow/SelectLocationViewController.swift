@@ -22,10 +22,8 @@ class SelectLocationViewController: ParentViewController {
     @IBOutlet weak var tblLocation : UITableView!
 
     var vwCustomSearch : CustomSearchView?
-    var arrLocation = [Any]()
+    var arrLocation = [TblRecentLocation]()
     
-    var locManager = CLLocationManager()
-    var currentLocation: CLLocation!
 
     var type = fromType.FromOther
     
@@ -57,8 +55,7 @@ class SelectLocationViewController: ParentViewController {
     
     func initialize() {
         
-        arrLocation = ["New York, NY","San Fransisco, CA","Washington, DC","London, UK","Chicago, LA","Los Angeles, CA","Atlanta, GA","Austin, TX","Boston, MA","Houston, TX","Seattle, WA","Dallas, TX"]
-        
+        self.fetchRecentLocationList()
         
         DispatchQueue.main.async {
             
@@ -80,24 +77,12 @@ class SelectLocationViewController: ParentViewController {
                     self.vwCustomSearch?.layoutSearchBarTrailing.constant = 0
                     self.vwCustomSearch?.layoutWidthSearchbar.constant = CScreenWidth - (self.vwCustomSearch?.btnBack.CViewWidth ?? 45.0) - 20.0
                 }
-            
-                
                 
                 customeView.btnBack.touchUpInside { (sender) in
                     self.navigationController?.popViewController(animated: true)
                 }
-                
             }
         }
-        
-        
-        locManager.requestWhenInUseAuthorization()
-        
-        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
-            currentLocation = locManager.location
-        }
-        
     }
 
 }
@@ -110,8 +95,11 @@ extension SelectLocationViewController : customSearchViewDelegate {
     
     func showNextScreen() {
         //...Open Google Picker
-        
         showPickerWithCurrentLocation()
+    }
+    
+    func clearSearchText() {
+        
     }
 }
 
@@ -124,23 +112,10 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
     
     func showPickerWithCurrentLocation()
     {
-        var latitude = 23.0524
-        var longitude = 72.5337
-        
-//        if !IS_iPhone_Simulator {
-//
-//            if currentLocation != nil {
-//                latitude = currentLocation.coordinate.latitude
-//                longitude = currentLocation.coordinate.longitude
-//            }
-//
-//        }
-        
-        
 //        if let latitude = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let longitude = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
 //        {
 //            MILoader.shared.hideLoader()
-            let center = CLLocationCoordinate2DMake(latitude, longitude)
+        let center = CLLocationCoordinate2DMake(CUserDefaults.value(forKey: CLatitude) as! CLLocationDegrees, CUserDefaults.value(forKey: CLongitude) as! CLLocationDegrees)
             let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001, longitude: center.longitude + 0.001)
             let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001, longitude: center.longitude - 0.001)
             let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
@@ -168,12 +143,13 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
         vwCustomSearch?.searchBar.text = place.formattedAddress
         vwCustomSearch?.btnClear.hide(byWidth: false)
         
-        print("Place : ",place)
-        print("Name : ",place.name)
-        print("coordinate : ",place.coordinate.latitude, place.coordinate.longitude)
-        print("address : ",place.formattedAddress)
-        print("id : ",place.placeID)
+        let dict = ["id" : place.placeID,
+                    "address" : place.formattedAddress as Any,
+                    "latitude" : place.coordinate.latitude,
+                    "longitude" : place.coordinate.longitude] as [String : AnyObject]
         
+        self.saveRecentLocation(dict: dict)
+        self.fetchRecentLocationList()
     }
     
     //...Called when the place picking operation has been cancelled.
@@ -189,14 +165,24 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
 extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrLocation.count
+        return arrLocation.count > 10 ? 10 : arrLocation.count
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SelectLocationTableViewCell") as? SelectLocationTableViewCell {
             
-            cell.lblLocationName.text = arrLocation[indexPath.row] as? String
+            let dict = arrLocation[indexPath.row]
+            cell.lblLocationName.text = dict.address
+            
             return cell
         }
         
@@ -208,6 +194,36 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
         appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
         appDelegate?.window?.rootViewController = appDelegate?.tabbarController
         
+    }
+    
+}
+
+
+//MARK:-
+//MARK:- Store Recent Location in Local and FetchK
+
+extension SelectLocationViewController {
+    
+    func saveRecentLocation(dict : [String : AnyObject]) {
+        
+        let tblRecentLocation = TblRecentLocation.findOrCreate(dictionary: ["place_id": dict.valueForString(key: "id"), "user_id" : appDelegate?.loginUser?.user_id ?? 0]) as! TblRecentLocation
+        
+        tblRecentLocation.address = dict.valueForString(key: "address")
+        tblRecentLocation.latitude = dict.valueForDouble(key: "latitude")!
+        tblRecentLocation.longitude = dict.valueForDouble(key: "longitude")!
+        tblRecentLocation.index = Int64((TblRecentLocation.fetchAllObjects()?.count)!)+1
+        
+        CoreData.saveContext()
+    }
+    
+    func fetchRecentLocationList() {
+        
+        let arrData = TblRecentLocation.fetch(predicate: NSPredicate(format: "%K == %@", "user_id", "\(appDelegate?.loginUser?.user_id ?? 0)"), orderBy: "index", ascending: false)
+        
+        if (arrData?.count)! > 0 {
+            arrLocation = (arrData as? [TblRecentLocation])!.sorted(by: { $0.index > $1.index })
+            tblLocation.reloadData()
+        }
     }
     
 }

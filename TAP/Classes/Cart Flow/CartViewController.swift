@@ -55,8 +55,8 @@ class CartViewController: ParentViewController {
     }
     
     
-    var arrOrderList = [Any]()
-    var arrOrderPrice = [Any]()
+    var arrCartList = [TblCart]()
+    var arrPrice = [[String : AnyObject]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,15 +83,49 @@ class CartViewController: ParentViewController {
     
     func setOrderDetail() {
         
-        arrOrderList = [["dishname":"Maxican Crepe","price":4,"quantity":1,"total":"4"],
-                          ["dishname":"Cesar salad wrap","price":15,"quantity":2,"total":"30"],
-                          ["dishname":"Country road chicken","price":25,"quantity":3,"total":"75"]]
+        arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
         
-        arrOrderPrice = [["title":"Subtotal","value":"25"],["title":"Tax (15%)","value":"3"],["title":"Additional Charge","value":"2"],["title":"To Pay","value":"30"]]
+        if arrCartList.count > 0 {
+            
+            vwEmptyCart.isHidden = true
+            scrollVW.isHidden = false
+            
+            let arrRes = TblCartRestaurant.fetchAllObjects() as! [TblCartRestaurant]
+            let resDetail = arrRes[0]
+            
+            lblResName.text = resDetail.restaurant_name
+            lblContact.text = resDetail.contact_no
+            lblResLocation.text = resDetail.address
         
-        tblOrderList.reloadData()
-        tblOrderPrice.reloadData()
-        self.updateOrderTableHeight()
+            imgVDish.sd_setShowActivityIndicatorView(true)
+            imgVDish.sd_setImage(with: URL(string: resDetail.restaurant_img!), placeholderImage: nil)
+            
+            var subTotal = 0.0
+            
+            for cart in arrCartList {
+                
+                let total = cart.dish_price * Double(cart.qauntity)
+                subTotal = subTotal + total
+            }
+            
+            
+            arrPrice = [["title":"Subtotal","value": ""],
+                        ["title":"Tax\(resDetail.tax)","value": resDetail.tax],
+                        ["title":"Additional Charge","value": resDetail.additional_tax as Any],
+                        ["title":"To Pay","value": subTotal]] as [[String : AnyObject]]
+            
+            
+            
+            tblOrderList.reloadData()
+            tblOrderPrice.reloadData()
+            self.updateOrderTableHeight()
+            
+        } else {
+            
+            vwEmptyCart.isHidden = false
+            scrollVW.isHidden = true
+        }
+        
     }
     
     func updateOrderTableHeight() {
@@ -100,6 +134,15 @@ class CartViewController: ParentViewController {
             self.cnTblOrderListHeight.constant = self.tblOrderList.contentSize.height
             self.cnTblPriceHeight.constant = self.tblOrderPrice.contentSize.height
         }
+    }
+    
+    func updateCart(dish_id : Int64, qauntity : Int16) {
+        
+        let tblCart = TblCart.findOrCreate(dictionary: ["dish_id" : dish_id]) as! TblCart
+        
+        tblCart.qauntity = qauntity
+        
+        CoreData.saveContext()
     }
 }
 
@@ -184,7 +227,7 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableView .isEqual(tblOrderList) ? arrOrderList.count : arrOrderPrice.count
+        return tableView .isEqual(tblOrderList) ? arrCartList.count : arrPrice.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -199,21 +242,33 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CartTableViewCell") as? CartTableViewCell {
                 
-                let dict = arrOrderList[indexPath.row] as? [String:AnyObject]
-                cell.lblDishName.text = dict?.valueForString(key: "dishname")
-                cell.lblPrice.text = "$\(dict?.valueForInt(key: "price") ?? 0)"
-                cell.lblquantity.text = "\(dict?.valueForInt(key: "quantity") ?? 0)"
+                let dict = arrCartList[indexPath.row]
+                cell.lblDishName.text = dict.dish_name
+                cell.lblPrice.text = "$\(dict.dish_price)"
+                cell.lblquantity.text = "\(dict.qauntity)"
                 
                 cell.btnPlus.touchUpInside { (sender) in
                     
                     let currentCount = (cell.lblquantity.text?.toInt)! + 1
                     cell.lblquantity.text = "\(currentCount)"
+                    
+                    dict.qauntity = Int16(currentCount)
+                    arrCartList[indexPath.row] = dict
+                    tblOrderList.reloadRows(at: [indexPath], with: .none)
+                    
+                    self.updateCart(dish_id: dict.dish_id, qauntity: dict.qauntity)
                 }
                 
                 cell.btnMinus.touchUpInside { (sender) in
                     
                     let currentCount = (cell.lblquantity.text?.toInt)! - 1 > 0 ? (cell.lblquantity.text?.toInt)! - 1 : 0
                     cell.lblquantity.text = "\(currentCount)"
+                    
+                    dict.qauntity = Int16(currentCount)
+                    arrCartList[indexPath.row] = dict
+                    tblOrderList.reloadRows(at: [indexPath], with: .none)
+
+                    self.updateCart(dish_id: dict.dish_id, qauntity: dict.qauntity)
                 }
                 
                 
@@ -224,9 +279,9 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OrderPriceTableViewCell") as? OrderPriceTableViewCell {
                 
-                let dict = arrOrderPrice[indexPath.row] as? [String:AnyObject]
-                cell.lblTitle.text = dict?.valueForString(key: "title")
-                cell.lblValue.text = "$\(dict?.valueForString(key: "value") ?? "")"
+                let dict = arrPrice[indexPath.row]
+//                cell.lblTitle.text = dict?.valueForString(key: "title")
+//                cell.lblValue.text = "$\(dict?.valueForString(key: "value") ?? "")"
                 
                 return cell
             }
@@ -251,7 +306,10 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 
                 self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CDeleteOrderMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
                     
-                    self.arrOrderList.remove(at: indexPath.row)
+                    let dict = self.arrCartList[indexPath.row]
+                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", "dish_id", "\(dict.dish_id)"))
+                    
+                    self.arrCartList.remove(at: indexPath.row)
                     self.tblOrderList.reloadData()
                     self.updateOrderTableHeight()
                     self.view.layoutIfNeeded()
