@@ -36,6 +36,7 @@ class HomeViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
+        lblLocation.text = appDelegate?.loginUser?.address
     }
     
     

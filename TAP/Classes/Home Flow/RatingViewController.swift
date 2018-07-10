@@ -80,7 +80,7 @@ extension RatingViewController : UITableViewDelegate, UITableViewDataSource {
             cell.lblUserName.text = dict.valueForString(key: CName)
             cell.lblRating.text = "\(dict.valueForDouble(key: CRating) ?? 0.0)"
             cell.lblReview.text = dict.valueForString(key: CRating_note)
-            cell.vwRating.rating = (dict.valueForDouble(key: CRating))!
+            cell.vwRating.rating = (dict.valueForDouble(key: CRating)) ?? 0.0
 
             cell.imgVProfile.sd_setShowActivityIndicatorView(true)
             cell.imgVProfile.sd_setImage(with: URL(string: (dict.valueForString(key: CImage))), placeholderImage: nil)

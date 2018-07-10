@@ -149,7 +149,7 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
         
         if let resDetailVC = CMain_SB.instantiateViewController(withIdentifier: "RestaurantDetailViewController") as? RestaurantDetailViewController {
             resDetailVC.restaurantID = dict.valueForInt(key: CId)
-            self.viewController?.navigationController?.pushViewController(resDetailVC, animated: true)
+            self.navigationController?.pushViewController(resDetailVC, animated: true)
         }
     }
 }

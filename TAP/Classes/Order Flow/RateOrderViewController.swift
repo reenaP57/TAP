@@ -19,6 +19,7 @@ class RateOrderViewController: ParentViewController {
     @IBOutlet fileprivate weak var vwRating : RatingView! {
         didSet {
             vwRating.delegate = self
+            vwRating.rating = 0.0
         }
     }
     
@@ -30,6 +31,7 @@ class RateOrderViewController: ParentViewController {
         }
     }
     
+    var dict = [String : AnyObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,12 @@ class RateOrderViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
+        
+        self.lblResName.text = dict.valueForString(key: CRestaurant_name)
+        self.lblOrderedTime.text = "\(COrderPlaceDateTime) \(dict.valueForString(key: COrder_completed)) "
+        
+        imgVRes.sd_setShowActivityIndicatorView(true)
+        imgVRes.sd_setImage(with: URL(string: (dict.valueForString(key: CRestaurant_image))), placeholderImage: nil)
     }
 }
 
@@ -72,7 +80,22 @@ extension RateOrderViewController {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankReview, btnOneTitle: COk, btnOneTapped: nil)
        
         } else {
-            self.navigationController?.popViewController(animated: true)
+            
+            let param = [COrderID : dict.valueForInt(key: COrderID) as Any,
+                        "rating" : vwRating.rating,
+                        "rating_note" : txtVReview.text] as [String : AnyObject]
+            
+            APIRequest.shared().orderRating(param: param) { (response, error) in
+                
+                if response != nil && error == nil {
+                    
+                    let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                    
+                    self.navigationController?.popViewController(animated: true)
+                    CTopMostViewController.presentAlertViewWithOneButton(alertTitle: metaData.valueForString(key: CJsonMessage), alertMessage: "", btnOneTitle: COk, btnOneTapped: { (action) in
+                    })
+                }
+            }
         }
     }
     

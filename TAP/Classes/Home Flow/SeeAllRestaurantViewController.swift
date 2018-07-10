@@ -112,13 +112,17 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
             let arrCuisine = dict.valueForJSON(key: CCuisine) as? [[String : AnyObject]]
             let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
             cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
+    
             
+            let time = appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone")))
+           
             
             if dict.valueForInt(key: COpen_Close_Status) == 0 {
                 cell.lblClosed.hide(byWidth: false)
-                cell.lblTime.text = "Open at \(dict.valueForString(key: COpen_time) )"
+                cell.lblTime.text = "Open at \(time ?? "")"
             } else {
                 cell.lblClosed.hide(byWidth: true)
+                cell.lblTime.text = ""
             }
             
             

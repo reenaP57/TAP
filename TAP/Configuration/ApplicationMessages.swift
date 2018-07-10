@@ -43,6 +43,8 @@ let COrderSummary       =  CLocalize(text: "Order Summary")
 let COrderAccepted      =  CLocalize(text: "ORDER ACCEPTED")
 let COrderRejected      =  CLocalize(text: "ORDER REJECTED")
 let COrderReady         =  CLocalize(text: "ORDER READY")
+let COrderPending       =  CLocalize(text: "ORDER PENDING")
+
 let CAddYourReview      =  CLocalize(text: "Add your review...")
 
 //Cart
@@ -101,6 +103,8 @@ let CMessaseChangePassword       = CLocalize(text:"Password updated successfully
 
 let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
 
+let CMessageUpdatedRestCart     = CLocalize(text: "Updated cart detail.")
 
-
-
+let CPaymentMessage1            = CLocalize(text: "Your Payment of")
+let CPaymentMessage2            = CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")
+let COrderPlaceDateTime         = CLocalize(text: "The order was place on")

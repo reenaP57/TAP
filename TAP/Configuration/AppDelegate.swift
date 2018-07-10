@@ -13,6 +13,7 @@ import GooglePlaces
 import GoogleMaps
 import MessageUI
 import CoreLocation
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -31,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         IQKeyboardManager.shared.enable = true
         
+        STPPaymentConfiguration.shared().publishableKey = CStripePublishableKey
+        
         GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
         GMSServices.provideAPIKey(CGooglePlacePickerKey)
         
@@ -38,18 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
             locManager.requestWhenInUseAuthorization()
-        }else{
+        } else {
             locManager.startUpdatingLocation()
         }
-        
-//        locManager.requestWhenInUseAuthorization()
-//
-//        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-//            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
-//            currentLocation = locManager.location
-//        }
-        
-        
+
         self.loadCountryList()
         self.initSelectLanguageViewController()
         return true
@@ -69,8 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             
             loginUser =  TblUser.findOrCreate(dictionary: ["user_id" : CUserDefaults.object(forKey: UserDefaultLoginUserID) as Any]) as? TblUser
             
+            
             appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+            self.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
 
         }
     }
@@ -165,7 +161,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
+    func UTCToLocalTime(date:String, fromFormat: String, toFormat: String, timezone: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = fromFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        let dt = dateFormatter.date(from: date)
+        dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+        dateFormatter.dateFormat = toFormat
+        
+        return dateFormatter.string(from: dt!)
+    }
     
+
     
     // MARK:-
     // MARK:- Root update
@@ -255,8 +263,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // MARK:- Common Api
     
     func updateFavouriteStatus(restaurant_id : Int, sender : UIButton, completionBlock : @escaping ((AnyObject) -> Void)) {
-        
-        
         
         if sender.isSelected {
             sender.isSelected = false

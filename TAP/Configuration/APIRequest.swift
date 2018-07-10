@@ -37,6 +37,12 @@ let CAPITagPromotionList               = "promotion-list"
 let CAPITagRestaurantDetails           = "restaurant-details"
 let CAPITagRestaurantRating            = "restaurant-rating"
 let CAPITagRestaurantUpdateDetail      = "restaurant-update-detail"
+let CAPITagStripePayment               = "stripe-payment"
+let CAPITagAddOrder                    = "add-order"
+let CAPITagOrderList                   = "order-list"
+let CAPITagOrderDetail                 = "order-detail"
+let CAPITagAddRating                   = "add-rating"
+
 
 let CJsonResponse           = "response"
 let CJsonMessage            = "message"
@@ -804,7 +810,11 @@ extension APIRequest {
     
     func restaurantList (completion : @escaping ClosureCompletion) {
         
-        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantMainList, param: [CLatitude : 23.0524 as AnyObject, CLongitude : 72.5337 as AnyObject, CCountry_id : appDelegate!.countryCode as AnyObject], successBlock: { (task, response) in
+        let dict = [CLatitude : appDelegate?.loginUser?.latitude as AnyObject,
+                    CLongitude : appDelegate?.loginUser?.longitude as AnyObject,
+                    CCountry_id : appDelegate!.countryCode as AnyObject]
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantMainList, param: dict, successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantMainList) {
                 completion(response, nil)
@@ -821,8 +831,8 @@ extension APIRequest {
         
         dict = param
         dict[CPerPage] = CLimit as AnyObject
-        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
-        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
+        dict[CLatitude] = appDelegate?.loginUser?.latitude as AnyObject
+        dict[CLongitude] = appDelegate?.loginUser?.longitude as AnyObject
         dict[CCountry_id] = appDelegate?.countryCode as AnyObject
         
         return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantList, param: dict, successBlock: { (task, response) in
@@ -842,8 +852,8 @@ extension APIRequest {
         
         dict = param
         dict[CPerPage] = CLimit as AnyObject
-        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
-        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
+        dict[CLatitude] = appDelegate?.loginUser?.latitude as AnyObject
+        dict[CLongitude] = appDelegate?.loginUser?.longitude as AnyObject
         dict[CCountry_id] = appDelegate?.countryCode as AnyObject
         
         return Networking.sharedInstance.POST(apiTag: CAPITagSearchRestaurant, param: dict, successBlock: { (task, response) in
@@ -873,13 +883,7 @@ extension APIRequest {
     
     func favouriteRestaurant(param : [String : AnyObject], completion : @escaping ClosureCompletion) {
         
-        var dict = [String : AnyObject]()
-        
-        dict = param
-//        dict[CLatitude] = CUserDefaults.value(forKey: CLatitude)! as AnyObject
-//        dict[CLongitude] = CUserDefaults.value(forKey: CLongitude)! as AnyObject
-        
-        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddFavouriteRestaurant, param: dict, successBlock: { (task, response) in
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddFavouriteRestaurant, param: param, successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagAddFavouriteRestaurant) {
                 completion(response, nil)
@@ -928,9 +932,9 @@ extension APIRequest {
         })!
     }
     
-    func updateRestaurantDetail (restaurant_id : Int, completion : @escaping ClosureCompletion) {
+    func updateRestaurantDetail (param : [String : AnyObject], completion : @escaping ClosureCompletion) {
         
-        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantUpdateDetail, param: [CRestaurant_id : restaurant_id as AnyObject], successBlock: { (task, response) in
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantUpdateDetail, param: param, successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantUpdateDetail) {
                 completion(response, nil)
@@ -939,6 +943,104 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantUpdateDetail, error: error)
+        })
+    }
+    
+    
+    //TODO:
+    //TODO: --------------ORDER FLOW API--------------
+    //TODO:
+    
+    func addOrder(param : [String : AnyObject], completion : @escaping ClosureCompletion) {
+        
+        MILoader.shared.showLoader(type: .circularRing, message: "")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddOrder, param: param, successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagAddOrder) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            MILoader.shared.hideLoader()
+            
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddOrder, error: error)
+        })
+    }
+    
+    
+    func stripePayment(order_id : Int?, stripe_token : String, completion : @escaping ClosureCompletion) {
+        
+        MILoader.shared.showLoader(type: .circularRing, message: "Processing...")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagStripePayment, param: ["order_id" : order_id as AnyObject, "stripe_token" : stripe_token as AnyObject], successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagStripePayment){
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            
+            MILoader.shared.hideLoader()
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagStripePayment, error: error)
+        })
+    }
+    
+    func orderList(completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagOrderList, param: [:], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagOrderList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderList, error: error)
+        })!
+    }
+    
+    func orderDetail (order_id : Int?, completion : @escaping ClosureCompletion) {
+        
+        MILoader.shared.showLoader(type: .circularRing, message: "")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagOrderDetail, param: [COrderID : order_id as AnyObject], successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+           
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagOrderDetail) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            
+            MILoader.shared.hideLoader()
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderDetail, error: error)
+        })
+    }
+    
+    
+    func orderRating(param : [String : AnyObject], completion : @escaping ClosureCompletion) {
+        
+        MILoader.shared.showLoader(type: .circularRing, message: "")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddRating, param: param, successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagAddRating) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            
+            MILoader.shared.hideLoader()
+            
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddRating, error: error)
         })
     }
 }

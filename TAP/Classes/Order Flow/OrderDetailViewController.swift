@@ -10,10 +10,10 @@ import UIKit
 
 class OrderDetailViewController: ParentViewController {
     
-    @IBOutlet weak var imgVDish : UIImageView!{
+    @IBOutlet weak var imgVRest : UIImageView!{
         didSet {
-            imgVDish.layer.cornerRadius = 5.0
-            imgVDish.layer.masksToBounds = true
+            imgVRest.layer.cornerRadius = 5.0
+            imgVRest.layer.masksToBounds = true
         }
     }
     
@@ -27,6 +27,7 @@ class OrderDetailViewController: ParentViewController {
     @IBOutlet weak var imgVContact : UIImageView!
     @IBOutlet weak var btnViewMap : UIButton!
     
+    @IBOutlet weak var vwRestDetail : UIView!
     @IBOutlet weak var vwRateOrder : UIView!
     @IBOutlet weak var vwOrderDetails : UIView!
     @IBOutlet weak var vwOrderNote : UIView!
@@ -52,10 +53,13 @@ class OrderDetailViewController: ParentViewController {
     }
 
     
-    var arrOrderDetail = [Any]()
-    var arrOrderPrice = [Any]()
+    var arrOrderList = [[String : AnyObject]]()
+    var arrOrderPrice = [[String : AnyObject]]()
     var isCompleted : Bool = false
-    
+    var orderID : Int?
+    var dictDetail = [String : AnyObject]()
+
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -68,6 +72,7 @@ class OrderDetailViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.hideTabBar()
+        self.loadOrderDetail()
     }
     
     
@@ -76,35 +81,100 @@ class OrderDetailViewController: ParentViewController {
     
     func initialize() {
         self.title = COrderSummary
-        self.setOrderDetail()
     }
     
     func setOrderDetail() {
         
-        // If order is completed
-    /*
-        if isCompleted {
-            
-            imgVContact.image = UIImage(named: "calender")
-            lblContact.text = "Nov 23, 2017 at 7:30 PM"
-            btnViewMap.hide(byHeight: true)
-            imgVOrderStatus.hide(byHeight: true)
-            scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 120, 0)
+        arrOrderList.removeAll()
+        arrOrderPrice.removeAll()
+        
+        scrollVW.isHidden = false
+        vwRateOrder.isHidden = false
+        
+        lblResName.text = dictDetail.valueForString(key: CRestaurant_name)
+        lblResLocation.text = dictDetail.valueForString(key: CAddress)
+        lblOrderID.text = dictDetail.valueForString(key: COrder_no)
+      
+        imgVRest.sd_setShowActivityIndicatorView(true)
+        imgVRest.sd_setImage(with: URL(string: (dictDetail.valueForString(key: CRestaurant_image))), placeholderImage: nil)
+        
+        if dictDetail.valueForString(key: CNote) == "" {
             vwOrderNote.hide(byHeight: true)
-           _ = tblOrderPrice.setConstraintConstant(0, edge: .top, ancestor: true)
-            
+            lblNote.text = ""
         } else {
+            lblNote.text = dictDetail.valueForString(key: CNote)
+        }
+        
+        
+        if dictDetail.valueForInt(key: COrder_status) == COrderStatusComplete {
+            //... If order is completed
+            
+            self.btnViewMap.hide(byHeight: true)
+            self.imgVOrderStatus.hide(byHeight: true)
+            self.vwOrderNote.hide(byHeight: true)
+            _ = tblOrderPrice.setConstraintConstant(0, edge: .top, ancestor: true)
+
+//            DispatchQueue.main.async {
+//
+//                self.vwRestDetail.layoutSubviews()
+//                self.view.layoutIfNeeded()
+//            }
+
+            
+            if (dictDetail.valueForString(key: "rating")) == "" {
+                scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 120, 0)
+                vwRateOrder.isHidden = false
+            } else {
+                scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+                vwRateOrder.isHidden = true
+            }
+            
+           
+            let dateFormat = DateFormatter()
+            lblContact.text =  dateFormat.string(timestamp: dictDetail.valueForDouble(key: COrder_completed)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
+            lblOrderStatus.text = ""
+            imgVContact.image = UIImage(named: "calender")
+
+        } else {
+           
+            imgVContact.image = UIImage(named: "mobile")
+            
+            let contactNo = dictDetail.valueForJSON(key: CContact_number) as! [String]
+            lblContact.text = contactNo.joined(separator: ",\n")
+            
+            switch (dictDetail.valueForInt(key: COrder_status)) {
+                
+            case COrderStatusPending :
+                lblOrderStatus.text = COrderPending
+            case COrderStatusAccept:
+                lblOrderStatus.text = COrderAccepted
+            case COrderStatusReject:
+                lblOrderStatus.text = COrderRejected
+            case COrderStatusReady:
+                lblOrderStatus.text = COrderReady
+            default:
+                lblOrderStatus.text = ""
+            }
+            
+            
             scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
             vwRateOrder.isHidden = true
         }
-   */
-        scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 120, 0)
         
-        arrOrderDetail = [["dishname":"Maxican Crepe","price":"4","quantity":"1","total":"4"],
-        ["dishname":"Cesar salad wrap","price":"15","quantity":"2","total":"30"],
-        ["dishname":"Country road chicken","price":"25","quantity":"3","total":"75"]]
+       
+        arrOrderList = dictDetail.valueForJSON(key: "dish") as! [[String : AnyObject]]
+        let arrAD = dictDetail.valueForJSON(key: "additional_charge") as![[String : AnyObject]]
         
-        arrOrderPrice = [["title":"Subtotal","value":"25"],["title":"Tax (15%)","value":"3"],["title":"Additional Charge","value":"2"],["title":"To Pay","value":"30"]]
+        arrOrderPrice.append(["title":"Subtotal" as AnyObject,"value": dictDetail.valueForDouble(key: CSubtotal) as AnyObject])
+        arrOrderPrice.append(["title":"Tax(\(dictDetail.valueForDouble(key: CTax_percent) ?? 0.0)%)" as AnyObject,"value": dictDetail.valueForDouble(key: CTax_amount)  as AnyObject])
+
+        for adCharge in arrAD {
+            
+            arrOrderPrice.append(["title":adCharge.valueForString(key: "tax_name") as AnyObject,"value": adCharge.valueForString(key: "order_tax_amount") as AnyObject])
+        }
+
+        arrOrderPrice.append(["title":"To Pay" as AnyObject,"value": dictDetail.valueForDouble(key: COrder_total) as AnyObject])
+
         
         tblOrderDetail.reloadData()
         tblOrderPrice.reloadData()
@@ -119,6 +189,7 @@ class OrderDetailViewController: ParentViewController {
         }
         
     }
+ 
 }
 
 //MARK:-
@@ -128,12 +199,18 @@ extension OrderDetailViewController {
     
     @IBAction func btnViewMapClicked(sender : UIButton) {
         
-        UIApplication.shared.open(URL(string: "https://maps.google.com/?q=@23.0524,72.5337")!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: "https://maps.google.com/?q=\(dictDetail.valueForDouble(key: CLatitude)!),\(dictDetail.valueForDouble(key: CLongitude)!)")!, options: [:], completionHandler: nil)
     }
    
     @IBAction func btnRateOrderClicked(sender:UIButton){
        
         if let rateVC = COrder_SB.instantiateViewController(withIdentifier: "RateOrderViewController") as? RateOrderViewController {
+            
+            rateVC.dict = [COrderID : self.orderID as Any,
+                           CRestaurant_name : dictDetail.valueForString(key: CRestaurant_name) as Any,
+                           COrder_completed : self.lblContact.text as Any,
+                           CRestaurant_image : dictDetail.valueForString(key: CRestaurant_image)] as [String : AnyObject]
+            
             self.navigationController?.pushViewController(rateVC, animated: true)
         }
     }
@@ -148,7 +225,7 @@ extension OrderDetailViewController : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableView .isEqual(tblOrderDetail) ? arrOrderDetail.count : arrOrderPrice.count
+        return tableView .isEqual(tblOrderDetail) ? arrOrderList.count : arrOrderPrice.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -163,12 +240,14 @@ extension OrderDetailViewController : UITableViewDelegate, UITableViewDataSource
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OrderDetailTableViewCell") as? OrderDetailTableViewCell {
                 
-                let dict = arrOrderDetail[indexPath.row] as? [String:AnyObject]
-                cell.lblDishName.text = dict?.valueForString(key: "dishname")
-                cell.lblQuantity.text = dict?.valueForString(key: "quantity")
-                cell.lblPrice.text = "$\(dict?.valueForString(key: "price") ?? "0")"
-                cell.lblTotalPrice.text = "$\(dict?.valueForString(key: "total") ?? "0")"
+                let dict = arrOrderList[indexPath.row]
+                cell.lblDishName.text = dict.valueForString(key: CDish_name)
+                cell.lblQuantity.text = "\(dict.valueForInt(key: CQuantity) ?? 0)"
+                cell.lblPrice.text = "$\(dict.valueForDouble(key: CDish_price) ?? 0.0)"
+                cell.lblTotalPrice.text = "$\(dict.valueForDouble(key: CQuantity)! * dict.valueForDouble(key: CDish_price)!)"
 
+                cell.imgVDish.sd_setShowActivityIndicatorView(true)
+                cell.imgVDish.sd_setImage(with: URL(string: dict.valueForString(key: CDish_image)), placeholderImage: nil)
                 
                 return cell
             }
@@ -177,9 +256,9 @@ extension OrderDetailViewController : UITableViewDelegate, UITableViewDataSource
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OrderPriceTableViewCell") as? OrderPriceTableViewCell {
                 
-                let dict = arrOrderPrice[indexPath.row] as? [String:AnyObject]
-                cell.lblTitle.text = dict?.valueForString(key: "title")
-                cell.lblValue.text = "$\(dict?.valueForString(key: "value") ?? "")"
+                let dict = arrOrderPrice[indexPath.row]
+                cell.lblTitle.text = dict.valueForString(key: "title")
+                cell.lblValue.text = "$\(dict.valueForString(key: "value"))"
 
                 return cell
             }
@@ -189,5 +268,27 @@ extension OrderDetailViewController : UITableViewDelegate, UITableViewDataSource
     }
 }
 
+
+//MARK:-
+//MARK:- API Method
+
+extension OrderDetailViewController {
+    
+    func loadOrderDetail() {
+     
+        scrollVW.isHidden = true
+        vwRateOrder.isHidden = true
+        
+        APIRequest.shared().orderDetail(order_id: self.orderID) { (response, error) in
+        
+            if response != nil && error == nil {
+                
+                let dataRes = ((response?.value(forKey: CJsonData) as! [AnyObject])[0]) as! [String : AnyObject]
+                self.dictDetail = dataRes
+                self.setOrderDetail()
+            }
+        }
+    }
+}
 
 

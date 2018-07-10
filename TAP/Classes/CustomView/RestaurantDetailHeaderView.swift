@@ -26,10 +26,11 @@ class RestaurantDetailHeaderView: UIView {
     var categoryID : String?
     
     
-    func loadCategoryList(arrCategory : [[String : Any]]) {
+    func loadCategoryList(arrCategory : [[String : Any]], categoryId : String) {
         
         arrCategoryDetail = arrCategory
         collCategory.reloadData()
+        categoryID = categoryId
         
         if arrCategoryDetail.count > 0{
             collCategory.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
@@ -43,15 +44,24 @@ class RestaurantDetailHeaderView: UIView {
 
 extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return arrCategoryDetail.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        return arrCategoryDetail.count > 0 ? arrCategoryDetail.count + 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let fontToResize =  CFontSFUIText(size: 12 , type: .Regular).setUpAppropriateFont()
-        let dict = arrCategoryDetail[indexPath.row]
-        let strCategoryName = dict.valueForString(key: CDish_category_name)
+        var strCategoryName = ""
+        
+        if indexPath.row == 0 {
+             strCategoryName = "Most Popular"
+        } else {
+            let dict = arrCategoryDetail[indexPath.row - 1]
+            strCategoryName = dict.valueForString(key: CDish_category_name)
+        }
+        
+      
         return CGSize(width: strCategoryName.size(withAttributes: [NSAttributedStringKey.font: fontToResize as Any]).width + 32, height: collectionView.CViewHeight)
     }
     
@@ -60,9 +70,15 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCategoryCollectionViewCell", for: indexPath) as? RestaurantCategoryCollectionViewCell {
             
-            let dict = arrCategoryDetail[indexPath.row]
-            cell.lblCategory.text = dict.valueForString(key: CDish_category_name)
-            cell.accessibilityLabel = "\(dict["dish_category_id"] ?? "")"
+            if indexPath.item == 0 {
+                cell.lblCategory.text  = "Most Popular"
+                cell.accessibilityLabel = ""
+            } else {
+                
+                let dict = arrCategoryDetail[indexPath.row - 1]
+                cell.lblCategory.text = dict.valueForString(key: CDish_category_name)
+                cell.accessibilityLabel = "\(dict["dish_category_id"] ?? "")"
+            }
             
             
             if cell.accessibilityLabel == categoryID

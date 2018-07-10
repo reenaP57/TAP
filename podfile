@@ -15,4 +15,5 @@ target 'TAP' do
   pod 'Fabric'
   pod 'Crashlytics'
  
+  pod 'Stripe'
 end

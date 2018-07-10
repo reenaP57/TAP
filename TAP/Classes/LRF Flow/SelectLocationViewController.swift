@@ -95,6 +95,7 @@ extension SelectLocationViewController : customSearchViewDelegate {
     
     func showNextScreen() {
         //...Open Google Picker
+        vwCustomSearch?.searchBar.resignFirstResponder()
         showPickerWithCurrentLocation()
     }
     
@@ -137,20 +138,32 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
     
     //...Called when a place has been selected
     func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace) {
+
+        viewController.dismiss(animated: true) {
+            self.vwCustomSearch?.searchBar.text = place.formattedAddress
+            self.vwCustomSearch?.btnClear.hide(byWidth: false)
+            
+            appDelegate?.loginUser?.latitude = place.coordinate.latitude
+            appDelegate?.loginUser?.longitude = place.coordinate.longitude
+            appDelegate?.loginUser?.address = place.name
+            
+            if place.formattedAddress != nil {
+                
+                let dict = ["id" : place.placeID,
+                            "name" : place.name,
+                            "address" : place.formattedAddress as Any,
+                            "latitude" : place.coordinate.latitude,
+                            "longitude" : place.coordinate.longitude] as [String : AnyObject]
+                
+                self.saveRecentLocation(dict: dict)
+            }
+            
+            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+            appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)
+        }
         
-        viewController.dismiss(animated: true, completion: nil)
-        
-        vwCustomSearch?.searchBar.text = place.formattedAddress
-        vwCustomSearch?.btnClear.hide(byWidth: false)
-        
-        let dict = ["id" : place.placeID,
-                    "address" : place.formattedAddress as Any,
-                    "latitude" : place.coordinate.latitude,
-                    "longitude" : place.coordinate.longitude] as [String : AnyObject]
-        
-        self.saveRecentLocation(dict: dict)
-        self.fetchRecentLocationList()
     }
+    
     
     //...Called when the place picking operation has been cancelled.
     func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
@@ -191,8 +204,14 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let dict = arrLocation[indexPath.row]
+        
+        appDelegate?.loginUser?.latitude = dict.latitude
+        appDelegate?.loginUser?.longitude = dict.longitude
+        appDelegate?.loginUser?.address = dict.name
+
         appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-        appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+        appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)
         
     }
     
@@ -208,6 +227,7 @@ extension SelectLocationViewController {
         
         let tblRecentLocation = TblRecentLocation.findOrCreate(dictionary: ["place_id": dict.valueForString(key: "id"), "user_id" : appDelegate?.loginUser?.user_id ?? 0]) as! TblRecentLocation
         
+        tblRecentLocation.name = dict.valueForString(key: "name")
         tblRecentLocation.address = dict.valueForString(key: "address")
         tblRecentLocation.latitude = dict.valueForDouble(key: "latitude")!
         tblRecentLocation.longitude = dict.valueForDouble(key: "longitude")!

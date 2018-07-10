@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Stripe
+
 
 class CartViewController: ParentViewController {
    
@@ -27,7 +29,9 @@ class CartViewController: ParentViewController {
     @IBOutlet weak var lblContact : UILabel!
     @IBOutlet weak var btnViewMap : UIButton!
     @IBOutlet weak var vwEmptyCart : UIView!
-
+    @IBOutlet weak var vwFooter : UIView!
+    
+    
     @IBOutlet weak var txtVNote : UITextView!{
         didSet {
             txtVNote.placeholderColor = CColorLightGray
@@ -57,6 +61,12 @@ class CartViewController: ParentViewController {
     
     var arrCartList = [TblCart]()
     var arrPrice = [[String : AnyObject]]()
+    var resDetail = TblCartRestaurant()
+    
+    var additionalCharge = 0.0
+    var subTotal = 0.0
+    var orderID : Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +80,7 @@ class CartViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
+        self.setOrderDetail()
     }
     
     
@@ -78,54 +89,111 @@ class CartViewController: ParentViewController {
     
     func initialize() {
         self.title = CViewCart
-        self.setOrderDetail()
     }
     
     func setOrderDetail() {
+        
+        arrPrice.removeAll()
+        arrCartList.removeAll()
         
         arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
         
         if arrCartList.count > 0 {
             
             vwEmptyCart.isHidden = true
+            vwFooter.isHidden = false
             scrollVW.isHidden = false
             
             let arrRes = TblCartRestaurant.fetchAllObjects() as! [TblCartRestaurant]
-            let resDetail = arrRes[0]
+            resDetail = arrRes[0]
             
-            lblResName.text = resDetail.restaurant_name
-            lblContact.text = resDetail.contact_no
-            lblResLocation.text = resDetail.address
+            lblResName.text =  resDetail.restaurant_name
+            lblContact.text =  resDetail.contact_no
+            lblResLocation.text =  resDetail.address
         
             imgVDish.sd_setShowActivityIndicatorView(true)
             imgVDish.sd_setImage(with: URL(string: resDetail.restaurant_img!), placeholderImage: nil)
             
-            var subTotal = 0.0
-            
-            for cart in arrCartList {
-                
-                let total = cart.dish_price * Double(cart.qauntity)
-                subTotal = subTotal + total
-            }
-            
-            
-            arrPrice = [["title":"Subtotal","value": ""],
-                        ["title":"Tax\(resDetail.tax)","value": resDetail.tax],
-                        ["title":"Additional Charge","value": resDetail.additional_tax as Any],
-                        ["title":"To Pay","value": subTotal]] as [[String : AnyObject]]
-            
-            
+            self.createPriceArray()
             
             tblOrderList.reloadData()
-            tblOrderPrice.reloadData()
             self.updateOrderTableHeight()
             
         } else {
             
             vwEmptyCart.isHidden = false
+            vwFooter.isHidden = true
             scrollVW.isHidden = true
         }
         
+    }
+    
+    func createPriceArray() {
+      
+        subTotal = 0.0
+        additionalCharge = 0.0
+        
+        for cart in arrCartList {
+            let total = cart.dish_price * Double(cart.quantity)
+            subTotal = subTotal + total
+        }
+        
+        let arrAD = resDetail.additional_tax as? [[String : AnyObject]]
+        let taxPrice = subTotal * resDetail.tax / 100
+        
+        
+        arrPrice.append(["title":"Subtotal" as AnyObject,"value": String(format: "%.2f", subTotal) as AnyObject])
+        arrPrice.append(["title":"Tax(\(resDetail.tax)%)" as AnyObject,"value": String(format: "%.2f", taxPrice) as AnyObject])
+        
+        
+        for cart in arrAD! {
+            
+            var amount = 0.0
+            
+            if cart.valueForString(key: "tax_type") == "1" {
+                amount = subTotal * cart.valueForDouble(key: "tax_amount")! / 100
+            } else {
+                amount = cart.valueForDouble(key: "tax_amount")!
+            }
+            
+            arrPrice.append(["title":cart.valueForString(key: "tax_name") as AnyObject,"value": String(format: "%.2f", amount) as AnyObject])
+            
+            additionalCharge = additionalCharge + amount
+        }
+        
+        arrPrice.append(["title":"To Pay" as AnyObject,"value": 0.0 as AnyObject])
+        
+        self.updatePrice(tax: taxPrice, additional_charge: additionalCharge)
+    }
+    
+    
+    func updatePrice (tax : Double, additional_charge : Double) {
+        
+        let toPay = subTotal + tax + additional_charge
+        
+        var index = 0
+        
+        for item in arrPrice {
+            
+            var dict = item
+            
+            if dict.valueForString(key: "title") == "Subtotal" {
+                dict["value"] = subTotal as AnyObject
+            }
+            
+            if dict.valueForString(key: "title") == "Tax(\(resDetail.tax)%)" {
+                dict["value"] = tax as AnyObject
+            }
+            
+            if dict.valueForString(key: "title") == "To Pay" {
+                dict["value"] = toPay as AnyObject
+            }
+            
+            arrPrice[index] = dict
+            index = index + 1
+        }
+        
+        tblOrderPrice.reloadData()
     }
     
     func updateOrderTableHeight() {
@@ -139,27 +207,46 @@ class CartViewController: ParentViewController {
     func updateCart(dish_id : Int64, qauntity : Int16) {
         
         let tblCart = TblCart.findOrCreate(dictionary: ["dish_id" : dish_id]) as! TblCart
-        
-        tblCart.qauntity = qauntity
-        
+        tblCart.quantity = qauntity
         CoreData.saveContext()
     }
-}
-
-//MARK:-
-//MARK:- Action
-
-extension CartViewController {
     
-    @IBAction func btnViewMapClicked(sender : UIButton) {
+    func updateQuantity(cell : CartTableViewCell, dict : TblCart, index : IndexPath, isIncrease : Bool)
+    {
         
-        UIApplication.shared.open(URL(string: "https://maps.google.com/?q=@23.0524,72.5337")!, options: [:], completionHandler: nil)
+        var currentCount = 0
+        
+        if isIncrease {
+            currentCount = (cell.lblquantity.text?.toInt)! + 1
+        } else {
+            currentCount = (cell.lblquantity.text?.toInt)! - 1 > 0 ? (cell.lblquantity.text?.toInt)! - 1 : 0
+        }
+        
+        cell.lblquantity.text = "\(currentCount)"
+        
+        dict.quantity = Int16(currentCount)
+        arrCartList[index.row] = dict
+        tblOrderList.reloadRows(at: [index], with: .none)
+        
+        //... Update cart and price
+        
+        self.subTotal = 0.0
+        
+        for cart in arrCartList {
+            let total = cart.dish_price * Double(cart.quantity)
+            self.subTotal = subTotal + total
+        }
+        
+        let taxPrice = self.subTotal * resDetail.tax / 100
+        
+        self.updateCart(dish_id: dict.dish_id, qauntity: dict.quantity)
+        self.updatePrice(tax: taxPrice, additional_charge: additionalCharge)
     }
     
-    @IBAction func btnProceedToPayClicked(sender:UIButton){
+    func openPaymentPopup() {
         
         if let vwPayment = PaymentPopupView.viewFromXib as? PaymentPopupView {
-           
+            
             vwPayment.CViewSetSize(width: CScreenWidth, height: CScreenHeight)
             
             vwPayment.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -168,31 +255,148 @@ extension CartViewController {
             }
             
             appDelegate?.window?.addSubview(vwPayment)
-
+            
             
             //...Action
             vwPayment.btnWithStripe.touchUpInside { (sender) in
                 
-                //...After Payment Success redirect
-              
+                //...Stripe Payment
                 vwPayment.removeFromSuperview()
-
-                if let paymentVC = CCart_SB.instantiateViewController(withIdentifier: "PaymentSuccessViewController") as? PaymentSuccessViewController {
-                    self.navigationController?.pushViewController(paymentVC, animated: true)
-                }
-            }
+                self.addOrder(paymentType: CPaymentStripe)
+           }
             
             vwPayment.btnViaCash.touchUpInside { (sender) in
+                //...Cash Payment
                 
                 vwPayment.removeFromSuperview()
-                
-                if let orderDetailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
-                    self.navigationController?.pushViewController(orderDetailVC, animated: true)
-                }
+                self.addOrder(paymentType: CPaymentCash)
             }
             
             vwPayment.btnClose.touchUpInside { (sender) in
                 vwPayment.removeFromSuperview()
+            }
+        }
+    }
+    
+}
+
+
+//MARK:-
+//MARK:- Action
+
+extension CartViewController {
+    
+    @IBAction func btnViewMapClicked(sender : UIButton) {
+        
+        let strUrl = "https://maps.google.com/?q=\(resDetail.latitude),\(resDetail.longitude)"
+        UIApplication.shared.open(URL(string: strUrl)!, options: [:], completionHandler: nil)
+    }
+    
+    @IBAction func btnProceedToPayClicked(sender:UIButton){
+        
+        if appDelegate?.loginUser?.user_id == nil {
+            appDelegate?.openLoginPopup(viewController: self)
+            
+        } else {
+            
+            let arrID = arrCartList.compactMap{$0.dish_id}
+            
+            let dict = [CRestaurant_id : resDetail.restaurant_id,
+                        "dish_ids" : arrID] as [String : AnyObject]
+            
+            APIRequest.shared().updateRestaurantDetail(param: dict) { (response, error) in
+                
+                if response != nil && error == nil {
+                    
+                    let dataResponse = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                    let arrDishes = dataResponse.valueForJSON(key: "dishes") as! [[String : AnyObject]]
+                    
+                    var arrDishesUpdate = [String]()
+                    var arrADTaxUpdate = [String]()
+                    var isTaxUpdated = false
+                    
+                    for cart in self.arrCartList {
+                        
+                        let tblCart = TblCart.findOrCreate(dictionary: ["dish_id" : cart.dish_id]) as! TblCart
+                        
+                        for dishes in arrDishes {
+                            
+                            if Int(cart.dish_id) == dishes.valueForInt(key: "dish_id") &&
+                                (cart.dish_name != dishes.valueForString(key: CDish_name) ||
+                                    cart.dish_price != dishes.valueForDouble(key: CDish_price) ||
+                                    dishes.valueForInt(key: "status_id") == 3) {
+                                
+                                tblCart.dish_name = dishes.valueForString(key: CDish_name)
+                                tblCart.dish_price = dishes.valueForDouble(key: CDish_price)!
+                                tblCart.is_available = dishes.valueForBool(key: CIs_available)
+                                tblCart.status_id = Int16(dishes.valueForInt(key: "status_id")!)
+                                
+                                arrDishesUpdate.append("")
+                            }
+                        }
+                        
+                        CoreData.saveContext()
+                    }
+                    
+                    self.arrCartList.removeAll()
+                    self.arrCartList = TblCart.fetchAllObjects() as! [TblCart]
+                    self.tblOrderList.reloadData()
+                    
+                    let tblCartRest = TblCartRestaurant.findOrCreate(dictionary: ["restaurant_id" : self.resDetail.restaurant_id]) as! TblCartRestaurant
+                    
+                    let arrDishAD = dataResponse.valueForJSON(key: CAdditional_tax) as! [[String : AnyObject]]
+                    let arrAd = self.resDetail.additional_tax as? [[String : AnyObject]]
+                    
+                    var arrADCharge = [[String : AnyObject]]()
+                    
+                    
+                    if arrDishAD.count != arrAd?.count {
+                        
+                        for item in arrDishAD {
+                            arrADCharge.append(item)
+                            arrADTaxUpdate.append("")
+                        }
+                        
+                        tblCartRest.additional_tax = arrADCharge as NSObject
+                        
+                    } else {
+                        
+                        for item in arrDishAD {
+                            
+                            for item2 in arrAd!  {
+                                
+                                if item.valueForInt(key: "tax_id") == item2.valueForInt(key: "tax_id") &&  item.valueForInt(key: "tax_amount") != item2.valueForInt(key: "tax_amount")
+                                {
+                                    arrADTaxUpdate.append("")
+                                }
+                            }
+                        }
+                        
+                        if arrADTaxUpdate.count > 0 {
+                            tblCartRest.additional_tax = arrDishAD as NSObject
+                        }
+                    }
+                    
+                    
+                    if self.resDetail.tax != dataResponse.valueForDouble(key: CTax_percent){
+                        tblCartRest.tax = dataResponse.valueForDouble(key: CTax_percent)!
+                        isTaxUpdated = true
+                    }
+                    
+                    CoreData.saveContext()
+                    self.arrPrice.removeAll()
+                    self.createPriceArray()
+                    
+                    
+                    if arrDishesUpdate.count > 0 || arrADTaxUpdate.count > 0 || isTaxUpdated {
+                        
+                        self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMessageUpdatedRestCart, btnOneTitle: "Ok", btnOneTapped: { (action) in
+                        })
+                        
+                    } else {
+                        self.openPaymentPopup()
+                    }
+                }
             }
         }
     }
@@ -245,32 +449,18 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 let dict = arrCartList[indexPath.row]
                 cell.lblDishName.text = dict.dish_name
                 cell.lblPrice.text = "$\(dict.dish_price)"
-                cell.lblquantity.text = "\(dict.qauntity)"
+                cell.lblquantity.text = "\(dict.quantity)"
+                
+                cell.imgVDish.sd_setShowActivityIndicatorView(true)
+                cell.imgVDish.sd_setImage(with: URL(string: dict.dish_image!), placeholderImage: nil)
                 
                 cell.btnPlus.touchUpInside { (sender) in
-                    
-                    let currentCount = (cell.lblquantity.text?.toInt)! + 1
-                    cell.lblquantity.text = "\(currentCount)"
-                    
-                    dict.qauntity = Int16(currentCount)
-                    arrCartList[indexPath.row] = dict
-                    tblOrderList.reloadRows(at: [indexPath], with: .none)
-                    
-                    self.updateCart(dish_id: dict.dish_id, qauntity: dict.qauntity)
+                    self.updateQuantity(cell: cell, dict: dict, index: indexPath, isIncrease: true)
                 }
                 
                 cell.btnMinus.touchUpInside { (sender) in
-                    
-                    let currentCount = (cell.lblquantity.text?.toInt)! - 1 > 0 ? (cell.lblquantity.text?.toInt)! - 1 : 0
-                    cell.lblquantity.text = "\(currentCount)"
-                    
-                    dict.qauntity = Int16(currentCount)
-                    arrCartList[indexPath.row] = dict
-                    tblOrderList.reloadRows(at: [indexPath], with: .none)
-
-                    self.updateCart(dish_id: dict.dish_id, qauntity: dict.qauntity)
+                    self.updateQuantity(cell: cell, dict: dict, index: indexPath, isIncrease: false)
                 }
-                
                 
                 return cell
             }
@@ -280,8 +470,9 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OrderPriceTableViewCell") as? OrderPriceTableViewCell {
                 
                 let dict = arrPrice[indexPath.row]
-//                cell.lblTitle.text = dict?.valueForString(key: "title")
-//                cell.lblValue.text = "$\(dict?.valueForString(key: "value") ?? "")"
+                
+                cell.lblTitle.text = dict.valueForString(key: "title")
+                cell.lblValue.text = "$\(dict.valueForString(key: "value"))"
                 
                 return cell
             }
@@ -311,6 +502,19 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                     
                     self.arrCartList.remove(at: indexPath.row)
                     self.tblOrderList.reloadData()
+                    
+                    //... Update cart and price
+                   
+                    self.subTotal = 0.0
+                    
+                    for cart in self.arrCartList {
+                        let total = cart.dish_price * Double(cart.quantity)
+                        self.subTotal = self.subTotal + total
+                    }
+                    
+                    let taxPrice = self.subTotal * self.resDetail.tax / 100
+                    self.updatePrice(tax: taxPrice, additional_charge: self.additionalCharge)
+                    
                     self.updateOrderTableHeight()
                     self.view.layoutIfNeeded()
                     
@@ -321,3 +525,135 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+
+//MARK:-
+//MARK:- Stripe Payment Delegate
+
+extension CartViewController : STPAddCardViewControllerDelegate {
+   
+    func addCardViewControllerDidCancel(_ addCardViewController: STPAddCardViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
+        
+        if token.tokenId != "" {
+            self.stripePayment(token: token.tokenId)
+        }
+    }
+
+}
+
+
+//MARK:-
+//MARK:- API Method
+
+extension CartViewController {
+    
+    func stripePayment(token : String) {
+        
+        APIRequest.shared().stripePayment(order_id: self.orderID, stripe_token: token) { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                
+                TblCart.deleteAllObjects()
+                TblCartRestaurant.deleteAllObjects()
+                
+                //...After Payment Success redirect
+                
+                self.dismiss(animated: true, completion: nil)
+                
+                
+                if let paymentVC = CCart_SB.instantiateViewController(withIdentifier: "PaymentSuccessViewController") as? PaymentSuccessViewController {
+                    
+                    paymentVC.dictPayment = [COrder_no : dataRes.valueForInt(key: COrder_no) as Any,
+                                             COrder_total : self.arrPrice.last?.valueForDouble(key: "value")! as Any,
+                                             CTranscation_id : dataRes.valueForString(key: CTranscation_id),
+                                             COrderID : dataRes.valueForInt(key: COrderID) as Any ] as [String : AnyObject]
+                    
+                    self.navigationController?.pushViewController(paymentVC, animated: true)
+                }
+            }
+        }
+    }
+    
+    
+    func addOrder(paymentType : String) {
+        
+        let totalToPay = arrPrice.last?.valueForDouble(key: "value")
+ 
+        var arrCart = [[String : AnyObject]]()
+        var arrADPrice = [[String : AnyObject]]()
+        let arrAD = resDetail.additional_tax as? [[String : AnyObject]]
+        
+        for cart in arrCartList {
+            
+            let keys = cart.entity.attributesByName.keys
+            var dicTest : Dictionary = cart.dictionaryWithValues(forKeys: Array(keys))
+            
+            dicTest.removeValue(forKey: CRestaurant_id)
+            dicTest.removeValue(forKey: CStatus_id)
+            dicTest.removeValue(forKey: CIs_available)
+
+            arrCart.append(dicTest as [String : AnyObject])
+        }
+
+        
+        for item in arrAD! {
+            
+            var dict = item
+            var amount = ""
+ 
+            if dict.valueForString(key: "tax_type") == "1" {
+                amount = "\((subTotal * dict.valueForDouble(key: "tax_amount")! / 100).roundToPlaces(places: 2))"
+
+            } else {
+                amount = "\(dict.valueForDouble(key: "tax_amount")!)"
+            }
+            
+            dict.removeValue(forKey: "tax_id")
+            dict["order_tax_amount"] = amount as AnyObject
+            
+            arrADPrice.append(dict)
+        }
+        
+        
+        let dict = [CRestaurant_id : self.resDetail.restaurant_id as AnyObject,
+                    CNote : self.txtVNote.text,
+                    CSubtotal : subTotal ,
+                    CTax_percent : self.resDetail.tax,
+                    CTax_amount : subTotal * resDetail.tax / 100 ,
+                    COrder_total : totalToPay as Any,
+                    CPayment_type : paymentType,
+                    CCart : arrCart,
+                    CAdditional_tax : arrADPrice] as [String : AnyObject]
+        
+        
+        APIRequest.shared().addOrder(param: dict) { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                let dataResponse = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                
+                self.orderID = dataResponse.valueForInt(key: COrderID)
+                
+                if paymentType == CPaymentStripe {
+                    
+                    let stripeVW = STPAddCardViewController()
+                    stripeVW.delegate = self
+                    
+                    let navigationController = UINavigationController(rootViewController: stripeVW)
+                    self.present(navigationController, animated: true)
+                
+                } else {
+                    
+                    if let orderDetailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+                        self.navigationController?.pushViewController(orderDetailVC, animated: true)
+                    }
+                }
+            }
+        }
+    }
+}

@@ -13,12 +13,14 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
 
     @IBOutlet weak var tblRestDetail : UITableView!
     @IBOutlet weak var activityLoader  : UIActivityIndicatorView!
+
     
     var headerView : RestaurantDetailHeaderView!
     var headerTableTop : ParallaxHeaderView!
     var restaurantTopView : RestaurantDetailTopView!
     var footerView : RestaurantDetailFooterView!
 
+  
     var arrDishList  = [[String : AnyObject]]()
     var arrCategory  = [[String : Any]]()
     var arrSelectedDishList  = [[String : AnyObject]]()
@@ -58,7 +60,6 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         if headerView == nil {
             headerView = RestaurantDetailHeaderView.viewFromXib as? RestaurantDetailHeaderView
             headerView.delegate = self
-    
         }
         
         if footerView == nil {
@@ -103,10 +104,13 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 self.dictRest = response?.value(forKey: CJsonData) as! [String : AnyObject]
                 
                 self.arrDishList = self.dictRest.valueForJSON(key: "dishes") as! [[String : AnyObject]]
+               
                 self.arrCategory = self.dictRest.valueForJSON(key: "dish_categories") as! [[String : AnyObject]]
                 
                 if self.arrCategory.count > 0 {
-                    self.filterCategoryWithID(categoryID: self.arrCategory[0].valueForString(key: CDish_category_id))
+                    self.categoryID = 0
+                    self.filterMostPopularDish()
+                   // self.filterCategoryWithID(categoryID: self.arrCategory[0].valueForString(key: CDish_category_id))
                 }
                
                 
@@ -202,20 +206,24 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         
     }
     
+    func filterMostPopularDish() {
+       
+        arrSelectedDishList.removeAll()
+        arrSelectedDishList = arrDishList.filter {( $0["popular_index"] as! Int != 0)}
+        tblRestDetail.reloadData()
+    }
+    
+    
     @objc func btnSearchClicked() {
         
         self.tblRestDetail.setContentOffset(CGPoint.zero, animated: false)
-        showSearchScreen()
-    }
-    
-    func showSearchScreen()
-    {
+        
         if let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController {
             searchVC.isFromOther = true
             self.navigationController?.pushViewController(searchVC, animated: true)
         }
     }
-    
+ 
     //MARK:- Manage Cart and restuarnt in local
     
     func saveCart(dict : [String : AnyObject]) {
@@ -223,12 +231,15 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         let tblCart = TblCart.findOrCreate(dictionary: ["dish_id": Int64(dict.valueForInt(key: "dish_id")!)]) as! TblCart
 
         tblCart.restaurant_id = Int64(restaurantID!)
-        tblCart.dish_category_id = Int64(categoryID!)
+        tblCart.dish_category_ids = Int64(categoryID!)
         tblCart.dish_name = dict.valueForString(key: CDish_name)
-        tblCart.dish_img = dict.valueForString(key: CDish_image)
+        tblCart.dish_image = dict.valueForString(key: CDish_image)
         tblCart.dish_price = dict.valueForDouble(key: CDish_price)!
-        tblCart.qauntity = Int16(dict.valueForInt(key: CQuantity)!)
+        tblCart.quantity = Int16(dict.valueForInt(key: CQuantity)!)
         tblCart.dish_ingredients = dict.valueForString(key: CDish_ingredients)
+        tblCart.is_available = dict.valueForBool(key: CIs_available)
+        tblCart.popular_index = Int16(dict.valueForInt(key: CPopular_index)!)
+        tblCart.status_id = Int16(CActive)
         
         CoreData.saveContext()
     }
@@ -239,7 +250,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         
         if arr?.count == 0 {
             
-            let tblCartRest = TblCartRestaurant.findOrCreate(dictionary: ["restaurant_id" : dictRest.valueForInt(key: CRestaurant_id)!]) as! TblCartRestaurant
+            let tblCartRest = TblCartRestaurant.findOrCreate(dictionary: ["restaurant_id" : dictRest.valueForInt(key: CId)!]) as! TblCartRestaurant
             
             tblCartRest.restaurant_name = dictRest.valueForString(key: CName)
             tblCartRest.restaurant_img = dictRest.valueForString(key: CImage)
@@ -285,9 +296,13 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
     
     func selectCategory(categoryID: String) {
         
-        self.categoryID = Int(categoryID)
-        self.filterCategoryWithID(categoryID: categoryID)
-  
+        if categoryID == "" {
+            self.categoryID = 0
+            self.filterMostPopularDish()
+        } else {
+            self.categoryID = Int(categoryID)
+            self.filterCategoryWithID(categoryID: categoryID)
+        }
     }
 
 }
@@ -298,13 +313,12 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
 
 extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewDataSource {
     
-  
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrSelectedDishList.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        headerView.loadCategoryList(arrCategory: arrCategory)
+        headerView.loadCategoryList(arrCategory: arrCategory, categoryId : categoryID == 0 ? "" : "\(categoryID ?? 0)")
         return headerView
     }
     
@@ -341,28 +355,47 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
             let dict = arrDishList[indexPath.row]
             
             //...Check cart is added for particular dish and category
-            let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@ && %K == %@", "dish_id", "\(dict.valueForInt(key: "dish_id")!)","dish_category_id","\(self.categoryID ?? 0)"), orderBy: nil, ascending: false)
-            
+//            let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@ && %K == %@", "dish_id", "\(dict.valueForInt(key: "dish_id")!)","dish_category_id","\(self.categoryID ?? 0)"), orderBy: nil, ascending: false)
+            let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@", "dish_id", "\(dict.valueForInt(key: "dish_id")!)"), orderBy: nil, ascending: false)
+
+           
             if (arrCart?.count)! > 0 {
-                cell.txtQuantity.text = "\((arrCart![0] as! TblCart).qauntity)"
+                cell.txtQuantity.text = "\((arrCart![0] as! TblCart).quantity)"
             } else {
-                cell.txtQuantity.text = dict.valueForString(key: CQuantity)
+                cell.txtQuantity.text = "0" //dict.valueForString(key: CQuantity)
             }
             
            
             cell.lblDishName.text = dict.valueForString(key: CDish_name)
             cell.lblCuisine.text = dict.valueForString(key: CDish_ingredients)
-            cell.lblPrice.text = "$\(dict.valueForString(key: CDish_price))"
+            cell.lblPrice.text = "$\(String(format: "%.2f", dict.valueForDouble(key: CDish_price)!))"
             
+            cell.imgVDish.sd_setShowActivityIndicatorView(true)
+            cell.imgVDish.sd_setImage(with: URL(string: (dict.valueForString(key: CDish_image))), placeholderImage: nil)
             
             cell.txtQuantity.addTarget(self, action: #selector(txtQuantityDidBeginChange), for: .editingDidBegin)
             cell.txtQuantity.addTarget(self, action: #selector(txtQuantityDidEndChange), for: .editingDidEnd)
+            
+            
+            if dict.valueForInt(key: CIs_available) == 0 {
+                //...UnAvailable
+                cell.vwAvailable.isHidden = false
+                cell.vwQuantity.isHidden = true
+                
+            } else {
+                //...Available
+                cell.vwAvailable.isHidden = true
+                cell.vwQuantity.isHidden = false
+            }
+            
             
             cell.btnPlus.touchUpInside { (sender) in
                 
              let isClearCart =  self.checkCartForThisRestaurant()
                 
                 if isClearCart {
+                    
+                    //...Cart will be add If Cart from same restaurant
                     
                     let currentCount = (cell.txtQuantity.text?.toInt)! + 1
                     cell.txtQuantity.text = "\(currentCount)"
@@ -372,10 +405,12 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
                     arrSelectedDishList[indexPath.row] = updatedDict
                     tblRestDetail.reloadRows(at: [indexPath], with: .none)
                     
+                    self.saveRestaurantDetail()
                     self.saveCart(dict: updatedDict)
                     
                 } else {
                     
+                    //... If cart from other restaurant than show popup with clear cart option
                     self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CMessageAlreadyCardAdded, btnOneTitle: CClearCartAndAdd, btnOneTapped: { (action) in
                         TblCart.deleteAllObjects()
                         TblCartRestaurant.deleteAllObjects()
@@ -391,6 +426,8 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
                 
                 if isClearCart {
                    
+                     //...Cart will be add If Cart from same restaurant
+                    
                     let currentCount = (cell.txtQuantity.text?.toInt)! - 1 > 0 ? (cell.txtQuantity.text?.toInt)! - 1 : 0
                     cell.txtQuantity.text = "\(currentCount)"
                     
@@ -411,6 +448,7 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
                     
                 } else {
                     
+                     //... If cart from other restaurant than show popup with clear cart option
                     self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CMessageAlreadyCardAdded, btnOneTitle: CClearCartAndAdd, btnOneTapped: { (action) in
                         TblCart.deleteAllObjects()
                         TblCartRestaurant.deleteAllObjects()
@@ -446,6 +484,8 @@ extension RestaurantDetailViewController : UITextFieldDelegate {
         restaurantTopView.txtSearch.resignFirstResponder()
         
         if let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchDishesViewController") as? SearchDishesViewController {
+            searchVC.arrDishList = arrDishList
+            searchVC.dictRestDetail = self.dictRest
             self.navigationController?.pushViewController(searchVC, animated: false)
         }
     }

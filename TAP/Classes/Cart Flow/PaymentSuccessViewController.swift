@@ -14,6 +14,9 @@ class PaymentSuccessViewController: ParentViewController {
     @IBOutlet weak var lblOrderID : UILabel!
     @IBOutlet weak var lblTranscationID : UILabel!
 
+    var dictPayment = [String :AnyObject]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -35,6 +38,10 @@ class PaymentSuccessViewController: ParentViewController {
     
     func initialize() {
         self.title = CPaymentSuccess
+        
+        lblPrice.text = "\(CPaymentMessage1) $\(dictPayment.valueForDouble(key: COrder_total) ?? 0.0) \(CPaymentMessage2)"
+        lblOrderID.text = "\(dictPayment.valueForInt(key: COrder_no) ?? 0)"
+        lblTranscationID.text = "\(dictPayment.valueForString(key: CTranscation_id))"
     }
 }
 
@@ -46,6 +53,8 @@ extension PaymentSuccessViewController {
     @IBAction func btnViewOrderDetailClicked(sender : UIButton) {
         
         if let detailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+            
+            detailVC.orderID = dictPayment.valueForInt(key: COrderID)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }

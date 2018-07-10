@@ -87,7 +87,22 @@ let CPopular = 2
 let CRecentlyAdded = 3
 
 let CUnfavourite = "0"
-let CFavourite = "1"
+let CFavourite   = "1"
+
+
+let CPaymentStripe = "2"
+let CPaymentCash   = "1"
+
+
+let CActive = 1
+let CDeleted = 3
+
+
+let COrderStatusPending = 1
+let COrderStatusAccept = 2
+let COrderStatusReject = 3
+let COrderStatusReady = 4
+let COrderStatusComplete = 5
 
 
 //MARK:-
@@ -115,6 +130,8 @@ let CClose_Status       = "close_status"
 let CLatitude           = "latitude"
 let CLongitude          = "longitude"
 let COpen_time          = "open_time"
+let CRestaurant_name    = "restaurant_name"
+let CRestaurant_image   = "restaurant_image"
 let CRestaurant_type    = "restaurant_type"
 let CLastPage           = "last_page"
 let CCurrentPage        = "current_page"
@@ -137,3 +154,18 @@ let CRating_note        = "rating_note"
 let CType               = "type"
 let CTax_percent        = "tax_percent"
 let CAdditional_tax     = "additional_tax"
+let CIs_available       = "is_available"
+let CNote               = "note"
+let CSubtotal           = "subtotal"
+let CTax_amount         = "tax_amount"
+let COrder_total        = "order_total"
+let CPayment_type       = "payment_type"
+let CCart               = "cart"
+let COrderID            = "order_id"
+let CPopular_index      = "popular_index"
+let CCreated_at         = "created_at"
+let COrder_status       = "order_status"
+let CTranscation_id     = "transaction_id"
+let COrder_no           = "order_no"
+let CContact_number     = "contact_number"
+let COrder_completed    = "order_completed"
