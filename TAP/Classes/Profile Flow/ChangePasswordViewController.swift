@@ -80,9 +80,9 @@ extension ChangePasswordViewController {
         } else if (txtNewPwd.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankNewPassword, btnOneTitle:COk , btnOneTapped: nil)
             
-        } else if (txtNewPwd.text?.count)! < 6 || !(strNewPwd.isAlphanumeric) {
+        } else if !(strNewPwd.isValidPassword) {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
-            
+
         } else if (txtConfirmPwd.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankConfirmPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
             

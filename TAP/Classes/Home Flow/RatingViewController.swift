@@ -121,7 +121,6 @@ extension RatingViewController {
         }
         
         if !isRefresh {
-            tblRating.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -153,7 +152,6 @@ extension RatingViewController {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
                 }
                 
-                self.tblRating.isHidden = self.arrRating.count == 0
                 self.lblNoData.isHidden = self.arrRating.count != 0
                 self.tblRating.reloadData()
             }

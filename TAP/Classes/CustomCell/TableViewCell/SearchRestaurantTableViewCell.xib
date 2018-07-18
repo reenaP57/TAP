@@ -30,26 +30,26 @@
                     <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5w-M7-9q2" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
                         <rect key="frame" x="20" y="5" width="335" height="206"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download-1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="yBf-sc-OpW" customClass="GenericImageView" customModule="Ta_Pronto" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yBf-sc-OpW" customClass="GenericImageView" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="10" y="5" width="315" height="98"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yBf-sc-OpW" secondAttribute="height" multiplier="45:14" id="rJ9-ft-76H"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CAFE DE PERKS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZh-Za-ig4" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="15" y="115" width="115.5" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uZh-Za-ig4" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="15" y="115" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Alpha One Mall" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t65-BX-7ex" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="15" y="138" width="305" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t65-BX-7ex" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="15" y="120" width="305" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Rolls - Desserts - Fast Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdO-FP-leV" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="15" y="157" width="305" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdO-FP-leV" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="15" y="125" width="305" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -66,13 +66,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZk-pO-OM5">
-                                <rect key="frame" x="304" y="113" width="16" height="22"/>
+                                <rect key="frame" x="304" y="104" width="16" height="22"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="heart"/>
                                 <state key="selected" image="heart_selected"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkU-uq-G0C" customClass="RatingView" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="15" y="179.5" width="50" height="10"/>
+                                <rect key="frame" x="15" y="133.5" width="50" height="10"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="Nnr-Cb-tre"/>
@@ -85,14 +85,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cL-Ds-skE" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="70" y="177" width="17" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cL-Ds-skE" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="70" y="138" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15-30 mins" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7W-4n-Ejf" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="259.5" y="177" width="60.5" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7W-4n-Ejf" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="320" y="138" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -152,7 +152,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="download-1.jpg" width="700" height="500"/>
         <image name="heart" width="16" height="15"/>
         <image name="heart_selected" width="16" height="15"/>
     </resources>

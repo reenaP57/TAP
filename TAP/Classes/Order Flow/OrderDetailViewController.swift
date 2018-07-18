@@ -56,6 +56,7 @@ class OrderDetailViewController: ParentViewController {
     var arrOrderList = [[String : AnyObject]]()
     var arrOrderPrice = [[String : AnyObject]]()
     var isCompleted : Bool = false
+    var isFromCartPayment : Bool = false
     var orderID : Int?
     var dictDetail = [String : AnyObject]()
 
@@ -73,6 +74,19 @@ class OrderDetailViewController: ParentViewController {
         super.viewWillAppear(animated)
         appDelegate?.hideTabBar()
         self.loadOrderDetail()
+        
+        self.setBlock { (data, error) in
+            scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+            vwRateOrder.isHidden = true
+        }
+    }
+    
+    override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        
+        if parent == nil  && isFromCartPayment {
+            appDelegate?.tabbar?.btnTabClicked(sender: (appDelegate?.tabbar?.btnOrder)!)
+        }
     }
     
     
@@ -94,7 +108,7 @@ class OrderDetailViewController: ParentViewController {
         lblResName.text = dictDetail.valueForString(key: CRestaurant_name)
         lblResLocation.text = dictDetail.valueForString(key: CAddress)
         lblOrderID.text = dictDetail.valueForString(key: COrder_no)
-      
+  
         imgVRest.sd_setShowActivityIndicatorView(true)
         imgVRest.sd_setImage(with: URL(string: (dictDetail.valueForString(key: CRestaurant_image))), placeholderImage: nil)
         
@@ -109,16 +123,10 @@ class OrderDetailViewController: ParentViewController {
         if dictDetail.valueForInt(key: COrder_status) == COrderStatusComplete {
             //... If order is completed
             
+            _ = tblOrderPrice.setConstraintConstant(0, edge: .top, ancestor: true)
+            
             self.btnViewMap.hide(byHeight: true)
             self.imgVOrderStatus.hide(byHeight: true)
-            self.vwOrderNote.hide(byHeight: true)
-            _ = tblOrderPrice.setConstraintConstant(0, edge: .top, ancestor: true)
-
-//            DispatchQueue.main.async {
-//
-//                self.vwRestDetail.layoutSubviews()
-//                self.view.layoutIfNeeded()
-//            }
 
             
             if (dictDetail.valueForString(key: "rating")) == "" {
@@ -132,7 +140,7 @@ class OrderDetailViewController: ParentViewController {
            
             let dateFormat = DateFormatter()
             lblContact.text =  dateFormat.string(timestamp: dictDetail.valueForDouble(key: COrder_completed)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
-            lblOrderStatus.text = ""
+            lblOrderStatus.text = "comp"
             imgVContact.image = UIImage(named: "calender")
 
         } else {
@@ -172,8 +180,9 @@ class OrderDetailViewController: ParentViewController {
             
             arrOrderPrice.append(["title":adCharge.valueForString(key: "tax_name") as AnyObject,"value": adCharge.valueForString(key: "order_tax_amount") as AnyObject])
         }
-
-        arrOrderPrice.append(["title":"To Pay" as AnyObject,"value": dictDetail.valueForDouble(key: COrder_total) as AnyObject])
+  
+        let title = dictDetail.valueForInt(key: CPayment_type) == 2 ? CPaid : CToPay
+        arrOrderPrice.append(["title":title as AnyObject, "value": dictDetail.valueForDouble(key: COrder_total) as AnyObject])
 
         
         tblOrderDetail.reloadData()
@@ -258,7 +267,7 @@ extension OrderDetailViewController : UITableViewDelegate, UITableViewDataSource
                 
                 let dict = arrOrderPrice[indexPath.row]
                 cell.lblTitle.text = dict.valueForString(key: "title")
-                cell.lblValue.text = "$\(dict.valueForString(key: "value"))"
+                cell.lblValue.text = String(format: "$%.2f",(dict.valueForDouble(key: "value"))!)
 
                 return cell
             }
@@ -283,9 +292,16 @@ extension OrderDetailViewController {
         
             if response != nil && error == nil {
                 
-                let dataRes = ((response?.value(forKey: CJsonData) as! [AnyObject])[0]) as! [String : AnyObject]
-                self.dictDetail = dataRes
+                self.dictDetail = response?.value(forKey: CJsonData) as! [String : AnyObject] //((response?.value(forKey: CJsonData) as! [AnyObject])[0]) as! [String : AnyObject]
+                //self.dictDetail = dataRes
                 self.setOrderDetail()
+           
+            } else {
+                
+                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
+                   self.loadOrderDetail()
+                }, btnTwoTitle: CCancel, btnTwoTapped: { (action) in
+                })
             }
         }
     }

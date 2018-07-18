@@ -174,6 +174,14 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
             //...LogOut
             
             self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CLogOutMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
+                
+                let arrCart = TblCart.fetchAllObjects()
+                
+                if (arrCart?.count)! > 0 {
+                     self.addCartOnServer()
+                }
+               
+                appDelegate?.isFromLoginPop = false
                 appDelegate?.logout()
                 
             }, btnTwoTitle: CNo) { (action) in
@@ -208,4 +216,90 @@ extension ProfileViewController {
     }
 }
 
+//MARK:-
+//MARK:- API Method
 
+extension ProfileViewController {
+    
+    func addCartOnServer() {
+        
+        var arrCart = [[String : AnyObject]]()
+        var additionalCharge = 0.0
+        var subTotal = 0.0
+        
+        
+        let arrRes = TblCartRestaurant.fetchAllObjects() as! [TblCartRestaurant]
+        let resDetail =  arrRes[0]
+        
+        var arrADPrice = [[String : AnyObject]]()
+        let arrAD = resDetail.additional_tax as? [[String : AnyObject]]
+        let arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
+      
+        
+        //...Get cart list
+        for cart in arrCartList {
+
+            let total = cart.dish_price * Double(cart.quantity)
+            subTotal = subTotal + total
+            
+            let keys = cart.entity.attributesByName.keys
+            var dicTest : Dictionary = cart.dictionaryWithValues(forKeys: Array(keys))
+
+            dicTest.removeValue(forKey: CRestaurant_id)
+            dicTest.removeValue(forKey: CStatus_id)
+            dicTest.removeValue(forKey: CIs_available)
+
+            arrCart.append(dicTest as [String : AnyObject])
+        }
+
+        
+        //...Get Additional charge list
+        for item in arrAD! {
+            
+            var dict = item
+            var amount = 0.0
+            
+            if dict.valueForString(key: "tax_type") == "1" {
+                amount = ((subTotal * dict.valueForDouble(key: "tax_amount")! / 100).roundToPlaces(places: 2))
+                
+            } else {
+                amount = (dict.valueForDouble(key: "tax_amount")!)
+            }
+            
+            dict.removeValue(forKey: "tax_id")
+            dict["order_tax_amount"] = amount as AnyObject
+            
+            arrADPrice.append(dict)
+            
+            additionalCharge = additionalCharge + amount
+        }
+        
+        
+        let taxPrice = subTotal * resDetail.tax / 100
+        let totalToPay = subTotal + taxPrice + additionalCharge
+        
+
+        let dict = [CRestaurant_id : resDetail.restaurant_id as AnyObject,
+                    CSubtotal : subTotal as AnyObject ,
+                    CTax_percent : resDetail.tax,
+                    CTax_amount : subTotal * resDetail.tax / 100 ,
+                    COrder_total : totalToPay as Any,
+                    CCart : arrCart,
+                    CAdditional_tax : arrADPrice,
+                    CCart_id : CUserDefaults.object(forKey: UserDefaultCartID) != nil ? CUserDefaults.object(forKey: UserDefaultCartID) as Any : 0] as [String : AnyObject]
+        
+        
+        APIRequest.shared().addCart(param: dict) { (response, error) in
+            
+            if response != nil && error == nil {
+                
+                print("Add Cart : ",response as Any)
+                
+                let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                
+                CUserDefaults.set(dataRes.valueForInt(key: CCart_id), forKey: UserDefaultCartID)
+                CUserDefaults.synchronize()
+            }
+        }
+    }
+}

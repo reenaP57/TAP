@@ -48,7 +48,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aup-3z-91g">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please login to continue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aup-3z-91g">
                             <rect key="frame" x="10" y="25" width="291" height="17"/>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -99,6 +99,7 @@
                 <outlet property="btnClose" destination="RHm-ML-dDc" id="uu4-6M-0JN"/>
                 <outlet property="btnLogin" destination="oPe-N1-teE" id="coN-nZ-eK7"/>
                 <outlet property="btnSignUp" destination="ZH9-5d-9Qa" id="5ND-IF-EpF"/>
+                <outlet property="lblMsg" destination="Aup-3z-91g" id="4YC-6m-7Rj"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="51.5"/>
         </view>

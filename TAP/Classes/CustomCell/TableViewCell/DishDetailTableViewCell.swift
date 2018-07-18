@@ -35,3 +35,21 @@ class DishDetailTableViewCell: UITableViewCell {
     }
 
 }
+
+
+extension DishDetailTableViewCell : UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (textField.text?.count)! > 2 {
+            
+            if string == "" {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+}

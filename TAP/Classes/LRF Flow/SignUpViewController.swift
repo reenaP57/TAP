@@ -54,7 +54,7 @@ class SignUpViewController: ParentViewController {
     func initialize() {
         self.title = CSignUp
         
-        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: true)
+        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: CCountry_name, ascending: true)
         let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
         
         if (arrCountryCode?.count)! > 0 {
@@ -62,7 +62,8 @@ class SignUpViewController: ParentViewController {
             txtCountryCode.setPickerData(arrPickerData: arrCountryCode!, selectedPickerDataHandler: { (select, index, component) in
 
                  let dict = arrCountry![index] as AnyObject
-                countryID = dict.value(forKey: "country_id") as! Int
+                 countryID = dict.value(forKey: CCountry_id) as! Int
+                txtCountryCode.text = dict.value(forKey: CCountry_code) as? String
             }, defaultPlaceholder: "")
         }
     }
@@ -135,7 +136,7 @@ extension SignUpViewController {
         } else if (txtPassword.text?.isBlank)! {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
         
-        } else if (txtPassword.text?.count)! < 6 || !(strPwd.isAlphanumeric) {
+        } else if !(strPwd.isValidPassword) {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CInvalidPasswordMessage, btnOneTitle:COk , btnOneTapped: nil)
        
         } else if (txtConfirmPassword.text?.isBlank)! {

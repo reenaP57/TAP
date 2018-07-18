@@ -23,6 +23,8 @@ class HomeViewController: ParentViewController {
     var nearby_count = 0
     var popular_count = 0
     
+    var refreshControl = UIRefreshControl()
+    var apiTask : URLSessionTask?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,16 @@ class HomeViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
-        lblLocation.text = appDelegate?.loginUser?.address
+        
+
+        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
+            lblLocation.text = appDelegate?.loginUser?.address
+        } else if appDelegate?.loginUser == nil && !(appDelegate?.isCurrentLoc)!{
+            lblLocation.text = appDelegate?.dictLocation[CAddress] as? String
+        } else {
+            lblLocation.text = CUserDefaults.object(forKey: UserDefaultCurrentLocation) as? String
+        }
+
     }
     
     
@@ -45,9 +56,13 @@ class HomeViewController: ParentViewController {
     
     func initialize() {
         
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl.tintColor = CColorNavRed
+        tblHome.pullToRefreshControl = refreshControl
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateFavouriteStatus), name: NSNotification.Name(rawValue: kNotificationUpdateFavStatus), object: nil)
         
-        self.loadRestaurantList()
+        self.loadRestaurantList(isRefresh: false)
     }
     
     @objc func updateFavouriteStatus(notification : Notification) {
@@ -147,17 +162,17 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
             if arrSection[indexPath.section] == CNearbyRestaurant {
                 cell.lblTitle.text = CNearbyRestaurant
                 cell.loadRestaurantDetail(arrDetail: arrNearByData, type : CNearbyRestaurant)
-               // cell.btnSeeAll.isHidden = self.nearby_count < 5
+                cell.btnSeeAll.isHidden = self.nearby_count < 5
                 
             } else if arrSection[indexPath.section] == CMostPopular {
                 cell.lblTitle.text = CMostPopular
                 cell.loadRestaurantDetail(arrDetail: arrPopularData, type : CMostPopular)
-                //cell.btnSeeAll.isHidden = self.popular_count < 5
+                cell.btnSeeAll.isHidden = self.popular_count < 5
                 
             } else {
                 cell.lblTitle.text = CNewArrival
                 cell.loadRestaurantDetail(arrDetail: arrArrivalData, type : CNewArrival)
-               // cell.btnSeeAll.isHidden = self.arrival_count < 5
+                cell.btnSeeAll.isHidden = self.arrival_count < 5
             }
             
             
@@ -184,14 +199,29 @@ extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController {
     
-    func loadRestaurantList() {
+    @objc func pullToRefresh() {
+        refreshControl.beginRefreshing()
+        self.loadRestaurantList(isRefresh : true)
+    }
+    
+    func loadRestaurantList(isRefresh : Bool) {
         
-        activityLoader.startAnimating()
+        if apiTask?.state == URLSessionTask.State.running {
+            return
+        }
         
-        APIRequest.shared().restaurantList { (response, error) in
+        if !isRefresh {
+            activityLoader.startAnimating()
+        }
         
+        
+        apiTask = APIRequest.shared().restaurantList { (response, error) in
+        
+            self.apiTask?.cancel()
+            self.activityLoader.stopAnimating()
+            self.refreshControl.endRefreshing()
+            
             if response != nil && error == nil {
-                self.activityLoader.stopAnimating()
                 
                 let data = response?.value(forKey: CJsonData) as? [String : AnyObject]
                 let metaData = response?.value(forKey: CJsonMeta) as? [String : AnyObject]

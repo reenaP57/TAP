@@ -10,6 +10,7 @@ import Foundation
 
 //General
 
+let CRetry              = CLocalize(text: "Retry")
 let CYes                = CLocalize(text: "Yes")
 let CNo                 = CLocalize(text: "No")
 let COk                 = CLocalize(text: "Ok")
@@ -24,6 +25,7 @@ let CForgotPassword      = CLocalize(text: "Forgot Password")
 let CSearchYourLocation  = CLocalize(text: "Search your location")
 let CDone                = CLocalize(text: "Done")
 let CContinue            = CLocalize(text: "Continue")
+let CCurrentLocation      = CLocalize(text: "Current Location")
 
 
 //Home
@@ -33,8 +35,8 @@ let CMostPopular        =  CLocalize(text: "Most Popular")
 let CNewArrival         =  CLocalize(text: "New Arrival")
 let CRatings            = CLocalize(text: "Ratings")
 let CPromotions         = CLocalize(text: "Promotions")
-let CSearchRestaurant   = CLocalize(text: "Search restaurant or cusine")
-let CClearCartAndAdd      = CLocalize(text: "CLEAR CART & ADD")
+let CSearchRestaurant   = CLocalize(text: "Search restaurant or Cuisine")
+let CClearCartAndAdd    = CLocalize(text: "CLEAR CART & ADD")
 
 //Order
 
@@ -46,6 +48,9 @@ let COrderReady         =  CLocalize(text: "ORDER READY")
 let COrderPending       =  CLocalize(text: "ORDER PENDING")
 
 let CAddYourReview      =  CLocalize(text: "Add your review...")
+let CToPay              = CLocalize(text: "To pay (by cash)")
+let CPaid               = CLocalize(text: "Paid (with stripe)")
+
 
 //Cart
 let CViewCart           =  CLocalize(text: "View Cart")
@@ -73,7 +78,7 @@ let CLogOut              =  CLocalize(text: "Log Out")
 //Confirmation Message
 
 let CDeleteOrderMessage     = CLocalize(text: "Are you sure you want to delete this order?")
-let CLogOutMessage          = CLocalize(text: "Are you sure you want to logOut?")
+let CLogOutMessage          = CLocalize(text: "Are you sure you want to Log Out?")
 
 
 //Validaton Message
@@ -94,6 +99,8 @@ let CBlankReview                 = CLocalize(text:"Please enter review.")
 let CBlankOldPassword            = CLocalize(text:"Please enter your Old Password.")
 let CBlankNewPassword            = CLocalize(text:"Please enter your New Password.")
 
+let CMessaseLoginPopup           = CLocalize(text:"Please login to continue")
+let CMessaseOrderPopup           = CLocalize(text:"Please login to get your cart history.")
 
 
 let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not support mail")
@@ -104,7 +111,9 @@ let CMessaseChangePassword       = CLocalize(text:"Password updated successfully
 let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
 
 let CMessageUpdatedRestCart     = CLocalize(text: "Updated cart detail.")
+let CMessageNoDishAvailable     = CLocalize(text: "No Dishes Available for this Category")
 
 let CPaymentMessage1            = CLocalize(text: "Your Payment of")
 let CPaymentMessage2            = CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")
 let COrderPlaceDateTime         = CLocalize(text: "The order was place on")
+let CClosedRestaurant           = CLocalize(text: "Restaurant is closed.")

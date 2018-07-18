@@ -92,6 +92,12 @@ extension LoginViewController {
     
     @IBAction func btnGuestUserClicked(sender : UIButton) {
         
+        TblRecentLocation.deleteAllObjects()
+//        CUserDefaults.removeObject(forKey: UserDefaultCurrentLocation)
+//        CUserDefaults.removeObject(forKey: CLatitude)
+//        CUserDefaults.removeObject(forKey: CLongitude)
+
+        
         if let selectLocVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewController") as? SelectLocationViewController {
             self.navigationController?.pushViewController(selectLocVC, animated: false)
         }
@@ -139,13 +145,35 @@ extension LoginViewController {
                     
                     APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
                     
+                    
+                    let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                    
+                    if dataRes.valueForString(key: CCart_id) != "" && CUserDefaults.object(forKey: UserDefaultCartID) != nil {
+                        appDelegate?.loadCartDetail()
+                    }
+                  
+                    
                     if (appDelegate?.isFromLoginPop)!
                     {
                         //...From Login popup
                         if appDelegate?.objNavController != nil
                         {
                             appDelegate?.isFromLoginPop = false
-                            self.navigationController?.popToViewController((appDelegate?.objNavController)!, animated: false)
+                           
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateTabbar), object: nil)
+                       
+                            
+                            if (appDelegate?.tabbar?.btnOrder.isSelected)! {
+                                appDelegate?.tabbarController?.selectedIndex = 2
+                                appDelegate?.tabbar?.btnOrder.isSelected = true
+                                appDelegate?.tabbar?.btnHome.isSelected = false
+                            } else {
+                                appDelegate?.tabbarController?.selectedIndex = 0
+                                appDelegate?.tabbar?.btnOrder.isSelected = false
+                                appDelegate?.tabbar?.btnHome.isSelected = true
+                            }
+                            
+                        self.navigationController?.popToViewController((appDelegate?.objNavController)!, animated: false)
                         }
                         
                     } else if self.loginFrom == .FromProfileLogin {

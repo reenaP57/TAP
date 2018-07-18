@@ -352,8 +352,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hfz-Dt-9Ms" firstAttribute="leading" secondItem="LRH-4D-LHA" secondAttribute="leading" id="0rC-9I-t4k"/>
+                            <constraint firstItem="hfz-Dt-9Ms" firstAttribute="top" secondItem="LRH-4D-LHA" secondAttribute="top" id="6cO-6c-Dn4"/>
                             <constraint firstItem="hfz-Dt-9Ms" firstAttribute="trailing" secondItem="LRH-4D-LHA" secondAttribute="trailing" id="DUi-FY-Hlc"/>
-                            <constraint firstItem="hfz-Dt-9Ms" firstAttribute="top" secondItem="LRH-4D-LHA" secondAttribute="top" id="cAT-tE-A5B"/>
                             <constraint firstItem="hfz-Dt-9Ms" firstAttribute="bottom" secondItem="LRH-4D-LHA" secondAttribute="bottom" id="hSn-W7-b0d"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LRH-4D-LHA"/>
@@ -987,6 +987,12 @@ registered email address.</string>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDJ-jF-8mI">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                                        <connections>
+                                            <action selector="btnCurrentLocationClickedWithSender:" destination="k2N-pc-8M9" eventType="touchUpInside" id="8s8-vx-AOl"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     Recently Searched Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8s-eE-j6w" customClass="GenericLabel" customModule="Ta_Pronto">
                                         <rect key="frame" x="0.0" y="45" width="375" height="45"/>
                                         <color key="backgroundColor" red="0.74509803921568629" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1010,14 +1016,18 @@ registered email address.</string>
                                     <constraint firstItem="Q8s-eE-j6w" firstAttribute="top" secondItem="blT-Or-gHh" secondAttribute="bottom" id="1mF-Kj-guc"/>
                                     <constraint firstAttribute="bottom" secondItem="rC6-u2-bQf" secondAttribute="bottom" id="52b-oH-5pD"/>
                                     <constraint firstItem="blT-Or-gHh" firstAttribute="top" secondItem="6gs-fo-fua" secondAttribute="top" id="5Js-0X-emn"/>
+                                    <constraint firstItem="VDJ-jF-8mI" firstAttribute="leading" secondItem="6gs-fo-fua" secondAttribute="leading" id="9QM-71-19j"/>
                                     <constraint firstAttribute="trailing" secondItem="Q8s-eE-j6w" secondAttribute="trailing" id="J2S-Th-AeX"/>
                                     <constraint firstItem="ouR-iq-5EW" firstAttribute="leading" secondItem="6gs-fo-fua" secondAttribute="leading" constant="20" id="Jkc-gz-gAe"/>
                                     <constraint firstAttribute="bottom" secondItem="Q8s-eE-j6w" secondAttribute="bottom" id="KOd-kW-BIe"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="blT-Or-gHh" secondAttribute="trailing" constant="15" id="P93-sI-9yM"/>
                                     <constraint firstItem="rC6-u2-bQf" firstAttribute="top" secondItem="6gs-fo-fua" secondAttribute="top" constant="45" id="SP6-m3-CJY"/>
+                                    <constraint firstAttribute="trailing" secondItem="VDJ-jF-8mI" secondAttribute="trailing" id="VHC-YP-0Ar"/>
                                     <constraint firstAttribute="trailing" secondItem="rC6-u2-bQf" secondAttribute="trailing" constant="10" id="Vdq-8g-ufI"/>
                                     <constraint firstItem="ouR-iq-5EW" firstAttribute="centerY" secondItem="blT-Or-gHh" secondAttribute="centerY" id="YGg-h0-apy"/>
                                     <constraint firstItem="Q8s-eE-j6w" firstAttribute="leading" secondItem="6gs-fo-fua" secondAttribute="leading" id="a1Y-aZ-Dz7"/>
+                                    <constraint firstItem="Q8s-eE-j6w" firstAttribute="top" secondItem="VDJ-jF-8mI" secondAttribute="bottom" id="cgi-kn-5Fl"/>
+                                    <constraint firstItem="VDJ-jF-8mI" firstAttribute="top" secondItem="6gs-fo-fua" secondAttribute="top" id="dAa-xL-AMr"/>
                                     <constraint firstAttribute="width" secondItem="6gs-fo-fua" secondAttribute="height" multiplier="25:6" id="gNW-dP-nbQ"/>
                                     <constraint firstItem="blT-Or-gHh" firstAttribute="leading" secondItem="ouR-iq-5EW" secondAttribute="trailing" constant="16" id="j1m-7v-QEd"/>
                                 </constraints>
@@ -1026,20 +1036,29 @@ registered email address.</string>
                                 <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectLocationTableViewCell" rowHeight="53" id="Yzo-M7-TFK" customClass="SelectLocationTableViewCell" customModule="Ta_Pronto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="53"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectLocationTableViewCell" rowHeight="81" id="Yzo-M7-TFK" customClass="SelectLocationTableViewCell" customModule="Ta_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="1" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yzo-M7-TFK" id="Zny-f9-he0">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gurukul Road" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzE-nK-mB0" customClass="GenericLabel" customModule="Ta_Pronto">
-                                                    <rect key="frame" x="20" y="5" width="335" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gurukul Road" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBP-8f-wfp" customClass="GenericLabel" customModule="Ta_Pronto">
+                                                    <rect key="frame" x="20" y="15" width="335" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gurukul Road" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzE-nK-mB0" customClass="GenericLabel" customModule="Ta_Pronto">
+                                                    <rect key="frame" x="20" y="42" width="335" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="1UJ-Na-YHK"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
+                                                    <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gke-sk-UgE">
-                                                    <rect key="frame" x="20" y="51" width="335" height="1"/>
+                                                    <rect key="frame" x="20" y="79.5" width="335" height="1"/>
                                                     <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="s8g-Pk-LFl"/>
@@ -1047,16 +1066,20 @@ registered email address.</string>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gke-sk-UgE" firstAttribute="top" secondItem="hzE-nK-mB0" secondAttribute="bottom" constant="5" id="Bgj-GS-7jP"/>
+                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="top" secondItem="GBP-8f-wfp" secondAttribute="bottom" constant="9" id="18x-im-hfO"/>
+                                                <constraint firstAttribute="trailing" secondItem="hzE-nK-mB0" secondAttribute="trailing" constant="20" id="1vY-ip-WOj"/>
+                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="1yw-hO-q61"/>
+                                                <constraint firstItem="gke-sk-UgE" firstAttribute="top" secondItem="hzE-nK-mB0" secondAttribute="bottom" constant="13.5" id="3Z8-2C-aEW"/>
                                                 <constraint firstAttribute="bottom" secondItem="gke-sk-UgE" secondAttribute="bottom" constant="0.5" id="JEz-oj-RC6"/>
-                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="top" secondItem="Zny-f9-he0" secondAttribute="top" constant="5" id="UjG-WR-Z2a"/>
                                                 <constraint firstAttribute="trailing" secondItem="gke-sk-UgE" secondAttribute="trailing" constant="20" id="WGC-aA-dwV"/>
                                                 <constraint firstItem="gke-sk-UgE" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="YZU-pY-MQK"/>
-                                                <constraint firstItem="hzE-nK-mB0" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="h5f-IX-DAT"/>
-                                                <constraint firstAttribute="trailing" secondItem="hzE-nK-mB0" secondAttribute="trailing" constant="20" id="kKK-ZY-jm2"/>
+                                                <constraint firstItem="GBP-8f-wfp" firstAttribute="top" secondItem="Zny-f9-he0" secondAttribute="top" constant="15" id="dDH-cm-AKm"/>
+                                                <constraint firstItem="GBP-8f-wfp" firstAttribute="leading" secondItem="Zny-f9-he0" secondAttribute="leading" constant="20" id="hhS-Ye-bZI"/>
+                                                <constraint firstAttribute="trailing" secondItem="GBP-8f-wfp" secondAttribute="trailing" constant="20" id="snT-vL-bF9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="lblLocation" destination="GBP-8f-wfp" id="8lc-4T-bYE"/>
                                             <outlet property="lblLocationName" destination="hzE-nK-mB0" id="mZt-rf-cX9"/>
                                         </connections>
                                     </tableViewCell>

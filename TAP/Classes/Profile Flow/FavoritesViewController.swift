@@ -87,12 +87,17 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
             let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
             cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
             
+            var time = ""
+            if dict.valueForString(key: COpen_time) != "" {
+                time = (appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone"))))!
+            }
             
             if dict.valueForInt(key: COpen_Close_Status) == 0 {
                 cell.lblClosed.hide(byWidth: false)
-                cell.lblTime.text = "Open at \(dict.valueForString(key: COpen_time) )"
+                cell.lblTime.text = time != "" ? "Open at \(time)" : ""
             } else {
                 cell.lblClosed.hide(byWidth: true)
+                cell.lblTime.text = ""
             }
             
             
@@ -108,18 +113,21 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
                 //...Open login Popup If user is not logged In OtherWise Like
                 
                 if appDelegate?.loginUser?.user_id == nil{
-                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                    appDelegate?.openLoginPopup(viewController: self, fromOrder: false, completion: {
+                    })
+                 
                 } else{
                     
                     appDelegate?.updateFavouriteStatus(restaurant_id: dict.valueForInt(key: CId)!, sender: cell.btnLike, completionBlock: { (response) in
                         
                         self.arrRestData.remove(at: indexPath.row)
                         
-                        if self.arrRestData.count == 0 {
-                           self.tblFavorite.reloadRows(at: [indexPath], with: .none)
-                        } else {
+//                        if self.arrRestData.count == 0 {
+//                           self.tblFavorite.reloadRows(at: [indexPath], with: .none)
+//                        } else {
+                            self.lblNoData.isHidden = self.arrRestData.count != 0
                             self.tblFavorite.reloadData()
-                        }
+                     //   }
                         
                     })
                     
@@ -174,7 +182,6 @@ extension FavoritesViewController {
         }
         
         if !isRefresh{
-            tblFavorite.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -205,7 +212,6 @@ extension FavoritesViewController {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
                 }
                 
-                self.tblFavorite.isHidden = self.arrRestData.count == 0
                 self.lblNoData.isHidden = self.arrRestData.count != 0
                 self.tblFavorite.reloadData()
             }

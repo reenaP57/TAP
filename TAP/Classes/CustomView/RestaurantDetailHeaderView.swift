@@ -16,6 +16,7 @@ class RestaurantDetailHeaderView: UIView {
 
     var delegate : selectCategoryProtocol?
     
+    @IBOutlet weak var lblNoDishMsg : UILabel!
     @IBOutlet weak var collCategory : UICollectionView! {
         didSet {
             collCategory.register(UINib(nibName: "RestaurantCategoryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RestaurantCategoryCollectionViewCell")
@@ -32,7 +33,7 @@ class RestaurantDetailHeaderView: UIView {
         collCategory.reloadData()
         categoryID = categoryId
         
-        if arrCategoryDetail.count > 0{
+        if arrCategoryDetail.count > 0 {
             collCategory.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
         }
     }

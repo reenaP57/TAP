@@ -113,13 +113,14 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
             let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
             cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
     
-            
-            let time = appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone")))
-           
+            var time = ""
+            if dict.valueForString(key: COpen_time) != "" {
+                time = (appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone"))))!
+            }
             
             if dict.valueForInt(key: COpen_Close_Status) == 0 {
                 cell.lblClosed.hide(byWidth: false)
-                cell.lblTime.text = "Open at \(time ?? "")"
+                cell.lblTime.text = time != "" ? "Open at \(time)" : ""
             } else {
                 cell.lblClosed.hide(byWidth: true)
                 cell.lblTime.text = ""
@@ -137,7 +138,9 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
                 //...Open login Popup If user is not logged In OtherWise Like
                 
                 if appDelegate?.loginUser?.user_id == nil{
-                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                    appDelegate?.openLoginPopup(viewController: self, fromOrder: false, completion: {
+                    })
+             
                 } else{
                     
                     appDelegate?.updateFavouriteStatus(restaurant_id: (dict.valueForInt(key: CId))!, sender: cell.btnLike, completionBlock: { (response) in
@@ -218,7 +221,6 @@ extension SeeAllRestaurantViewController {
         }
         
         if !isRefresh {
-            tblRestList.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -250,10 +252,6 @@ extension SeeAllRestaurantViewController {
                 
                 if metaData.valueForInt(key: CCurrentPage)! <= self.lastPage {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
-                }
-                
-                if self.arrRestData.count > 0 {
-                    self.tblRestList.isHidden = false
                 }
                 
                 self.tblRestList.reloadData()

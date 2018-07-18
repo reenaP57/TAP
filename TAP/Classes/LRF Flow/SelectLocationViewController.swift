@@ -55,6 +55,19 @@ class SelectLocationViewController: ParentViewController {
     
     func initialize() {
         
+      //  else if appDelegate?.loginUser == nil && !(appDelegate?.isCurrentLoc)!{
+        //    lblCurrentLoc.text = appDelegate?.dictLocation[CAddress] as? String
+      //  }
+        
+        lblCurrentLoc.text = CUserDefaults.object(forKey: UserDefaultCurrentLocation) as? String
+        
+//        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
+//            lblCurrentLoc.text = appDelegate?.loginUser?.address
+//        } else {
+//             lblCurrentLoc.text = CUserDefaults.object(forKey: UserDefaultCurrentLocation) as? String
+//        }
+        
+       
         self.fetchRecentLocationList()
         
         DispatchQueue.main.async {
@@ -85,6 +98,19 @@ class SelectLocationViewController: ParentViewController {
         }
     }
 
+}
+
+//MARK:-
+//MARK:- Action
+
+extension SelectLocationViewController {
+
+     @IBAction func btnCurrentLocationClicked(sender : UIButton) {
+        
+        appDelegate?.isCurrentLoc = true
+        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+        appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)
+    }
 }
 
 
@@ -142,10 +168,27 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
         viewController.dismiss(animated: true) {
             self.vwCustomSearch?.searchBar.text = place.formattedAddress
             self.vwCustomSearch?.btnClear.hide(byWidth: false)
+            appDelegate?.isCurrentLoc = false
             
-            appDelegate?.loginUser?.latitude = place.coordinate.latitude
-            appDelegate?.loginUser?.longitude = place.coordinate.longitude
-            appDelegate?.loginUser?.address = place.name
+            if appDelegate?.loginUser?.user_id != nil {
+                appDelegate?.loginUser?.latitude = place.coordinate.latitude
+                appDelegate?.loginUser?.longitude = place.coordinate.longitude
+                appDelegate?.loginUser?.address = place.name
+                
+            } else {
+                
+                //...Save in lat,long and place name in dictionary for guest user to pass in restuarant api
+                appDelegate?.dictLocation.removeAll()
+                appDelegate?.dictLocation[CLatitude] = place.coordinate.latitude as AnyObject
+                appDelegate?.dictLocation[CLongitude] = place.coordinate.longitude as AnyObject
+                appDelegate?.dictLocation[CAddress] = place.name as AnyObject
+                
+//                CUserDefaults.set(place.coordinate.latitude, forKey: CLatitude)
+//                CUserDefaults.set(place.coordinate.longitude, forKey: CLongitude)
+//                CUserDefaults.set(place.name, forKey: UserDefaultCurrentLocation)
+//                CUserDefaults.synchronize()
+            }
+            
             
             if place.formattedAddress != nil {
                 
@@ -178,11 +221,11 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
 extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrLocation.count > 10 ? 10 : arrLocation.count
+        return arrLocation.count > 20 ? 20 : arrLocation.count
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 80
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -194,6 +237,8 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SelectLocationTableViewCell") as? SelectLocationTableViewCell {
             
             let dict = arrLocation[indexPath.row]
+            
+            cell.lblLocation.text = dict.name
             cell.lblLocationName.text = dict.address
             
             return cell
@@ -205,10 +250,29 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let dict = arrLocation[indexPath.row]
+        appDelegate?.isCurrentLoc = false
         
-        appDelegate?.loginUser?.latitude = dict.latitude
-        appDelegate?.loginUser?.longitude = dict.longitude
-        appDelegate?.loginUser?.address = dict.name
+        
+        if appDelegate?.loginUser?.user_id != nil {
+            
+            appDelegate?.loginUser?.latitude = dict.latitude
+            appDelegate?.loginUser?.longitude = dict.longitude
+            appDelegate?.loginUser?.address = dict.name
+        } else {
+            
+            //...Save in lat,long and place name in dictionary for guest user to pass in restuarant api
+            appDelegate?.dictLocation.removeAll()
+            appDelegate?.dictLocation[CLatitude] = dict.latitude as AnyObject
+            appDelegate?.dictLocation[CLongitude] = dict.longitude as AnyObject
+            appDelegate?.dictLocation[CAddress] = dict.name as AnyObject
+            
+            //
+//            CUserDefaults.set(dict.latitude, forKey: CLatitude)
+//            CUserDefaults.set(dict.longitude, forKey: CLongitude)
+//            CUserDefaults.set(dict.name, forKey: UserDefaultCurrentLocation)
+//            CUserDefaults.synchronize()
+        }
+ 
 
         appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
         appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)

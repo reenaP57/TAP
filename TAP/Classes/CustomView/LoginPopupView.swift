@@ -13,5 +13,6 @@ class LoginPopupView: UIView {
     @IBOutlet weak var btnLogin : UIButton!
     @IBOutlet weak var btnSignUp : UIButton!
     @IBOutlet weak var btnClose : UIButton!
+    @IBOutlet weak var lblMsg : UILabel!
 
 }

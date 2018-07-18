@@ -26,7 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var loginUser : TblUser?
     
     var locManager = CLLocationManager()
+    var placeMark : CLPlacemark?
     var countryCode = String()
+    var isCurrentLoc : Bool = false
+    var dictLocation = [String : AnyObject]()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -37,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
         GMSServices.provideAPIKey(CGooglePlacePickerKey)
         
+        self.loadCountryList()
+        self.initSelectLanguageViewController()
+        
+        
         locManager.delegate = self
         
         if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
@@ -45,8 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locManager.startUpdatingLocation()
         }
 
-        self.loadCountryList()
-        self.initSelectLanguageViewController()
         return true
     }
     
@@ -60,14 +65,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if CUserDefaults.object(forKey: UserDefaultLoginUserToken) == nil {
             let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
             self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
-        } else {
+            
+        } else if CUserDefaults.object(forKey: UserDefaultLoginUserToken) != nil {
             
             loginUser =  TblUser.findOrCreate(dictionary: ["user_id" : CUserDefaults.object(forKey: UserDefaultLoginUserID) as Any]) as? TblUser
             
             
-            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-            self.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
-
+            if loginUser?.latitude == nil && loginUser?.longitude == nil {
+                
+                let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLocationViewController"))
+                self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
+                
+            } else {
+                
+                appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+                self.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
+            }
         }
     }
     
@@ -84,21 +97,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         tabbarController = nil
         tabbar = nil
         
+        TblRecentLocation.deleteAllObjects()
+        TblCart.deleteAllObjects()
+        
+        appDelegate?.loginUser = nil
         CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
         CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
         CUserDefaults.synchronize()
         
-        guard let selectLangVC = CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController") as? SelectLanguageViewController else{
+        guard let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
             return
         }
         
-        self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: selectLangVC), animated: true, completion: nil)
+        self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: loginVC), animated: true, completion: nil)
         
     }
     
-    func openLoginPopup(viewController : UIViewController) {
+    func openLoginPopup(viewController : UIViewController, fromOrder: Bool, completion : @escaping () -> ()) {
         
         if let vwLogin = LoginPopupView.viewFromXib as? LoginPopupView {
+            
+            if fromOrder {
+               vwLogin.lblMsg.text = CMessaseOrderPopup
+               vwLogin.btnClose.hide(byWidth: true)
+            } else {
+                vwLogin.lblMsg.text = CMessaseLoginPopup
+                vwLogin.btnClose.hide(byWidth: false)
+            }
+            
             
             vwLogin.CViewSetSize(width: CScreenWidth, height: CScreenHeight)
             
@@ -120,7 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 
                 self.objNavController = (viewController as? ParentViewController)!
                 
-                
                 if let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
                  viewController.navigationController?.pushViewController(loginVC, animated: true)
                 }
@@ -130,6 +155,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 
                 vwLogin.removeFromSuperview()
                 appDelegate?.isFromLoginPop = true
+            
+            
+                completion()
                 
                 self.objNavController = (viewController as? ParentViewController)!
                 
@@ -162,15 +190,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func UTCToLocalTime(date:String, fromFormat: String, toFormat: String, timezone: String) -> String {
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+//        dateFormatter.defaultDate = Date()
+//        dateFormatter.dateFormat = fromFormat
+//
+//        let convertedDate = dateFormatter.date(from: date)
+//        return ""
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = fromFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+
         
         let dt = dateFormatter.date(from: date)
-        dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-        dateFormatter.dateFormat = toFormat
+        dateFormatter.dateFormat = fromFormat
+        dateFormatter.calendar = NSCalendar.current
+        dateFormatter.timeZone = TimeZone.current
         
         return dateFormatter.string(from: dt!)
+        
+        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = fromFormat
+//       // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//
+//        let dt = dateFormatter.date(from: date)
+//        dateFormatter.timeZone = TimeZone.current
+//        dateFormatter.dateFormat = toFormat
+//
+//        return dateFormatter.string(from: dt!)
     }
     
 
@@ -197,6 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
         }
     }
+    
     
     // MARK:-
     // MARK:- Country List API
@@ -247,13 +299,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         CUserDefaults.set(userLocation.coordinate.latitude, forKey: CLatitude)
         CUserDefaults.set(userLocation.coordinate.longitude, forKey: CLongitude)
         CUserDefaults.synchronize()
+
         
         let geocoder = CLGeocoder()
         
         geocoder.reverseGeocodeLocation(userLocation) { (placemark, error) in
             
-            let placeMark = placemark![0]
-            self.countryCode = placeMark.isoCountryCode!
+            if placemark != nil {
+                
+                self.placeMark = placemark![0]
+                self.countryCode = (self.placeMark?.isoCountryCode!)!
+                
+                CUserDefaults.set(self.placeMark?.locality, forKey: UserDefaultCurrentLocation)
+                CUserDefaults.synchronize()
+            }
         }
         
     }
@@ -261,6 +320,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     // MARK:-
     // MARK:- Common Api
+    
+    func loadCartDetail() {
+        
+     
+        APIRequest.shared().cartDetail { (response, error) in
+            
+            if response != nil && error == nil {
+               
+                let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                
+                let arrCart = dataRes.valueForJSON(key: CCart) as! [[String : AnyObject]]
+                
+                for item in arrCart {
+                     self.saveCart(dict: item, rest_id: dataRes.valueForInt(key: CRestaurant_id)!)
+                }
+                
+                let contactNo = dataRes.valueForJSON(key: CContact_number) as! [String]
+                
+                var dictRest = [String : AnyObject]()
+                dictRest = [CId : dataRes.valueForInt(key: CRestaurant_id),
+                            CName : dataRes.valueForString(key: CRestaurant_name),
+                            CAddress : dataRes.valueForString(key: CAddress),
+                            CImage : dataRes.valueForString(key: CRestaurant_image),
+                            CLatitude : dataRes.valueForDouble(key: CLatitude),
+                            CLongitude : dataRes.valueForDouble(key: CLongitude),
+                            CContact_no : contactNo.joined(separator: "\n"),
+                            CTax_percent : dataRes.valueForDouble(key: CTax_percent),
+                            CAdditional_tax : dataRes.valueForJSON(key: CAdditional_tax)] as [String : AnyObject]
+                
+                self.saveRestaurantDetail(dictRest: dictRest)
+ 
+            }
+        }
+    }
     
     func updateFavouriteStatus(restaurant_id : Int, sender : UIButton, completionBlock : @escaping ((AnyObject) -> Void)) {
         
@@ -288,6 +381,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
     }
     
+   
+    // MARK:-
+    // MARK:- Save cart and restaurant detail
+    
+    func saveCart(dict : [String : AnyObject], rest_id : Int) {
+        
+        let tblCart = TblCart.findOrCreate(dictionary: [CDish_id: Int64(dict.valueForInt(key: CDish_id)!)]) as! TblCart
+        
+        tblCart.restaurant_id = Int64(rest_id)
+        tblCart.dish_category_ids = dict.valueForJSON(key: "dish_category_ids") as? NSObject
+        tblCart.dish_name = dict.valueForString(key: CDish_name)
+        tblCart.dish_image = dict.valueForString(key: CDish_image)
+        tblCart.dish_price = dict.valueForDouble(key: CDish_price)!
+        tblCart.quantity = Int16(dict.valueForInt(key: CQuantity)!)
+        tblCart.dish_ingredients = dict.valueForString(key: CDish_ingredients)
+        tblCart.is_available = dict.valueForBool(key: CIs_available)
+        tblCart.popular_index = Int16(dict.valueForInt(key: CPopular_index)!)
+        tblCart.status_id = Int16(CActive)
+        
+        CoreData.saveContext()
+    }
+    
+    func saveRestaurantDetail(dictRest : [String : AnyObject]) {
+        
+        let arr = TblCartRestaurant.fetchAllObjects()
+        
+        if arr?.count == 0 {
+            
+            let tblCartRest = TblCartRestaurant.findOrCreate(dictionary: ["restaurant_id" : dictRest.valueForInt(key: CId)!]) as! TblCartRestaurant
+            
+            tblCartRest.restaurant_name = dictRest.valueForString(key: CName)
+            tblCartRest.restaurant_img = dictRest.valueForString(key: CImage)
+            tblCartRest.address = dictRest.valueForString(key: CAddress)
+            tblCartRest.latitude = dictRest.valueForDouble(key: CLatitude)!
+            tblCartRest.longitude = dictRest.valueForDouble(key: CLongitude)!
+            tblCartRest.contact_no = dictRest.valueForString(key: CContact_no)
+            tblCartRest.tax = dictRest.valueForDouble(key: CTax_percent)!
+            tblCartRest.additional_tax = dictRest.valueForJSON(key: CAdditional_tax) as? NSObject
+            
+            CoreData.saveContext()
+        }
+        
+    }
     
     
     

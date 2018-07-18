@@ -13,11 +13,7 @@ import Stripe
 class CartViewController: ParentViewController {
    
     
-    @IBOutlet weak var scrollVW : UIScrollView! {
-        didSet {
-             scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 175, 0)
-        }
-    }
+    @IBOutlet weak var scrollVW : UIScrollView!
     @IBOutlet weak var imgVDish : UIImageView!{
         didSet {
             imgVDish.layer.cornerRadius = 5.0
@@ -80,7 +76,10 @@ class CartViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
-        self.setOrderDetail()
+        
+        DispatchQueue.main.async {
+          self.setOrderDetail()
+        }
     }
     
     
@@ -95,7 +94,8 @@ class CartViewController: ParentViewController {
         
         arrPrice.removeAll()
         arrCartList.removeAll()
-        
+        scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 175, 0)
+
         arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
         
         if arrCartList.count > 0 {
@@ -114,10 +114,12 @@ class CartViewController: ParentViewController {
             imgVDish.sd_setShowActivityIndicatorView(true)
             imgVDish.sd_setImage(with: URL(string: resDetail.restaurant_img!), placeholderImage: nil)
             
+            
             self.createPriceArray()
             
             tblOrderList.reloadData()
             self.updateOrderTableHeight()
+            
             
         } else {
             
@@ -194,6 +196,8 @@ class CartViewController: ParentViewController {
         }
         
         tblOrderPrice.reloadData()
+        self.updateOrderTableHeight()
+
     }
     
     func updateOrderTableHeight() {
@@ -206,7 +210,7 @@ class CartViewController: ParentViewController {
     
     func updateCart(dish_id : Int64, qauntity : Int16) {
         
-        let tblCart = TblCart.findOrCreate(dictionary: ["dish_id" : dish_id]) as! TblCart
+        let tblCart = TblCart.findOrCreate(dictionary: [CDish_id : dish_id]) as! TblCart
         tblCart.quantity = qauntity
         CoreData.saveContext()
     }
@@ -240,7 +244,27 @@ class CartViewController: ParentViewController {
         let taxPrice = self.subTotal * resDetail.tax / 100
         
         self.updateCart(dish_id: dict.dish_id, qauntity: dict.quantity)
+        
+        if cell.lblquantity.text == "0" {
+            TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %d", CDish_id, dict.dish_id))
+            arrCartList.removeAll()
+            arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
+            tblOrderList.reloadData()
+            self.updateOrderTableHeight()
+            
+            if self.arrCartList.count == 0 {
+                self.vwEmptyCart.isHidden = false
+                self.vwFooter.isHidden = true
+                self.scrollVW.isHidden = true
+            }
+        }
+        
         self.updatePrice(tax: taxPrice, additional_charge: additionalCharge)
+        
+        let dic =  [CQuantity : cell.lblquantity.text as Any,
+                    CDish_id : dict.dish_id as Any]
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: dic)
     }
     
     func openPaymentPopup() {
@@ -295,7 +319,9 @@ extension CartViewController {
     @IBAction func btnProceedToPayClicked(sender:UIButton){
         
         if appDelegate?.loginUser?.user_id == nil {
-            appDelegate?.openLoginPopup(viewController: self)
+            
+            appDelegate?.openLoginPopup(viewController: self, fromOrder: false, completion: {
+            })
             
         } else {
             
@@ -317,11 +343,11 @@ extension CartViewController {
                     
                     for cart in self.arrCartList {
                         
-                        let tblCart = TblCart.findOrCreate(dictionary: ["dish_id" : cart.dish_id]) as! TblCart
+                        let tblCart = TblCart.findOrCreate(dictionary: [CDish_id : cart.dish_id]) as! TblCart
                         
                         for dishes in arrDishes {
                             
-                            if Int(cart.dish_id) == dishes.valueForInt(key: "dish_id") &&
+                            if Int(cart.dish_id) == dishes.valueForInt(key: CDish_id) &&
                                 (cart.dish_name != dishes.valueForString(key: CDish_name) ||
                                     cart.dish_price != dishes.valueForDouble(key: CDish_price) ||
                                     dishes.valueForInt(key: "status_id") == 3) {
@@ -388,7 +414,16 @@ extension CartViewController {
                     self.createPriceArray()
                     
                     
-                    if arrDishesUpdate.count > 0 || arrADTaxUpdate.count > 0 || isTaxUpdated {
+                    if dataResponse.valueForInt(key: COpen_Close_Status) == 0 {
+                        //Closed restaurant
+                       
+                        self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CClosedRestaurant, btnOneTitle: "Ok", btnOneTapped: { (action) in
+                            
+                            self.scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 59, 0)
+                            self.vwFooter.isHidden = true
+                        })
+                        
+                    } else if arrDishesUpdate.count > 0 || arrADTaxUpdate.count > 0 || isTaxUpdated {
                         
                         self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CMessageUpdatedRestCart, btnOneTitle: "Ok", btnOneTapped: { (action) in
                         })
@@ -415,11 +450,20 @@ extension CartViewController : UITextViewDelegate {
         } else {
             textView.placeholderColor = CColorLightGray
         }
-        
+    
         if textView.text.count > CharacterLimit {
             let currentText = textView.text as NSString
             txtVNote.text = currentText.substring(to: currentText.length - 1)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            return false
+        }
+        
+        return true
     }
 }
 
@@ -455,7 +499,11 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 cell.imgVDish.sd_setImage(with: URL(string: dict.dish_image!), placeholderImage: nil)
                 
                 cell.btnPlus.touchUpInside { (sender) in
-                    self.updateQuantity(cell: cell, dict: dict, index: indexPath, isIncrease: true)
+                    
+                    let currentCount = (cell.lblquantity.text?.toInt)! + 1
+                    if currentCount.toString.count <= 3 {
+                        self.updateQuantity(cell: cell, dict: dict, index: indexPath, isIncrease: true)
+                    }
                 }
                 
                 cell.btnMinus.touchUpInside { (sender) in
@@ -472,7 +520,7 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 let dict = arrPrice[indexPath.row]
                 
                 cell.lblTitle.text = dict.valueForString(key: "title")
-                cell.lblValue.text = "$\(dict.valueForString(key: "value"))"
+                cell.lblValue.text = String(format: "$%.2f",(dict.valueForDouble(key: "value"))!)
                 
                 return cell
             }
@@ -498,10 +546,11 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CDeleteOrderMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
                     
                     let dict = self.arrCartList[indexPath.row]
-                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", "dish_id", "\(dict.dish_id)"))
+                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.dish_id)"))
                     
                     self.arrCartList.remove(at: indexPath.row)
                     self.tblOrderList.reloadData()
+                    
                     
                     //... Update cart and price
                    
@@ -515,8 +564,18 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                     let taxPrice = self.subTotal * self.resDetail.tax / 100
                     self.updatePrice(tax: taxPrice, additional_charge: self.additionalCharge)
                     
+                    
+                    if self.arrCartList.count == 0 {
+                        self.vwEmptyCart.isHidden = false
+                        self.vwFooter.isHidden = true
+                        self.scrollVW.isHidden = true
+                    }
+                    
                     self.updateOrderTableHeight()
                     self.view.layoutIfNeeded()
+                    
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
                     
                 }, btnTwoTitle: CNo) { (action) in
                 }
@@ -560,6 +619,10 @@ extension CartViewController {
                 
                 TblCart.deleteAllObjects()
                 TblCartRestaurant.deleteAllObjects()
+                CUserDefaults.removeObject(forKey: UserDefaultCartID)
+
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
+
                 
                 //...After Payment Success redirect
                 
@@ -594,8 +657,8 @@ extension CartViewController {
             var dicTest : Dictionary = cart.dictionaryWithValues(forKeys: Array(keys))
             
             dicTest.removeValue(forKey: CRestaurant_id)
-            dicTest.removeValue(forKey: CStatus_id)
-            dicTest.removeValue(forKey: CIs_available)
+//            dicTest.removeValue(forKey: CStatus_id)
+//            dicTest.removeValue(forKey: CIs_available)
 
             arrCart.append(dicTest as [String : AnyObject])
         }
@@ -639,6 +702,8 @@ extension CartViewController {
                 
                 self.orderID = dataResponse.valueForInt(key: COrderID)
                 
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
+                
                 if paymentType == CPaymentStripe {
                     
                     let stripeVW = STPAddCardViewController()
@@ -649,7 +714,14 @@ extension CartViewController {
                 
                 } else {
                     
+                    TblCart.deleteAllObjects()
+                    TblCartRestaurant.deleteAllObjects()
+                    CUserDefaults.removeObject(forKey: UserDefaultCartID)
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
+                    
                     if let orderDetailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+                        orderDetailVC.orderID = self.orderID
                         self.navigationController?.pushViewController(orderDetailVC, animated: true)
                     }
                 }

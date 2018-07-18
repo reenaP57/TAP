@@ -13,12 +13,17 @@ class TabbarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpTabbarView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTabbar), name: Notification.Name(rawValue: kNotificationUpdateTabbar), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    @objc func updateTabbar (notification : Notification) {
+        self.setUpTabbarView()
+    }
 }
 
 extension TabbarViewController {
@@ -63,6 +68,7 @@ extension TabbarViewController {
         guard let profileLoginVC = CProfile_SB.instantiateViewController(withIdentifier: "ProfileLoginViewController") as? ProfileLoginViewController else { return }
         let profileLoginNav = UINavigationController.rootViewController(viewController: profileLoginVC)
         
+       
         if appDelegate?.loginUser?.user_id == nil {
             self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileLoginNav], animated: true)
         } else{

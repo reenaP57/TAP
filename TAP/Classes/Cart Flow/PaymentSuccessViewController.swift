@@ -54,6 +54,7 @@ extension PaymentSuccessViewController {
         
         if let detailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
             
+            detailVC.isFromCartPayment = true
             detailVC.orderID = dictPayment.valueForInt(key: COrderID)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }

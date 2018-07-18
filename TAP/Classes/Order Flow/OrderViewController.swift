@@ -23,7 +23,10 @@ class OrderViewController: ParentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialize()
+        
+        if appDelegate?.loginUser?.user_id != nil {
+            self.initialize()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,6 +36,11 @@ class OrderViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
+        
+        if appDelegate?.loginUser?.user_id == nil {
+            appDelegate?.openLoginPopup(viewController: self, fromOrder: true, completion: {
+            })
+        }
     }
     
     
@@ -49,8 +57,14 @@ class OrderViewController: ParentViewController {
         tblOrder.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
 
         self.loadOrderList(isRefresh: false)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshOrderList), name: NSNotification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
     }
     
+    
+    @objc func refreshOrderList(notification : Notification) {
+        self.loadOrderList(isRefresh: true)
+    }
 }
 
 
@@ -169,7 +183,6 @@ extension OrderViewController {
         }
         
         if !isRefresh{
-            tblOrder.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -201,9 +214,7 @@ extension OrderViewController {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
                 }
                 
-                
-                self.tblOrder.isHidden = self.arrOrderList.count == 0
-                self.lblNoData.isHidden = !self.tblOrder.isHidden
+                self.lblNoData.isHidden = self.arrOrderList.count != 0
                 self.tblOrder.reloadData()
             }
         })

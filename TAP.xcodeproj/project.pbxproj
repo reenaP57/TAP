@@ -89,14 +89,6 @@
 		5C3DBF5920CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5820CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift */; };
 		5C3DBF5C20CFA06800F9E2E4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5B20CFA06800F9E2E4 /* HomeViewController.swift */; };
 		5C3DBF5E20CFA62300F9E2E4 /* RestaurantDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF5D20CFA62300F9E2E4 /* RestaurantDetailViewController.swift */; };
-		5C3DBF6820CFB52B00F9E2E4 /* download-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6020CFB52B00F9E2E4 /* download-1.jpg */; };
-		5C3DBF6920CFB52B00F9E2E4 /* download-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6120CFB52B00F9E2E4 /* download-2.jpg */; };
-		5C3DBF6A20CFB52B00F9E2E4 /* download-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6220CFB52B00F9E2E4 /* download-3.jpg */; };
-		5C3DBF6B20CFB52B00F9E2E4 /* download-4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6320CFB52B00F9E2E4 /* download-4.jpg */; };
-		5C3DBF6C20CFB52B00F9E2E4 /* download.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6420CFB52B00F9E2E4 /* download.jpg */; };
-		5C3DBF6D20CFB52B00F9E2E4 /* images-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6520CFB52B00F9E2E4 /* images-1.jpg */; };
-		5C3DBF6E20CFB52B00F9E2E4 /* images-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6620CFB52B00F9E2E4 /* images-2.jpg */; };
-		5C3DBF6F20CFB52B00F9E2E4 /* images.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C3DBF6720CFB52B00F9E2E4 /* images.jpg */; };
 		5C3DBF7120CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF7020CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift */; };
 		5C3DBF7320CFCB4E00F9E2E4 /* SeeAllRestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF7220CFCB4E00F9E2E4 /* SeeAllRestaurantViewController.swift */; };
 		5C3DBF7720CFCEEA00F9E2E4 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DBF7620CFCEEA00F9E2E4 /* FloatRatingView.swift */; };
@@ -244,14 +236,6 @@
 		5C3DBF5820CF9E9000F9E2E4 /* RestaurantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C3DBF5B20CFA06800F9E2E4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C3DBF5D20CFA62300F9E2E4 /* RestaurantDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailViewController.swift; sourceTree = "<group>"; };
-		5C3DBF6020CFB52B00F9E2E4 /* download-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "download-1.jpg"; sourceTree = "<group>"; };
-		5C3DBF6120CFB52B00F9E2E4 /* download-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "download-2.jpg"; sourceTree = "<group>"; };
-		5C3DBF6220CFB52B00F9E2E4 /* download-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "download-3.jpg"; sourceTree = "<group>"; };
-		5C3DBF6320CFB52B00F9E2E4 /* download-4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "download-4.jpg"; sourceTree = "<group>"; };
-		5C3DBF6420CFB52B00F9E2E4 /* download.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = download.jpg; sourceTree = "<group>"; };
-		5C3DBF6520CFB52B00F9E2E4 /* images-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "images-1.jpg"; sourceTree = "<group>"; };
-		5C3DBF6620CFB52B00F9E2E4 /* images-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "images-2.jpg"; sourceTree = "<group>"; };
-		5C3DBF6720CFB52B00F9E2E4 /* images.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = images.jpg; sourceTree = "<group>"; };
 		5C3DBF7020CFCA1200F9E2E4 /* SearchRestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		5C3DBF7220CFCB4E00F9E2E4 /* SeeAllRestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllRestaurantViewController.swift; sourceTree = "<group>"; };
 		5C3DBF7620CFCEEA00F9E2E4 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
@@ -530,21 +514,6 @@
 			path = "Home Flow";
 			sourceTree = "<group>";
 		};
-		5C3DBF5F20CFB52B00F9E2E4 /* Temp */ = {
-			isa = PBXGroup;
-			children = (
-				5C3DBF6020CFB52B00F9E2E4 /* download-1.jpg */,
-				5C3DBF6120CFB52B00F9E2E4 /* download-2.jpg */,
-				5C3DBF6220CFB52B00F9E2E4 /* download-3.jpg */,
-				5C3DBF6320CFB52B00F9E2E4 /* download-4.jpg */,
-				5C3DBF6420CFB52B00F9E2E4 /* download.jpg */,
-				5C3DBF6520CFB52B00F9E2E4 /* images-1.jpg */,
-				5C3DBF6620CFB52B00F9E2E4 /* images-2.jpg */,
-				5C3DBF6720CFB52B00F9E2E4 /* images.jpg */,
-			);
-			path = Temp;
-			sourceTree = "<group>";
-		};
 		5C3DBF7420CFCEEA00F9E2E4 /* Framework:SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,7 +572,6 @@
 		5C944F1720CAA1FC00097FC4 /* TAP */ = {
 			isa = PBXGroup;
 			children = (
-				5C3DBF5F20CFB52B00F9E2E4 /* Temp */,
 				5C21B84620CEAF0000890B42 /* Fonts */,
 				5C21B7F820CEAE0300890B42 /* Master */,
 				5C3DBF7420CFCEEA00F9E2E4 /* Framework:SDK */,
@@ -831,11 +799,9 @@
 				5C21B84E20CEAF1000890B42 /* SF UI Text Medium.otf in Resources */,
 				5C9040D820CF84C6008A5C1C /* TabBarView.xib in Resources */,
 				5C21B7EE20CEA3F600890B42 /* CustomSearchView.xib in Resources */,
-				5C3DBF6A20CFB52B00F9E2E4 /* download-3.jpg in Resources */,
 				5C3DBF7D20CFDF6700F9E2E4 /* RestaurantDetailTopView.xib in Resources */,
 				5C92B87320D3CACA002CFF32 /* LoginPopupView.xib in Resources */,
 				5C1190E220D13823003166EE /* ProfileHeaderView.xib in Resources */,
-				5C3DBF6D20CFB52B00F9E2E4 /* images-1.jpg in Resources */,
 				5C21B85120CEAF1000890B42 /* SF UI Text Regular.otf in Resources */,
 				5C944F2620CAA1FF00097FC4 /* LaunchScreen.storyboard in Resources */,
 				5C2B9AA620D22C3500C17F1F /* Order.storyboard in Resources */,
@@ -844,19 +810,13 @@
 				5C21B85020CEAF1000890B42 /* SF UI Text Bold.otf in Resources */,
 				5C92B86620D37B7E002CFF32 /* Cart.storyboard in Resources */,
 				5C1190D320D0E52A003166EE /* RestaurantDetailFooterView.xib in Resources */,
-				5C3DBF6F20CFB52B00F9E2E4 /* images.jpg in Resources */,
-				5C3DBF6920CFB52B00F9E2E4 /* download-2.jpg in Resources */,
-				5C3DBF6E20CFB52B00F9E2E4 /* images-2.jpg in Resources */,
 				5C944F2320CAA1FF00097FC4 /* Assets.xcassets in Resources */,
 				5C1190DE20D1368D003166EE /* Profile.storyboard in Resources */,
 				5C944F1E20CAA1FC00097FC4 /* Main.storyboard in Resources */,
-				5C3DBF6C20CFB52B00F9E2E4 /* download.jpg in Resources */,
-				5C3DBF6B20CFB52B00F9E2E4 /* download-4.jpg in Resources */,
 				5C21B84F20CEAF1000890B42 /* SF UI Text Semibold.otf in Resources */,
 				5C92B86F20D3C132002CFF32 /* PaymentPopupView.xib in Resources */,
 				5C082C5820D8E2060000F018 /* SearchRestaurantTableViewCell.xib in Resources */,
 				5C21B84420CEAEB800890B42 /* MIPopUpOverlay.xib in Resources */,
-				5C3DBF6820CFB52B00F9E2E4 /* download-1.jpg in Resources */,
 				5C3DBF8920D000C100F9E2E4 /* RestaurantCategoryCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1217,15 +1177,18 @@
 			baseConfigurationReference = DB94963F7C18DD7F99661288 /* Pods-TAP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7224G6JACN;
 				INFOPLIST_FILE = TAP/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
-				PROVISIONING_PROFILE = "d181e285-0fe6-4e20-9a77-4c524cb4c7c7";
-				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2ADHoc 2 Feb 2018";
+				PROVISIONING_PROFILE = "5b1c50b6-ab5a-497b-a4e0-af9f20d04024";
+				PROVISIONING_PROFILE_SPECIFIER = "TaPronto Development 29 jun 2018";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1236,15 +1199,18 @@
 			baseConfigurationReference = 154B42EEDE2A023F0160D275 /* Pods-TAP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 7224G6JACN;
 				INFOPLIST_FILE = TAP/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mi.TaPronto;
 				PRODUCT_NAME = "Ta Pronto";
-				PROVISIONING_PROFILE = "d181e285-0fe6-4e20-9a77-4c524cb4c7c7";
-				PROVISIONING_PROFILE_SPECIFIER = "MIAccount2ADHoc 2 Feb 2018";
+				PROVISIONING_PROFILE = "5b1c50b6-ab5a-497b-a4e0-af9f20d04024";
+				PROVISIONING_PROFILE_SPECIFIER = "TaPronto Development 29 jun 2018";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1257,7 +1223,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1273,7 +1243,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1288,7 +1262,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1303,7 +1281,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TAPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.TAPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

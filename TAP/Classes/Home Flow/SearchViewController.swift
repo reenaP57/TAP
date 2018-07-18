@@ -16,7 +16,9 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
         }
     }
     
+    @IBOutlet weak var vwResultCount : UIView!
     @IBOutlet weak var lblResultCount : UILabel!
+    @IBOutlet weak var lblNoData : UILabel!
     @IBOutlet weak var cnTblBottom : NSLayoutConstraint!
     @IBOutlet weak var activityLoader : UIActivityIndicatorView!
     
@@ -56,6 +58,7 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
         refreshControl.tintColor = CColorNavRed
         tblSearch.pullToRefreshControl = refreshControl
         
+        self.loadSearchRestaurantList(search: "", isRefresh: false)
     }
     
     func setCustomSearchBar() {
@@ -98,14 +101,13 @@ extension SearchViewController {
     func textDidChange(text : String) {
        currentPage = 1
        lblResultCount.text = ""
+       vwResultCount.hide(byHeight: true)
        self.loadSearchRestaurantList(search: text, isRefresh: false)
     }
     
     func clearSearchText() {
-        lblResultCount.text = ""
-        arrRestData.removeAll()
-        tblSearch.isHidden = true
-        tblSearch.reloadData()
+        currentPage = 1
+        self.loadSearchRestaurantList(search: "", isRefresh: true)
     }
 
     func showNextScreen() {
@@ -145,14 +147,20 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
             cell.lblCuisines.text = arrCuisineName?.joined(separator: "-")
             
             
-            if dict.valueForInt(key: COpen_Close_Status) == 0 {
-                cell.lblClosed.hide(byWidth: false)
-                cell.lblTime.text = "Open at \(dict.valueForString(key: COpen_time))"
-            } else {
-                cell.lblClosed.hide(byWidth: true)
+            var time = ""
+            if dict.valueForString(key: COpen_time) != "" {
+                time = (appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone"))))!
             }
             
+            if dict.valueForInt(key: COpen_Close_Status) == 0 {
+                cell.lblClosed.hide(byWidth: false)
+                cell.lblTime.text = time != "" ? "Open at \(time)" : ""
+            } else {
+                cell.lblClosed.hide(byWidth: true)
+                cell.lblTime.text = ""
+            }
             
+
             if dict.valueForInt(key: CFav_status) == 0 {
                 cell.btnLike.isSelected = false
             } else{
@@ -164,7 +172,9 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
                 //...Open login Popup If user is not logged In OtherWise Like
                 
                 if appDelegate?.loginUser?.user_id == nil{
-                    appDelegate?.openLoginPopup(viewController: self.viewController!)
+                    appDelegate?.openLoginPopup(viewController: self, fromOrder: false, completion: {
+                    })
+            
                 } else{
                     if cell.btnLike.isSelected {
                         cell.btnLike.isSelected = false
@@ -185,6 +195,16 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         }
         
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let dict = arrRestData[indexPath.row]
+        
+        if let resDetailVC = CMain_SB.instantiateViewController(withIdentifier: "RestaurantDetailViewController") as? RestaurantDetailViewController {
+            resDetailVC.restaurantID = dict.valueForInt(key: CId)
+            self.navigationController?.pushViewController(resDetailVC, animated: true)
+        }
     }
 }
 
@@ -211,7 +231,6 @@ extension SearchViewController {
                     CPage : currentPage] as [String : AnyObject]
         
         if !isRefresh {
-            tblSearch.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -220,7 +239,6 @@ extension SearchViewController {
             self.apiTask?.cancel()
             self.activityLoader.stopAnimating()
             self.refreshControl.endRefreshing()
-            
             
             if response != nil && error == nil {
                 
@@ -235,11 +253,23 @@ extension SearchViewController {
                 
                 
                 if arrData.count > 0 {
-                   
+                    
                     self.arrRestData.removeAll()
                     for item in arrData {
                         self.arrRestData.append(item)
                     }
+                    
+                    if search != ""   {
+                        self.vwResultCount.hide(byHeight: false)
+                        self.lblResultCount.text = "\(metaData.valueForInt(key: "total")!) search results found"
+                    } else {
+                        self.vwResultCount.hide(byHeight: true)
+                        self.lblResultCount.text = ""
+                    }
+                    
+                } else {
+                    self.vwResultCount.hide(byHeight: true)
+                    self.lblResultCount.text = ""
                 }
                 
                 self.lastPage = metaData.valueForInt(key: CLastPage)!
@@ -248,11 +278,8 @@ extension SearchViewController {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)! + 1
                 }
                 
-                if self.arrRestData.count > 0 {
-                    self.tblSearch.isHidden = false
-                }
-                
-                self.lblResultCount.text = "\(metaData.valueForInt(key: "total")!) search results found"
+                self.lblNoData.isHidden = self.arrRestData.count != 0
+               
                 self.tblSearch.reloadData()
             }
         })

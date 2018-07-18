@@ -117,6 +117,7 @@ class EditProfileViewController: ParentViewController {
                 txtCountryCode.text = "+\(self.getCountryCodeFromId())"
             }
             
+            countryID = Int((appDelegate?.loginUser?.country_id)!)
             txtMobileNo.text = appDelegate?.loginUser?.mobile_no
         }
         
@@ -191,12 +192,16 @@ extension EditProfileViewController {
         dict[CName] = txtName.text as AnyObject
         
         if txtMobileNo.text != "" {
-            dict[CMobile_no] = "\(txtCountryCode.text ?? "")\(txtMobileNo.text ?? "")" as AnyObject
+            dict[CMobile_no] = txtMobileNo.text as AnyObject
+            dict[CCountry_id] = countryID as AnyObject
         }
         
         APIRequest.shared().editProfile(_param: dict, _imgData: imgData) { (response, error) in
         
             if response != nil && error == nil {
+                
+                print(response as Any)
+                
                 APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
                 
                 self.navigationController?.popViewController(animated: true)

@@ -126,7 +126,6 @@ extension PromotionViewController {
         }
         
         if !isRefresh {
-            tblPromotion.isHidden = true
             activityLoader.startAnimating()
         }
         
@@ -161,9 +160,7 @@ extension PromotionViewController {
                     self.currentPage = metaData.valueForInt(key: CCurrentPage)!
                 }
                 
-                self.tblPromotion.isHidden = self.arrPromotion.count == 0
                 self.lblNoData.isHidden = self.arrPromotion.count != 0
-                
                 self.tblPromotion.reloadData()
             }
         })

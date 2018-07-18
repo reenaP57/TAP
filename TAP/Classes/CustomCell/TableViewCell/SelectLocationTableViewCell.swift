@@ -10,6 +10,7 @@ import UIKit
 
 class SelectLocationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lblLocation : UILabel!
     @IBOutlet weak var lblLocationName : UILabel!
     
     override func awakeFromNib() {

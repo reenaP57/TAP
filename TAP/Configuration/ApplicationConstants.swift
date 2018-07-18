@@ -68,7 +68,13 @@ let CColorLightGray          =  CRGB(r: 172.0, g: 172.0, b: 172.0)
 let UserDefaultLoginUserToken       = "UserDefaultLoginUserToken"
 let UserDefaultLoginUserID          = "UserDefaultLoginUserID"
 let UserDefaultTimestamp            = "UserDefaultTimestamp"
+let UserDefaultCurrentLocation      = "UserDefaultCurrentLocation"
+let UserDefaultCartID               = "UserDefaultCartID"
+
 let kNotificationUpdateFavStatus    = "UpdateFavouriteStatus"
+let kNotificationRefreshOrderList   = "RefreshOrderList"
+let kNotificationUpdateTabbar       = "UpdateTabbar"
+let kNotificationUpdateRestaurantDetail   = "UpdateRestaurantDetail"
 
 
 //MARK:-
@@ -143,6 +149,7 @@ let CIs_favourite       = "is_favourite"
 let CNo_person_rated    = "no_person_rated"
 let CContact_no         = "contact_no"
 let CDish_name          = "dish_name"
+let CDish_id            = "dish_id"
 let CDish_image         = "dish_image"
 let CDish_ingredients   = "dish_ingredients"
 let CDish_price         = "dish_price"
@@ -169,3 +176,4 @@ let CTranscation_id     = "transaction_id"
 let COrder_no           = "order_no"
 let CContact_number     = "contact_number"
 let COrder_completed    = "order_completed"
+let CCart_id            = "cart_id"

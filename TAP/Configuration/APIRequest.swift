@@ -42,6 +42,8 @@ let CAPITagAddOrder                    = "add-order"
 let CAPITagOrderList                   = "order-list"
 let CAPITagOrderDetail                 = "order-detail"
 let CAPITagAddRating                   = "add-rating"
+let CAPITagAddCart                     = "add-cart"
+let CAPITagCartDetail                  = "cart-detail"
 
 
 let CJsonResponse           = "response"
@@ -73,6 +75,8 @@ let CStatus500              = 500
 let CStatus550              = 550 // Inactive/Delete user
 let CStatus555              = 555 // Invalid request
 let CStatus556              = 556 // Invalid request
+let CStatus1005             = -1005 // Lost network connection
+let CStatus1009             = -1009 // No interenet connection
 
 
 //MARK:- ---------Networking
@@ -687,7 +691,7 @@ extension APIRequest {
         
         Networking.sharedInstance.POST(param: param, tag: CAPITagSignUp, multipartFormData: { (formData) in
             
-            if _imgData != nil {
+            if _imgData?.count != 0 {
                 formData.append(_imgData!, withName: CImage, fileName:  String(format: "%.0f.jpg", Date().timeIntervalSince1970 * 1000), mimeType: "image/jpeg")
             }
             
@@ -808,41 +812,76 @@ extension APIRequest {
     //TODO:
     
     
-    func restaurantList (completion : @escaping ClosureCompletion) {
+    func restaurantList (completion : @escaping ClosureCompletion) -> URLSessionTask {
         
-        let dict = [CLatitude : appDelegate?.loginUser?.latitude as AnyObject,
-                    CLongitude : appDelegate?.loginUser?.longitude as AnyObject,
-                    CCountry_id : appDelegate!.countryCode as AnyObject]
+        var lat = 0.0
+        var long = 0.0
         
-        _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantMainList, param: dict, successBlock: { (task, response) in
+        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
+            lat = (appDelegate?.loginUser?.latitude)!
+            long = (appDelegate?.loginUser?.longitude)!
+        } else if appDelegate?.loginUser == nil && !(appDelegate?.isCurrentLoc)!{
+            lat =  appDelegate?.dictLocation[CLatitude]  as! Double
+            long = appDelegate?.dictLocation[CLongitude]  as! Double
+        } else {
+            lat = CUserDefaults.object(forKey: CLatitude) as! Double
+            long = CUserDefaults.object(forKey: CLongitude) as! Double
+        }
+
+        
+        let dict = [CLatitude : lat,
+                    CLongitude : long,
+                    CCountry_id : appDelegate!.countryCode as AnyObject] as [String : Any]
+        
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantMainList, param: dict as [String : AnyObject], successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantMainList) {
                 completion(response, nil)
             }
             
         }, failureBlock: { (task, message, error) in
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantMainList, error: error)
-        })
+           
+        })!
     }
     
     func moreRestaurantList (param : [String : AnyObject], completion : @escaping ClosureCompletion) -> URLSessionTask {
         
         var dict = [String : AnyObject]()
         
+        var lat = 0.0
+        var long = 0.0
+        
+        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
+            lat = (appDelegate?.loginUser?.latitude)!
+            long = (appDelegate?.loginUser?.longitude)!
+        } else if appDelegate?.loginUser == nil && !(appDelegate?.isCurrentLoc)!{
+            lat =  appDelegate?.dictLocation[CLatitude]  as! Double
+            long = appDelegate?.dictLocation[CLongitude]  as! Double
+        } else {
+            lat = CUserDefaults.object(forKey: CLatitude) as! Double
+            long = CUserDefaults.object(forKey: CLongitude) as! Double
+        }
+        
+        
         dict = param
         dict[CPerPage] = CLimit as AnyObject
-        dict[CLatitude] = appDelegate?.loginUser?.latitude as AnyObject
-        dict[CLongitude] = appDelegate?.loginUser?.longitude as AnyObject
+        dict[CLatitude] = lat as AnyObject
+        dict[CLongitude] = long as AnyObject
         dict[CCountry_id] = appDelegate?.countryCode as AnyObject
         
-        return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantList, param: dict, successBlock: { (task, response) in
+        return Networking.sharedInstance.POST(apiTag: CAPITagRestaurantList, param: dict , successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantList) {
                 completion(response, nil)
             }
             
         }, failureBlock: { (task, message, error) in
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantList, error: error)
+            
         })!
     }
     
@@ -850,10 +889,25 @@ extension APIRequest {
         
         var dict = [String : AnyObject]()
         
+        var lat = 0.0
+        var long = 0.0
+        
+        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
+            lat = (appDelegate?.loginUser?.latitude)!
+            long = (appDelegate?.loginUser?.longitude)!
+        } else if appDelegate?.loginUser == nil && !(appDelegate?.isCurrentLoc)!{
+            lat =  appDelegate?.dictLocation[CLatitude]  as! Double
+            long = appDelegate?.dictLocation[CLongitude]  as! Double
+        } else {
+            lat = CUserDefaults.object(forKey: CLatitude) as! Double
+            long = CUserDefaults.object(forKey: CLongitude) as! Double
+        }
+        
+        
         dict = param
         dict[CPerPage] = CLimit as AnyObject
-        dict[CLatitude] = appDelegate?.loginUser?.latitude as AnyObject
-        dict[CLongitude] = appDelegate?.loginUser?.longitude as AnyObject
+        dict[CLatitude] = lat as AnyObject
+        dict[CLongitude] = long as AnyObject
         dict[CCountry_id] = appDelegate?.countryCode as AnyObject
         
         return Networking.sharedInstance.POST(apiTag: CAPITagSearchRestaurant, param: dict, successBlock: { (task, response) in
@@ -863,7 +917,9 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
+             completion(nil, error)
              self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
+            
         })!
     }
     
@@ -876,7 +932,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantDetails, error: error)
+            completion(nil, error)
         })
         
     }
@@ -890,6 +946,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
+            
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddFavouriteRestaurant, error: error)
         })
     }
@@ -903,6 +960,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
+             completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagFavouriteRestaurantList, error: error)
         })!
     }
@@ -916,6 +974,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
+             completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagPromotionList, error: error)
         })!
     }
@@ -928,7 +987,9 @@ extension APIRequest {
                 completion(response, nil)
             }
         }, failureBlock: { (task, message, error) in
+             completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
+            
         })!
     }
     
@@ -999,7 +1060,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            
+             completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderList, error: error)
         })!
     }
@@ -1019,7 +1080,7 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderDetail, error: error)
+            completion(nil, error)
         })
     }
     
@@ -1041,6 +1102,40 @@ extension APIRequest {
             MILoader.shared.hideLoader()
             
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddRating, error: error)
+        })
+    }
+    
+    func addCart(param : [String : AnyObject], completion : @escaping ClosureCompletion) {
+        
+        MILoader.shared.showLoader(type: .circularRing, message: "")
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagAddCart, param: param, successBlock: { (task, response) in
+            
+            MILoader.shared.hideLoader()
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagAddCart) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            MILoader.shared.hideLoader()
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddCart, error: error)
+        })
+        
+    }
+    
+    func cartDetail(completion : @escaping ClosureCompletion) {
+        
+        //CUserDefaults.object(forKey: UserDefaultCartID)
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagCartDetail, param: [CCart_id : CUserDefaults.object(forKey: UserDefaultCartID) as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: false, responseobject: response, strApiTag: CAPITagCartDetail) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: false, strApiTag: CAPITagCartDetail, error: error)
         })
     }
 }
@@ -1072,6 +1167,11 @@ extension APIRequest {
     
     func saveLoginUserDetail (dictUser : [String : AnyObject]) ->  TblUser {
         
+        CUserDefaults.set(appDelegate?.locManager.location?.coordinate.latitude, forKey: CLatitude)
+        CUserDefaults.set(appDelegate?.locManager.location?.coordinate.longitude, forKey: CLongitude)
+        CUserDefaults.set(appDelegate?.placeMark?.locality, forKey: UserDefaultCurrentLocation)
+        CUserDefaults.synchronize()
+        
         let tblUser = TblUser.findOrCreate(dictionary: ["user_id": Int64(dictUser.valueForInt(key: CId)!)]) as! TblUser
         
         tblUser.name = dictUser.valueForString(key: CName)
@@ -1080,7 +1180,10 @@ extension APIRequest {
         tblUser.is_notify = dictUser.valueForBool(key: CIs_notify)
         tblUser.profile_image = dictUser.valueForString(key: CImage)
         tblUser.country_id = Int16(dictUser.valueForInt(key: CCountry_id)!)
-        
+        tblUser.latitude = CUserDefaults.object(forKey: CLatitude) as! Double
+        tblUser.longitude = CUserDefaults.object(forKey: CLongitude) as! Double
+        tblUser.address = (CUserDefaults.object(forKey: UserDefaultCurrentLocation) as! String)
+
         CoreData.saveContext()
         
         return tblUser

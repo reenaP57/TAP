@@ -75,8 +75,7 @@ extension RateOrderViewController {
         if vwRating.rating < 1.0 {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CSelectRating, btnOneTitle: COk, btnOneTapped: nil)
         
-        }
-        else if txtVReview.text.isBlank {
+        } else if txtVReview.text.isBlank {
             self.presentAlertViewWithOneButton(alertTitle: "", alertMessage: CBlankReview, btnOneTitle: COk, btnOneTapped: nil)
        
         } else {
@@ -90,6 +89,10 @@ extension RateOrderViewController {
                 if response != nil && error == nil {
                     
                     let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
+                    
+                    if (self.block != nil) {
+                        self.block!(nil,nil)
+                    }
                     
                     self.navigationController?.popViewController(animated: true)
                     CTopMostViewController.presentAlertViewWithOneButton(alertTitle: metaData.valueForString(key: CJsonMessage), alertMessage: "", btnOneTitle: COk, btnOneTapped: { (action) in
@@ -122,6 +125,15 @@ extension RateOrderViewController : UITextViewDelegate {
             let currentText = textView.text as NSString
             txtVReview.text = currentText.substring(to: currentText.length - 1)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            return false
+        }
+        
+        return true
     }
 }
 

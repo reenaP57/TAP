@@ -9,18 +9,23 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF UI Text Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="g8a-MX-h8F" customClass="RestaurantDetailHeaderView" customModule="Ta_Pronto" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1RO-cz-VoI">
-                    <rect key="frame" x="20" y="0.0" width="335" height="64"/>
+                    <rect key="frame" x="20" y="0.0" width="335" height="100"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fi-9a-ssm">
-                            <rect key="frame" x="0.0" y="15" width="335" height="34"/>
+                            <rect key="frame" x="0.0" y="16" width="335" height="34"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="34" id="R29-SD-cQl"/>
@@ -36,15 +41,27 @@
                                 <outlet property="delegate" destination="g8a-MX-h8F" id="TOz-F6-USX"/>
                             </connections>
                         </collectionView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No dishes available." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KvT-kY-h7k" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="66" width="335" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="KTQ-bD-9yk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                            <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="9fi-9a-ssm" firstAttribute="top" secondItem="1RO-cz-VoI" secondAttribute="top" constant="22" id="5jZ-ZO-h79"/>
-                        <constraint firstItem="9fi-9a-ssm" firstAttribute="centerY" secondItem="1RO-cz-VoI" secondAttribute="centerY" id="TIL-zZ-StV"/>
+                        <constraint firstItem="KvT-kY-h7k" firstAttribute="trailing" secondItem="31p-Qq-hxU" secondAttribute="trailing" id="MZ3-F2-VhX"/>
                         <constraint firstAttribute="bottom" secondItem="9fi-9a-ssm" secondAttribute="bottom" constant="18" id="TmI-SB-EsD"/>
                         <constraint firstAttribute="trailing" secondItem="9fi-9a-ssm" secondAttribute="trailing" id="WCV-wj-yzW"/>
+                        <constraint firstItem="KvT-kY-h7k" firstAttribute="leading" secondItem="31p-Qq-hxU" secondAttribute="leading" id="cj1-85-dVb"/>
+                        <constraint firstItem="31p-Qq-hxU" firstAttribute="bottom" secondItem="KvT-kY-h7k" secondAttribute="bottom" constant="16" id="dum-aU-WWR"/>
                         <constraint firstItem="9fi-9a-ssm" firstAttribute="leading" secondItem="1RO-cz-VoI" secondAttribute="leading" id="eQU-hg-ceh"/>
-                        <constraint firstAttribute="height" constant="64" id="sGe-b8-S91"/>
+                        <constraint firstItem="9fi-9a-ssm" firstAttribute="top" secondItem="31p-Qq-hxU" secondAttribute="top" constant="16" id="rzB-Nx-jKm"/>
+                        <constraint firstAttribute="height" constant="100" id="sGe-b8-S91"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="31p-Qq-hxU"/>
                     <variation key="default">
@@ -66,6 +83,7 @@
             <viewLayoutGuide key="safeArea" id="7K9-Wj-u7g"/>
             <connections>
                 <outlet property="collCategory" destination="9fi-9a-ssm" id="k0a-k5-kFb"/>
+                <outlet property="lblNoDishMsg" destination="KvT-kY-h7k" id="lKM-74-J6U"/>
             </connections>
             <point key="canvasLocation" x="441.5" y="53"/>
         </view>
