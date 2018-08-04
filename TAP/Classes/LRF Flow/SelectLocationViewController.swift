@@ -174,6 +174,7 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
                 appDelegate?.loginUser?.latitude = place.coordinate.latitude
                 appDelegate?.loginUser?.longitude = place.coordinate.longitude
                 appDelegate?.loginUser?.address = place.name
+                CoreData.saveContext()
                 
             } else {
                 
@@ -258,6 +259,7 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
             appDelegate?.loginUser?.latitude = dict.latitude
             appDelegate?.loginUser?.longitude = dict.longitude
             appDelegate?.loginUser?.address = dict.name
+            CoreData.saveContext()
         } else {
             
             //...Save in lat,long and place name in dictionary for guest user to pass in restuarant api

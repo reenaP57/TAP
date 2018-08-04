@@ -49,17 +49,16 @@ class ProfileViewController:ParentViewController {
         
         headerView.lblEmail.text = appDelegate?.loginUser?.email
         headerView.lblUserName.text = appDelegate?.loginUser?.name
-        
+
         if appDelegate?.loginUser?.mobile_no != "" {
             headerView.lblMobileNo.text = appDelegate?.loginUser?.mobile_no
         } else {
-            headerView.imgVPhone.hide(byHeight: true)
+            headerView.imgVPhone.isHidden = true
         }
         
         if appDelegate?.loginUser?.profile_image != nil {
             headerView.imgVProfile.sd_setImage(with: URL(string: (appDelegate?.loginUser?.profile_image)!), placeholderImage: nil)
         }
-        
     }
     
 }
@@ -175,9 +174,9 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
             
             self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CLogOutMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
                 
-                let arrCart = TblCart.fetchAllObjects()
+                let arrCartList =  TblCart.fetchAllObjects()
                 
-                if (arrCart?.count)! > 0 {
+                if arrCartList?.count != 0 ||  CUserDefaults.object(forKey: UserDefaultCartID) != nil {
                      self.addCartOnServer()
                 }
                
@@ -200,13 +199,17 @@ extension ProfileViewController {
     
     @objc func switchChanged(sender : UISwitch) {
         
+        var status = "0"
+        
         if sender.isOn {
             sender.isOn = true
+            status = "1"
         } else {
             sender.isOn = false
+            status = "0"
         }
         
-        APIRequest.shared().changeNotificationStatus(isNotify: sender.isOn) { (response, error) in
+        APIRequest.shared().changeNotificationStatus(isNotify: status) { (response, error) in
             
             if response != nil && error == nil {
                 
@@ -227,9 +230,13 @@ extension ProfileViewController {
         var additionalCharge = 0.0
         var subTotal = 0.0
         
-        
+        var resDetail = TblCartRestaurant()
         let arrRes = TblCartRestaurant.fetchAllObjects() as! [TblCartRestaurant]
-        let resDetail =  arrRes[0]
+        
+        if arrRes.count > 0 {
+            resDetail =  arrRes[0]
+        }
+        
         
         var arrADPrice = [[String : AnyObject]]()
         let arrAD = resDetail.additional_tax as? [[String : AnyObject]]
@@ -274,30 +281,42 @@ extension ProfileViewController {
             additionalCharge = additionalCharge + amount
         }
         
-        
         let taxPrice = subTotal * resDetail.tax / 100
         let totalToPay = subTotal + taxPrice + additionalCharge
         
 
-        let dict = [CRestaurant_id : resDetail.restaurant_id as AnyObject,
+        var dict = [CRestaurant_id : resDetail.restaurant_id as AnyObject,
                     CSubtotal : subTotal as AnyObject ,
                     CTax_percent : resDetail.tax,
                     CTax_amount : subTotal * resDetail.tax / 100 ,
                     COrder_total : totalToPay as Any,
-                    CCart : arrCart,
                     CAdditional_tax : arrADPrice,
                     CCart_id : CUserDefaults.object(forKey: UserDefaultCartID) != nil ? CUserDefaults.object(forKey: UserDefaultCartID) as Any : 0] as [String : AnyObject]
         
         
+        if CUserDefaults.object(forKey: UserDefaultCartID) != nil {
+            if arrCart.count == 0 {
+                dict[CCart] = [] as AnyObject
+            } else {
+                dict[CCart] = arrCart as AnyObject
+            }
+        } else {
+            dict[CCart] = arrCart as AnyObject
+        }
+        
+       
         APIRequest.shared().addCart(param: dict) { (response, error) in
             
             if response != nil && error == nil {
                 
                 print("Add Cart : ",response as Any)
                 
-                let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
+                if let dataRes = response?.value(forKey: CJsonData) as? [String : AnyObject] {
+                    CUserDefaults.set(dataRes.valueForInt(key: CCart_id), forKey: UserDefaultCartID)
+                } else {
+                    CUserDefaults.removeObject(forKey: UserDefaultCartID)
+                }
                 
-                CUserDefaults.set(dataRes.valueForInt(key: CCart_id), forKey: UserDefaultCartID)
                 CUserDefaults.synchronize()
             }
         }

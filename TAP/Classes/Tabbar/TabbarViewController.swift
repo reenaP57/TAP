@@ -42,8 +42,11 @@ extension TabbarViewController {
         tabbar.btnCart.isSelected = false
         tabbar.btnProfile.isSelected = false
 
-        appDelegate?.tabbar = tabbar
+        tabbar.lblCartCount.layer.cornerRadius = tabbar.lblCartCount.CViewHeight/2
+        tabbar.lblCartCount.layer.masksToBounds = true
         
+        appDelegate?.tabbar = tabbar
+        appDelegate?.setCartCountOnTab()
         self.view.addSubview(tabbar)
         
         guard let homeVC = CMain_SB.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }

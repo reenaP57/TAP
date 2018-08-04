@@ -28,7 +28,15 @@ class PaymentSuccessViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        self.navigationItem.hidesBackButton = true
+//        self.navigationItem.backBarButtonItem = nil
+        
+//        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "back_white"), style: .plain, target: self, action: #selector(btnBackClicked))
+        
         self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(image: UIImage(named: "back_white"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(btnBackClicked))
+        self.navigationItem.leftBarButtonItem = newBackButton
+        
         appDelegate?.hideTabBar()
     }
     
@@ -42,6 +50,16 @@ class PaymentSuccessViewController: ParentViewController {
         lblPrice.text = "\(CPaymentMessage1) $\(dictPayment.valueForDouble(key: COrder_total) ?? 0.0) \(CPaymentMessage2)"
         lblOrderID.text = "\(dictPayment.valueForInt(key: COrder_no) ?? 0)"
         lblTranscationID.text = "\(dictPayment.valueForString(key: CTranscation_id))"
+    }
+    
+    @objc func btnBackClicked(){
+        
+        if let detailVC = COrder_SB.instantiateViewController(withIdentifier: "OrderDetailViewController") as? OrderDetailViewController {
+            
+            detailVC.isFromCartPayment = true
+            detailVC.orderID = dictPayment.valueForInt(key: COrderID)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 }
 

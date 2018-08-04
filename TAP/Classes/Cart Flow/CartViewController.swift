@@ -109,16 +109,18 @@ class CartViewController: ParentViewController {
             
             lblResName.text =  resDetail.restaurant_name
             lblContact.text =  resDetail.contact_no
-            lblResLocation.text =  resDetail.address
+            lblResLocation.text = resDetail.address
         
             imgVDish.sd_setShowActivityIndicatorView(true)
             imgVDish.sd_setImage(with: URL(string: resDetail.restaurant_img!), placeholderImage: nil)
             
             
             self.createPriceArray()
-            
             tblOrderList.reloadData()
-            self.updateOrderTableHeight()
+            
+            DispatchQueue.main.async {
+                self.updateOrderTableHeight()
+            }
             
             
         } else {
@@ -205,6 +207,7 @@ class CartViewController: ParentViewController {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
             self.cnTblOrderListHeight.constant = self.tblOrderList.contentSize.height
             self.cnTblPriceHeight.constant = self.tblOrderPrice.contentSize.height
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -251,6 +254,8 @@ class CartViewController: ParentViewController {
             arrCartList =  TblCart.fetchAllObjects() as! [TblCart]
             tblOrderList.reloadData()
             self.updateOrderTableHeight()
+            
+            appDelegate?.setCartCountOnTab()
             
             if self.arrCartList.count == 0 {
                 self.vwEmptyCart.isHidden = false
@@ -391,7 +396,7 @@ extension CartViewController {
                             
                             for item2 in arrAd!  {
                                 
-                                if item.valueForInt(key: "tax_id") == item2.valueForInt(key: "tax_id") &&  item.valueForInt(key: "tax_amount") != item2.valueForInt(key: "tax_amount")
+                                if item.valueForInt(key: "tax_id") == item2.valueForInt(key: "tax_id") &&  (item.valueForInt(key: "tax_amount") != item2.valueForInt(key: "tax_amount") || item.valueForString(key: "tax_name") != item2.valueForString(key: "tax_name"))
                                 {
                                     arrADTaxUpdate.append("")
                                 }
@@ -411,6 +416,10 @@ extension CartViewController {
                     
                     CoreData.saveContext()
                     self.arrPrice.removeAll()
+                    
+                    let arrRes = TblCartRestaurant.fetchAllObjects() as! [TblCartRestaurant]
+                    self.resDetail = arrRes[0]
+                    
                     self.createPriceArray()
                     
                     
@@ -620,7 +629,11 @@ extension CartViewController {
                 TblCart.deleteAllObjects()
                 TblCartRestaurant.deleteAllObjects()
                 CUserDefaults.removeObject(forKey: UserDefaultCartID)
-
+                
+                appDelegate?.setCartCountOnTab()
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
+                
                 NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
 
                 
@@ -702,13 +715,12 @@ extension CartViewController {
                 
                 self.orderID = dataResponse.valueForInt(key: COrderID)
                 
-                NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
                 
                 if paymentType == CPaymentStripe {
                     
                     let stripeVW = STPAddCardViewController()
                     stripeVW.delegate = self
-                    
+                
                     let navigationController = UINavigationController(rootViewController: stripeVW)
                     self.present(navigationController, animated: true)
                 
@@ -717,6 +729,10 @@ extension CartViewController {
                     TblCart.deleteAllObjects()
                     TblCartRestaurant.deleteAllObjects()
                     CUserDefaults.removeObject(forKey: UserDefaultCartID)
+                    
+                    appDelegate?.setCartCountOnTab()
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
                     

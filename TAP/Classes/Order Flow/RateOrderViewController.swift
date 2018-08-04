@@ -32,6 +32,7 @@ class RateOrderViewController: ParentViewController {
     }
     
     var dict = [String : AnyObject]()
+    var isFromNotificaton : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,7 @@ class RateOrderViewController: ParentViewController {
     func initialize() {
         
         self.lblResName.text = dict.valueForString(key: CRestaurant_name)
-        self.lblOrderedTime.text = "\(COrderPlaceDateTime) \(dict.valueForString(key: COrder_completed)) "
+        self.lblOrderedTime.text = "\(COrderPlaceDateTime) \(dict.valueForString(key: COrder_updated)) "
         
         imgVRes.sd_setShowActivityIndicatorView(true)
         imgVRes.sd_setImage(with: URL(string: (dict.valueForString(key: CRestaurant_image))), placeholderImage: nil)
@@ -81,7 +82,7 @@ extension RateOrderViewController {
         } else {
             
             let param = [COrderID : dict.valueForInt(key: COrderID) as Any,
-                        "rating" : vwRating.rating,
+                         "rating" : vwRating.rating,
                         "rating_note" : txtVReview.text] as [String : AnyObject]
             
             APIRequest.shared().orderRating(param: param) { (response, error) in

@@ -56,14 +56,15 @@ class OrderViewController: ParentViewController {
         
         tblOrder.contentInset = UIEdgeInsetsMake(10, 0, 0, 0)
 
-        self.loadOrderList(isRefresh: false)
+        self.loadOrderList(isRefresh: false, isFromNotification: false)
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshOrderList), name: NSNotification.Name(rawValue: kNotificationRefreshOrderList), object: nil)
     }
     
     
     @objc func refreshOrderList(notification : Notification) {
-        self.loadOrderList(isRefresh: true)
+        currentPage = 1
+        self.loadOrderList(isRefresh: true, isFromNotification: false)
     }
 }
 
@@ -95,7 +96,7 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
             
             cell.lblResName.text = dict.valueForString(key: CName)
             cell.lblResLocation.text = dict.valueForString(key: CAddress)
-            cell.lblTime.text =  dateFormat.string(timestamp: dict.valueForDouble(key: CCreated_at)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
+            cell.lblTime.text =  dateFormat.string(timestamp: dict.valueForDouble(key: COrder_updated)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
             cell.lblAmount.text = String(format: "$%.2f", (dict.valueForDouble(key: COrder_total) ?? 0.0))
             
             let arrCuisine = dict.valueForJSON(key: CCuisine) as? [[String : AnyObject]]
@@ -108,12 +109,10 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
             
             if dict.valueForInt(key: COrder_status) == COrderStatusComplete {
                 cell.imgVOrderStatus.hide(byHeight: true)
-                cell.lblOrderStatus.hide(byHeight: true)
                 cell.lblOrderStatus.text = ""
                 
             } else {
                 cell.imgVOrderStatus.hide(byHeight: false)
-                cell.lblOrderStatus.hide(byHeight: false)
                 
                 switch (dict.valueForInt(key: COrder_status)) {
                 
@@ -123,10 +122,8 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
                      cell.lblOrderStatus.text = COrderAccepted
                 case COrderStatusReject:
                      cell.lblOrderStatus.text = COrderRejected
-                case COrderStatusReady:
-                     cell.lblOrderStatus.text = COrderReady
                 default:
-                    cell.lblOrderStatus.text = ""
+                    cell.lblOrderStatus.text = COrderReady
                 }
             }
 
@@ -137,7 +134,7 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
                 if currentPage < lastPage {
                     
                     if apiTask?.state == URLSessionTask.State.running {
-                        self.loadOrderList(isRefresh: false)
+                        self.loadOrderList(isRefresh: false, isFromNotification: false)
                     }
                 }
             }
@@ -173,16 +170,16 @@ extension OrderViewController {
     @objc func pullToRefresh() {
         currentPage = 1
         refreshControl.beginRefreshing()
-        self.loadOrderList(isRefresh: true)
+        self.loadOrderList(isRefresh: true, isFromNotification: false)
     }
     
-    func loadOrderList (isRefresh : Bool) {
+    func loadOrderList (isRefresh : Bool, isFromNotification : Bool) {
         
         if apiTask?.state == URLSessionTask.State.running {
             return
         }
         
-        if !isRefresh{
+        if !isRefresh  {
             activityLoader.startAnimating()
         }
         
@@ -197,7 +194,7 @@ extension OrderViewController {
                 let arrData = response?.value(forKey: CJsonData) as! [[String : AnyObject]]
                 let metaData = response?.value(forKey: CJsonMeta) as! [String : AnyObject]
                 
-                if self.currentPage == 1 {
+                if self.currentPage == 1 || isFromNotification {
                     self.arrOrderList.removeAll()
                 }
                 
@@ -207,6 +204,7 @@ extension OrderViewController {
                        self.arrOrderList.append(item)
                     }
                 }
+                
                 
                 self.lastPage = metaData.valueForInt(key: CLastPage)!
                 

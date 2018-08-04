@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var countryCode = String()
     var isCurrentLoc : Bool = false
     var dictLocation = [String : AnyObject]()
+    var dicLaunchOption : [UIApplicationLaunchOptionsKey: Any]?
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -39,6 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         GMSPlacesClient.provideAPIKey(CGooglePlacePickerKey)
         GMSServices.provideAPIKey(CGooglePlacePickerKey)
+        
+        
+        dicLaunchOption = launchOptions
+        MIOneSignal.shared().pushNotificatonRegistration()
+        
+        
+        print(window!)
         
         self.loadCountryList()
         self.initSelectLanguageViewController()
@@ -62,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func initSelectLanguageViewController()
     {
+        
         if CUserDefaults.object(forKey: UserDefaultLoginUserToken) == nil {
             let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLanguageViewController"))
             self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
@@ -76,10 +86,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 let rootVC = UINavigationController.init(rootViewController: CLRF_SB.instantiateViewController(withIdentifier: "SelectLocationViewController"))
                 self.setWindowRootViewController(rootVC: rootVC, animated: false, completion: nil)
                 
+                MIOneSignal.shared().registerDeviceTokenForNotification()
+                
             } else {
                 
                 appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
                 self.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
+                
+                MIOneSignal.shared().registerDeviceTokenForNotification()
             }
         }
     }
@@ -111,6 +125,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: loginVC), animated: true, completion: nil)
         
+    }
+    
+    func setCartCountOnTab(){
+        
+        let arrCartCount = TblCart.fetchAllObjects()
+        appDelegate?.tabbar?.lblCartCount.isHidden = arrCartCount?.count == 0
+        appDelegate?.tabbar?.lblCartCount.text = "\(arrCartCount?.count ?? 0)"
     }
     
     func openLoginPopup(viewController : UIViewController, fromOrder: Bool, completion : @escaping () -> ()) {
@@ -189,39 +210,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
-    func UTCToLocalTime(date:String, fromFormat: String, toFormat: String, timezone: String) -> String {
+    func UTCToLocalTime(openTime:Double) -> String {
         
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-//        dateFormatter.defaultDate = Date()
-//        dateFormatter.dateFormat = fromFormat
-//
-//        let convertedDate = dateFormatter.date(from: date)
-//        return ""
+        let date = NSDate(timeIntervalSince1970: openTime)
+        let dayTimePeriodFormatter = DateFormatter()
+        dayTimePeriodFormatter.dateFormat = "hh:mm a"
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = fromFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-
-        
-        let dt = dateFormatter.date(from: date)
-        dateFormatter.dateFormat = fromFormat
-        dateFormatter.calendar = NSCalendar.current
-        dateFormatter.timeZone = TimeZone.current
-        
-        return dateFormatter.string(from: dt!)
-        
-        
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = fromFormat
-//       // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-//
-//        let dt = dateFormatter.date(from: date)
-//        dateFormatter.timeZone = TimeZone.current
-//        dateFormatter.dateFormat = toFormat
-//
-//        return dateFormatter.string(from: dt!)
+        let dateString = dayTimePeriodFormatter.string(from: date as Date)
+        return dateString
     }
     
 

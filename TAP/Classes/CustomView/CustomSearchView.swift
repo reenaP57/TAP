@@ -40,7 +40,7 @@ class CustomSearchView: UIView, UISearchBarDelegate {
             
             let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
             
-            searchTextField?.font = (IS_iPhone_X) ? CFontSFUIText(size: 15, type: .Regular) : (IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 15, type: .Regular) :  CFontSFUIText(size: 13, type: .Regular)
+            searchTextField?.font = (IS_iPhone_X) ? CFontSFUIText(size: 15, type: .Regular) : (IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 15, type: .Regular) :  CFontSFUIText(size: 11, type: .Regular)
             searchTextField?.textColor = CColorWhite
             searchBar.layer.cornerRadius = 0.0
             searchBar.layer.masksToBounds = true

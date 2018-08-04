@@ -13,10 +13,8 @@ import Alamofire
 import SDWebImage
 
 
-
 //MARK:- ---------BASEURL __ TAG
 var BASEURL:String        =  "http://www.itrainacademy.in/tap/api/v1/" //"http://192.168.1.29/noq/api/v1/"
-
 
 
 
@@ -44,6 +42,9 @@ let CAPITagOrderDetail                 = "order-detail"
 let CAPITagAddRating                   = "add-rating"
 let CAPITagAddCart                     = "add-cart"
 let CAPITagCartDetail                  = "cart-detail"
+let CAPITagDeviceToken                 = "device-token"
+let CAPITagRemoveDeviceToken           = "delete-device-token"
+
 
 
 let CJsonResponse           = "response"
@@ -54,7 +55,7 @@ let CJsonTitle              = "title"
 let CJsonData               = "data"
 let CJsonMeta               = "meta"
 
-let CLimit                  = 10
+let CLimit                  = 20
 
 let CStatusZero             = 0
 let CStatusOne              = 1
@@ -75,8 +76,6 @@ let CStatus500              = 500
 let CStatus550              = 550 // Inactive/Delete user
 let CStatus555              = 555 // Invalid request
 let CStatus556              = 556 // Invalid request
-let CStatus1005             = -1005 // Lost network connection
-let CStatus1009             = -1009 // No interenet connection
 
 
 //MARK:- ---------Networking
@@ -90,14 +89,12 @@ class Networking: NSObject
     
     var headers:[String: String] {
         if UserDefaults.standard.value(forKey: UserDefaultLoginUserToken) != nil {
-            return ["Authorization" : "Bearer \((CUserDefaults.value(forKey: UserDefaultLoginUserToken)) as? String ?? "")","Accept-Language" : Localization.sharedInstance.getLanguage()]
+            return ["Authorization" : "Bearer \((CUserDefaults.value(forKey: UserDefaultLoginUserToken)) as? String ?? "")","Accept-Language" : Localization.sharedInstance.getLanguage(),"Accept" : "application/json"]
         } else {
             return ["Accept" : "application/json","Accept-Language" : Localization.sharedInstance.getLanguage()]
         }
     }
     
-    //"Accept":"application/json"
-
     var loggingEnabled = true
     var activityCount = 0
     
@@ -140,16 +137,15 @@ class Networking: NSObject
                     CTopMostViewController.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: (data?.valueForString(key: CJsonMessage)), btnOneTitle: COk, btnOneTapped: { (action) in
                     }, btnTwoTitle:CCancel) { (action) in
                     }
-                    
-                }
-                else if res?.response!.statusCode == CStatus401 || res?.response!.statusCode == CStatus405 {
-                    CTopMostViewController.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: (data?.valueForString(key: CJsonMessage)), btnOneTitle: COk, btnOneTapped: { (action) in
-                        
+             
+                }else if res?.response!.statusCode == CStatus401 || res?.response!.statusCode == CStatus405
+                {
+                    CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: (data?.valueForString(key: CJsonMessage)), btnOneTitle: COk) { (action) in
                         appDelegate?.logout()
-                    }, btnTwoTitle:CCancel) { (action) in
                     }
                 }
                 
+                print("API Response: (\(String(describing: res?.response!.statusCode))) [\(String(describing: res?.timeline.totalDuration))s] Response:\(String(describing: res?.result.value))")
             }
         }
     }
@@ -177,12 +173,12 @@ class Networking: NSObject
         let fileName = UUID().uuidString
         
         #if swift(>=2.3)
-            let directoryURL = tempDirectoryURL.appendingPathComponent("com.alamofire.manager/multipart.form.data")
-            let fileURL = directoryURL.appendingPathComponent(fileName)
+        let directoryURL = tempDirectoryURL.appendingPathComponent("com.alamofire.manager/multipart.form.data")
+        let fileURL = directoryURL.appendingPathComponent(fileName)
         #else
-            
-            let directoryURL = tempDirectoryURL.appendingPathComponent("com.alamofire.manager/multipart.form.data")
-            let fileURL = directoryURL.appendingPathComponent(fileName)
+        
+        let directoryURL = tempDirectoryURL.appendingPathComponent("com.alamofire.manager/multipart.form.data")
+        let fileURL = directoryURL.appendingPathComponent(fileName)
         #endif
         
         
@@ -347,7 +343,7 @@ class Networking: NSObject
     }
     
     
-
+    
     
     func HEAD(param parameters: [String: AnyObject]?, success : ClosureSuccess?, failure:ClosureError?) -> URLSessionTask
     {
@@ -570,7 +566,7 @@ class APIRequest: NSObject {
         if let meta = responseObject?[CJsonMeta]  as? [String : AnyObject] {
             
             if meta.valueForString(key: CStatusCode).toInt == CStatus200  {
-                return true
+                return  true
             } else {
                 return false
             }
@@ -578,7 +574,7 @@ class APIRequest: NSObject {
         
         
         if  responseObject?.valueForString(key: CStatusCode).toInt == CStatus200 {
-            return true
+            return  true
         } else {
             return false
         }
@@ -608,20 +604,22 @@ class APIRequest: NSObject {
                     }
                 }
             }
-        }else
-        {
-            // Auto Log out user
-            if let status : Int = responseobject![CJsonStatus] as? Int
-            {
-                if status == CStatus401
-                {
-                    let message : String = (responseobject![CJsonMessage] as? String)!
-                    CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: message, btnOneTitle: COk) { (action) in
-                        appDelegate?.logout()
-                    }
-                }
-            }
         }
+        
+//        else
+//        {
+//            // Auto Log out user
+//            if let status : Int = responseobject![CJsonStatus] as? Int
+//            {
+//                if status == CStatus401
+//                {
+//                    let message : String = (responseobject![CJsonMessage] as? String)!
+//                    CTopMostViewController.presentAlertViewWithOneButton(alertTitle: "", alertMessage: message, btnOneTitle: COk) { (action) in
+//                        appDelegate?.logout()
+//                    }
+//                }
+//            }
+//        }
         
         return false
     }
@@ -638,6 +636,7 @@ class APIRequest: NSObject {
     }
     
 }
+
 
 
 
@@ -667,7 +666,7 @@ extension APIRequest {
     }
     
     func cms(completion : @escaping ClosureCompletion) {
- 
+        
         _ = Networking.sharedInstance.GET(apiTag: CAPITagCMS, param: [:], successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagCMS) {
@@ -700,23 +699,23 @@ extension APIRequest {
             MILoader.shared.hideLoader()
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagSignUp) {
-                 completion(response, nil)
+                completion(response, nil)
             }
-           
+            
             
         }) { (task, message, error) in
-             MILoader.shared.hideLoader()
+            MILoader.shared.hideLoader()
             
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSignUp, error: error)
         }
     }
-
+    
     
     func login(_email: String?, _password: String?, completion: @escaping ClosureCompletion){
         
         MILoader.shared.showLoader(type: .circularRing, message: "")
         
-       _ = Networking.sharedInstance.POST(apiTag: CAPITagLogin, param: [CEmail : _email as AnyObject , CPassword : _password as AnyObject], successBlock: { (task, response) in
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagLogin, param: [CEmail : _email as AnyObject , CPassword : _password as AnyObject], successBlock: { (task, response) in
             
             MILoader.shared.hideLoader()
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagLogin){
@@ -770,7 +769,7 @@ extension APIRequest {
             MILoader.shared.hideLoader()
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagEditProfile, error: error)
         }
-
+        
     }
     
     
@@ -792,8 +791,8 @@ extension APIRequest {
         })
     }
     
-    func changeNotificationStatus(isNotify : Bool, completion : @escaping ClosureCompletion){
-     
+    func changeNotificationStatus(isNotify : String, completion : @escaping ClosureCompletion){
+        
         _ = Networking.sharedInstance.POST(apiTag: CAPITagNotificationStatus, param: [CIs_notify  : isNotify as AnyObject], successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagNotificationStatus){
@@ -827,7 +826,7 @@ extension APIRequest {
             lat = CUserDefaults.object(forKey: CLatitude) as! Double
             long = CUserDefaults.object(forKey: CLongitude) as! Double
         }
-
+        
         
         let dict = [CLatitude : lat,
                     CLongitude : long,
@@ -843,7 +842,7 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantMainList, error: error)
-           
+            
         })!
     }
     
@@ -917,14 +916,14 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-             completion(nil, error)
-             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
+            completion(nil, error)
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
             
         })!
     }
     
     func restaurantDetail(restaurant_id : Int, completion : @escaping ClosureCompletion){
-    
+        
         _ = Networking.sharedInstance.POST(apiTag: CAPITagRestaurantDetails, param: [CRestaurant_id : restaurant_id as AnyObject], successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRestaurantDetails){
@@ -952,7 +951,7 @@ extension APIRequest {
     }
     
     func favouriteRestaurantList(page : Int, completion : @escaping ClosureCompletion) -> URLSessionTask {
-      
+        
         return Networking.sharedInstance.POST(apiTag: CAPITagFavouriteRestaurantList, param: [CPage:page as AnyObject, CPerPage : CLimit as AnyObject], successBlock: { (task, response) in
             
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagFavouriteRestaurantList) {
@@ -960,7 +959,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-             completion(nil, error)
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagFavouriteRestaurantList, error: error)
         })!
     }
@@ -968,13 +967,13 @@ extension APIRequest {
     func promotionList(param: [String : AnyObject], completion : @escaping ClosureCompletion) -> URLSessionTask {
         
         return Networking.sharedInstance.POST(apiTag: CAPITagPromotionList, param: param, successBlock: { (task, response) in
-           
+            
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagPromotionList) {
                 completion(response, nil)
             }
             
         }, failureBlock: { (task, message, error) in
-             completion(nil, error)
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagPromotionList, error: error)
         })!
     }
@@ -987,7 +986,7 @@ extension APIRequest {
                 completion(response, nil)
             }
         }, failureBlock: { (task, message, error) in
-             completion(nil, error)
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
             
         })!
@@ -1060,7 +1059,7 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-             completion(nil, error)
+            completion(nil, error)
             self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderList, error: error)
         })!
     }
@@ -1072,7 +1071,7 @@ extension APIRequest {
         _ = Networking.sharedInstance.POST(apiTag: CAPITagOrderDetail, param: [COrderID : order_id as AnyObject], successBlock: { (task, response) in
             
             MILoader.shared.hideLoader()
-           
+            
             if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagOrderDetail) {
                 completion(response, nil)
             }
@@ -1138,6 +1137,36 @@ extension APIRequest {
             self.actionOnAPIFailure(errorMessage: message, showAlert: false, strApiTag: CAPITagCartDetail, error: error)
         })
     }
+    
+    //TODO:
+    //TODO: --------------DEVICE TOKEN API--------------
+    //TODO:
+    
+    func addDeviceToken(device_token : String, player_id : String, completion : @escaping ClosureCompletion) {
+        
+        _ = Networking.sharedInstance.POST(apiTag: CAPITagDeviceToken, param: ["device_token":device_token as AnyObject, "player_id":player_id as AnyObject, "device_type": 1 as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagDeviceToken) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagDeviceToken, error: error)
+        })
+    }
+    
+    func removeDeviceToken(player_id : String, completion : @escaping ClosureCompletion) {
+        
+        _ = Networking.sharedInstance.POST(apiTag:CAPITagRemoveDeviceToken , param: ["player_id":player_id as AnyObject, "device_type": 1 as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagRemoveDeviceToken) {
+                completion(response, nil)
+            }
+        }, failureBlock: { (task, message, error) in
+            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRemoveDeviceToken, error: error)
+            
+        })
+    }
 }
 
 
@@ -1183,7 +1212,7 @@ extension APIRequest {
         tblUser.latitude = CUserDefaults.object(forKey: CLatitude) as! Double
         tblUser.longitude = CUserDefaults.object(forKey: CLongitude) as! Double
         tblUser.address = (CUserDefaults.object(forKey: UserDefaultCurrentLocation) as! String)
-
+        
         CoreData.saveContext()
         
         return tblUser

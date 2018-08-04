@@ -14,6 +14,13 @@ class RestaurantDetailTopView: UIView {
     @IBOutlet weak var lblResLocation : UILabel!
     @IBOutlet weak var lblCuisines : UILabel!
     @IBOutlet weak var lblRating : UILabel!
+    @IBOutlet weak var lblClosed : UILabel!{
+        didSet{
+            lblClosed.layer.cornerRadius = lblClosed.CViewHeight/2
+            lblClosed.layer.masksToBounds = true
+        }
+    }
+    
     @IBOutlet weak var lblRatingCount : UILabel!
     @IBOutlet weak var imgVRest : UIImageView!
     @IBOutlet weak var btnLike : UIButton!

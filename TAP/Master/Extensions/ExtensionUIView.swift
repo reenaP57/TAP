@@ -59,6 +59,7 @@ extension UIView {
         
         for subview in self.subviews {
             
+           
             if subview.tag == tag {
                 subview.removeFromSuperview()
             }

@@ -15,12 +15,14 @@ class TabBarView: UIView {
     @IBOutlet weak var btnSearch : UIButton!
     @IBOutlet weak var btnCart : UIButton!
     @IBOutlet weak var btnProfile : UIButton!
+    @IBOutlet weak var lblCartCount : UILabel!
 
     private static var tabbar : TabBarView? = {
         
         guard let tabbar = TabBarView.viewFromXib as? TabBarView else {
             return nil
         }
+      
         return tabbar
     }()
     

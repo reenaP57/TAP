@@ -19,6 +19,7 @@ class LoginViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
+    @IBOutlet weak var btnCountiueGuest : UIButton!
     
     var loginFrom = loginFromType.FromSelectLangugae
     var strPwd = String()
@@ -46,6 +47,16 @@ class LoginViewController: ParentViewController {
     //MARK:- General Method
     
     func initialize() {
+        
+        if (appDelegate?.isFromLoginPop)!
+        {
+            //...From Login popup
+            if appDelegate?.objNavController != nil
+            {
+                btnCountiueGuest.hide(byHeight: true)
+               // self.view.layoutIfNeeded()
+            }
+        }
         
         if IS_iPhone_Simulator {
             txtEmail.text = "bhavika.mi@mailinator.com"
@@ -145,6 +156,7 @@ extension LoginViewController {
                     
                     APIRequest.shared().saveUserDetailToLocal(response: response as! [String : AnyObject])
                     
+                    MIOneSignal.shared().registerDeviceTokenForNotification()
                     
                     let dataRes = response?.value(forKey: CJsonData) as! [String : AnyObject]
                     

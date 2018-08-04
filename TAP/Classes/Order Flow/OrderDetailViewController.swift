@@ -139,7 +139,7 @@ class OrderDetailViewController: ParentViewController {
             
            
             let dateFormat = DateFormatter()
-            lblContact.text =  dateFormat.string(timestamp: dictDetail.valueForDouble(key: COrder_completed)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
+            lblContact.text =  dateFormat.string(timestamp: dictDetail.valueForDouble(key: COrder_updated)!, dateFormat: "MMM dd, yyyy' at 'hh:mm a")
             lblOrderStatus.text = "comp"
             imgVContact.image = UIImage(named: "calender")
 
@@ -158,6 +158,7 @@ class OrderDetailViewController: ParentViewController {
                 lblOrderStatus.text = COrderAccepted
             case COrderStatusReject:
                 lblOrderStatus.text = COrderRejected
+                self.btnViewMap.hide(byHeight: true)
             case COrderStatusReady:
                 lblOrderStatus.text = COrderReady
             default:
@@ -217,7 +218,7 @@ extension OrderDetailViewController {
             
             rateVC.dict = [COrderID : self.orderID as Any,
                            CRestaurant_name : dictDetail.valueForString(key: CRestaurant_name) as Any,
-                           COrder_completed : self.lblContact.text as Any,
+                           COrder_updated : self.lblContact.text as Any,
                            CRestaurant_image : dictDetail.valueForString(key: CRestaurant_image)] as [String : AnyObject]
             
             self.navigationController?.pushViewController(rateVC, animated: true)

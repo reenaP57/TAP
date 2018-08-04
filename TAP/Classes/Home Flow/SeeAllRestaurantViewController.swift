@@ -115,7 +115,7 @@ extension SeeAllRestaurantViewController : UITableViewDelegate, UITableViewDataS
     
             var time = ""
             if dict.valueForString(key: COpen_time) != "" {
-                time = (appDelegate?.UTCToLocalTime(date: (dict.valueForString(key: COpen_time)), fromFormat: "H:mm a", toFormat: "h:mm a", timezone: (dict.valueForString(key: "timezone"))))!
+                time = (appDelegate?.UTCToLocalTime(openTime: (dict.valueForDouble(key: COpen_time))!))!
             }
             
             if dict.valueForInt(key: COpen_Close_Status) == 0 {

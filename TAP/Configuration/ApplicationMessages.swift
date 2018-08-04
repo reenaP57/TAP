@@ -25,7 +25,7 @@ let CForgotPassword      = CLocalize(text: "Forgot Password")
 let CSearchYourLocation  = CLocalize(text: "Search your location")
 let CDone                = CLocalize(text: "Done")
 let CContinue            = CLocalize(text: "Continue")
-let CCurrentLocation      = CLocalize(text: "Current Location")
+let CCurrentLocation     = CLocalize(text: "Current Location")
 
 
 //Home
@@ -35,8 +35,15 @@ let CMostPopular        =  CLocalize(text: "Most Popular")
 let CNewArrival         =  CLocalize(text: "New Arrival")
 let CRatings            = CLocalize(text: "Ratings")
 let CPromotions         = CLocalize(text: "Promotions")
-let CSearchRestaurant   = CLocalize(text: "Search restaurant or Cuisine")
+let CSearchRestaurant   = CLocalize(text: "Search restaurant by name, cuisine or dish")
 let CClearCartAndAdd    = CLocalize(text: "CLEAR CART & ADD")
+
+let CMessageNoSearchRest     = CLocalize(text: "No restaurant,cuisine or dish available.")
+let CMessageNoDishAvailableForRest  = CLocalize(text: "No dishes available for this restaurant.")
+let CMessageNoDishAvailable     = CLocalize(text: "No dishes available.")
+let CMessageNoFoundPromotion = CLocalize(text: "Promotion list not found.")
+let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
+
 
 //Order
 
@@ -51,12 +58,19 @@ let CAddYourReview      =  CLocalize(text: "Add your review...")
 let CToPay              = CLocalize(text: "To pay (by cash)")
 let CPaid               = CLocalize(text: "Paid (with stripe)")
 
+let CMessageNoOrder     = CLocalize(text: "Yet you have not given order.")
+
 
 //Cart
+
 let CViewCart           =  CLocalize(text: "View Cart")
 let CPaymentSuccess     =  CLocalize(text: "Payment Success")
 
-
+let CMessageUpdatedRestCart     = CLocalize(text: "Updated cart detail.")
+let CClosedRestaurant           = CLocalize(text: "Restaurant is closed.")
+let CPaymentMessage1            = CLocalize(text: "Your Payment of")
+let CPaymentMessage2            = CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")
+let COrderPlaceDateTime         = CLocalize(text: "The order was place on")
 
 
 //Profile
@@ -73,6 +87,7 @@ let CPrivacyPolicy       =  CLocalize(text: "Privacy Policy")
 let CContactUs           =  CLocalize(text: "Contact Us")
 let CLogOut              =  CLocalize(text: "Log Out")
 
+let CMessageNoFavouriteRest  = CLocalize(text: "You have not favourite any restaurant.")
 
 
 //Confirmation Message
@@ -108,12 +123,13 @@ let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not sup
 let CMessaseProfileUpdated       = CLocalize(text:"Your profile updated successfully.")
 let CMessaseChangePassword       = CLocalize(text:"Password updated successfully.")
 
-let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
 
-let CMessageUpdatedRestCart     = CLocalize(text: "Updated cart detail.")
-let CMessageNoDishAvailable     = CLocalize(text: "No Dishes Available for this Category")
+// General Message
 
-let CPaymentMessage1            = CLocalize(text: "Your Payment of")
-let CPaymentMessage2            = CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")
-let COrderPlaceDateTime         = CLocalize(text: "The order was place on")
-let CClosedRestaurant           = CLocalize(text: "Restaurant is closed.")
+let CError  = "ERROR!"
+let CMessageRetry  = "An error has occured. Please check your network connection or try again."
+
+
+
+
+

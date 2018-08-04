@@ -127,12 +127,12 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
             tblRestDetail.isHidden = true
             activityLoader.startAnimating()
         }
-  
+        
         
         APIRequest.shared().restaurantDetail(restaurant_id: restaurantID!) { (response, error) in
             
             self.activityLoader.stopAnimating()
-           
+            
             if response != nil && error == nil {
                 
                 self.tblRestDetail.isHidden = false
@@ -141,15 +141,15 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 self.dictRest = response?.value(forKey: CJsonData) as! [String : AnyObject]
                 
                 self.arrDishList = self.dictRest.valueForJSON(key: "dishes") as! [[String : AnyObject]]
-               
+                
                 self.arrCategory = self.dictRest.valueForJSON(key: "dish_categories") as! [[String : AnyObject]]
                 
                 if self.arrCategory.count > 0 {
                     self.categoryID = 0
                     self.filterMostPopularDish()
-                   // self.filterCategoryWithID(categoryID: self.arrCategory[0].valueForString(key: CDish_category_id))
+                    // self.filterCategoryWithID(categoryID: self.arrCategory[0].valueForString(key: CDish_category_id))
                 }
-               
+                
                 
                 self.title = self.dictRest.valueForString(key: CName)
                 self.restaurantTopView.lblRestName.text = self.dictRest.valueForString(key: CName)
@@ -162,11 +162,14 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 let arrCuisineName = arrCuisine?.compactMap({$0[CName]}) as? [String]
                 self.restaurantTopView.lblCuisines.text = arrCuisineName?.joined(separator: "-")
                 
-                self.restaurantTopView.lblRating.text = "\(self.dictRest.valueForDouble(key: CAvg_rating) ?? 0.0)"
-                self.restaurantTopView.lblRatingCount.text = "(\(self.dictRest.valueForString(key: CNo_person_rated)))"
+                if self.dictRest.valueForInt(key: CNo_person_rated) != 0 {
+                    self.restaurantTopView.lblRating.text = "\(self.dictRest.valueForDouble(key: CAvg_rating) ?? 0.0)"
+                    self.restaurantTopView.lblRatingCount.text = "(\(self.dictRest.valueForString(key: CNo_person_rated)))"
+                }
+                
                 
                 self.restaurantTopView.btnContactNo.setTitle((self.dictRest.valueForString(key: CContact_no)), for: .normal)
-            
+                
                 self.restaurantTopView.vwRating.rating = self.dictRest.valueForDouble(key: CAvg_rating)!
                 
                 if self.dictRest.valueForInt(key: CFav_status) == 0 {
@@ -175,6 +178,12 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                     self.restaurantTopView.btnLike.isSelected = true
                 }
                 
+                
+                if self.dictRest.valueForInt(key: COpen_Close_Status) == 0 {
+                    self.restaurantTopView.lblClosed.hide(byWidth: false)
+                } else {
+                    self.restaurantTopView.lblClosed.hide(byWidth: true)
+                }
                 
                 //...Hide searchbar If dishes available for this restaurant
                 
@@ -187,7 +196,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 self.tblRestDetail.reloadData()
                 
             } else {
-               
+                
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 
                 self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
@@ -251,7 +260,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         }
         
         restaurantTopView.btnContactNo.touchUpInside { (sender) in
-        
+            
             if self.dictRest.valueForString(key: CContact_no) != "" {
                 self.dialPhoneNumber(phoneNumber: self.dictRest.valueForString(key: CContact_no))
             }
@@ -310,22 +319,23 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 appDelegate?.saveCart(dict: updatedDict, rest_id: restaurantID!)
             }
             
+            appDelegate?.setCartCountOnTab()
             
             arrSelectedDishList[indexPath.row] = updatedDict
             tblRestDetail.reloadRows(at: [indexPath], with: .none)
             self.view.layoutIfNeeded()
             
             
-            if !isPlus {
-                
-                let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"), orderBy: nil, ascending: false)
-                
-                if currentCount == 0  && (arrCart?.count)! > 0 {
-                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"))
-                } else {
-                    appDelegate?.saveCart(dict: updatedDict, rest_id: restaurantID!)
-                }
-            }
+//            if !isPlus {
+//                
+//                let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"), orderBy: nil, ascending: false)
+//                
+//                if currentCount == 0  && (arrCart?.count)! > 0 {
+//                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"))
+//                } else {
+//                    appDelegate?.saveCart(dict: updatedDict, rest_id: restaurantID!)
+//                }
+//            }
             
         } else {
             
@@ -333,6 +343,8 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
             self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CMessageAlreadyCardAdded, btnOneTitle: CClearCartAndAdd, btnOneTapped: { (action) in
                 TblCart.deleteAllObjects()
                 TblCartRestaurant.deleteAllObjects()
+                
+                appDelegate?.setCartCountOnTab()
                 
             }, btnTwoTitle: CClose, btnTwoTapped: { (actio) in
             })
@@ -446,7 +458,7 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.checkDishAvailableForCategory() ? 66 : 100
+        return self.checkDishAvailableForCategory() ? 66 : 150
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

@@ -123,7 +123,11 @@ class EditProfileViewController: ParentViewController {
         
         if appDelegate?.loginUser?.profile_image != nil {
             imgVProfile.sd_setImage(with: URL(string: (appDelegate?.loginUser?.profile_image)!), placeholderImage: nil)
-            imgData = UIImageJPEGRepresentation(imgVProfile.image!, 0.5)!
+            
+            if let img = imgVProfile.image {
+                imgData = UIImageJPEGRepresentation(img, 0.5)!
+            }
+            
         }
         
     }

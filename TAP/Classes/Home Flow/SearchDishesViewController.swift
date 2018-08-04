@@ -125,20 +125,22 @@ class SearchDishesViewController: ParentViewController {
                 arrDishList[indexPath.row] = updatedDict
             }
             
+            appDelegate?.setCartCountOnTab()
+            
             tblSearch.reloadRows(at: [indexPath], with: .none)
             self.view.layoutIfNeeded()
             
             
-            if !isPlus {
-                
-                let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"), orderBy: nil, ascending: false)
-                
-                if currentCount == 0  && (arrCart?.count)! > 0 {
-                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"))
-                } else {
-                    appDelegate?.saveCart(dict: updatedDict, rest_id: restaurantID!)
-                }
-            }
+//            if !isPlus {
+//
+//                let arrCart = TblCart.fetch(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"), orderBy: nil, ascending: false)
+//
+//                if currentCount == 0  && (arrCart?.count)! > 0 {
+//                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.valueForInt(key: CDish_id)!)"))
+//                } else {
+//                    appDelegate?.saveCart(dict: updatedDict, rest_id: restaurantID!)
+//                }
+//            }
             
             let dic =  [CQuantity : cell.txtQuantity.text as Any,
                         CDish_id : dict.valueForInt(key: CDish_id) as Any]
@@ -151,10 +153,12 @@ class SearchDishesViewController: ParentViewController {
             self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CMessageAlreadyCardAdded, btnOneTitle: CClearCartAndAdd, btnOneTapped: { (action) in
                 TblCart.deleteAllObjects()
                 TblCartRestaurant.deleteAllObjects()
+                appDelegate?.setCartCountOnTab()
                 
             }, btnTwoTitle: CClose, btnTwoTapped: { (actio) in
             })
         }
+        
     }
 }
 
