@@ -174,7 +174,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_unselected" translatesAutoresizingMaskIntoConstraints="NO" id="OYD-qk-HX8">
                                     <rect key="frame" x="15" y="14.5" width="17" height="17"/>
                                 </imageView>
-                                <textField opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tya-AO-h0y" customClass="GenericTextField" customModule="Ta_Pronto" customModuleProvider="target">
+                                <textField opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tya-AO-h0y" customClass="GenericTextField" customModule="Ta_Pronto" customModuleProvider="target">
                                     <rect key="frame" x="41" y="7" width="284" height="31"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

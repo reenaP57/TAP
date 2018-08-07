@@ -17,6 +17,7 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var txtPassword : GenericTextField!
     @IBOutlet weak var txtConfirmPassword : GenericTextField!
     @IBOutlet weak var imgVProfile : UIImageView!
+    @IBOutlet weak var lblLogin : UILabel!
 
     fileprivate var imgData = Data()
     var strPwd = String()
@@ -54,6 +55,8 @@ class SignUpViewController: ParentViewController {
     func initialize() {
         self.title = CSignUp
         
+        self.setAtttibuteString()
+        
         let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: CCountry_name, ascending: true)
         let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
         
@@ -68,6 +71,21 @@ class SignUpViewController: ParentViewController {
         }
     }
 
+    func setAtttibuteString() {
+        
+        let textAttributesOne = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
+        let textAttributesTwo = [NSAttributedStringKey.foregroundColor: CColorNavRed, NSAttributedStringKey.font: CFontSFUIText(size: 14.0, type: .SemiBold)]
+        
+        let textPartOne = NSMutableAttributedString(string: CAlreadyHaveAnAccount, attributes: textAttributesOne)
+        let textPartTwo = NSMutableAttributedString(string: CLogin, attributes: textAttributesTwo)
+        
+        let textCombination = NSMutableAttributedString()
+        textCombination.append(textPartOne)
+        textCombination.append(textPartTwo)
+        
+        self.lblLogin.attributedText = textCombination
+    }
+    
 }
 
 //MARK:-

@@ -33,13 +33,27 @@ class SelectLanguageViewController: ParentViewController {
     
     func initialize() {
         
-        LocalizationSetLanguage(language: CLanguageEnglish)
-
         if isFromProfile {
             self.title = CChangeLanguage
+            LocalizationSetLanguage(language: Localization.sharedInstance.getLanguage())
             btnContinue.setTitle(CDone, for: .normal)
+            
+            imgVEnglish.isHidden = true
+            imgVPortuguese.isHidden = true
+            
+            if Localization.sharedInstance.getLanguage() == CLanguagePortuguese {
+                btnPortuguese.isSelected = true
+                btnEnglish.isSelected = false
+                imgVPortuguese.isHidden = false
+            } else {
+                btnEnglish.isSelected = true
+                btnPortuguese.isSelected = false
+                imgVEnglish.isHidden = false
+            }
+            
         } else {
             self.title = CSelectLanguage
+            LocalizationSetLanguage(language: CLanguageEnglish)
             btnContinue.setTitle(CContinue, for: .normal)
         }
     }
@@ -79,7 +93,12 @@ extension SelectLanguageViewController {
     @IBAction func btnContinueClicked(sender : UIButton) {
         
         if isFromProfile {
-            self.navigationController?.popViewController(animated: true)
+           // self.navigationController?.popViewController(animated: true)
+            
+            appDelegate?.tabbarController = nil
+            
+            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+            appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
             
         } else {
             

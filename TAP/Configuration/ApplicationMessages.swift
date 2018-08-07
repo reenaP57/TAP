@@ -10,126 +10,126 @@ import Foundation
 
 //General
 
-let CRetry              = CLocalize(text: "Retry")
-let CYes                = CLocalize(text: "Yes")
-let CNo                 = CLocalize(text: "No")
-let COk                 = CLocalize(text: "Ok")
-let CCancel             = CLocalize(text: "Cancel")
-let CClose              = CLocalize(text: "CLOSE")
+var CRetry              : String { return CLocalize(text: "Retry")}
+var CYes                : String { return CLocalize(text: "Yes")}
+var CNo                 : String { return CLocalize(text: "No")}
+var COk                 : String { return CLocalize(text: "Ok")}
+var CCancel             : String { return CLocalize(text: "Cancel")}
+var CClose              : String { return CLocalize(text: "CLOSE")}
 
 //LRF
 
-let CSelectLanguage      = CLocalize(text: "Select Language")
-let CSignUp              = CLocalize(text: "Sign Up")
-let CForgotPassword      = CLocalize(text: "Forgot Password")
-let CSearchYourLocation  = CLocalize(text: "Search your location")
-let CDone                = CLocalize(text: "Done")
-let CContinue            = CLocalize(text: "Continue")
-let CCurrentLocation     = CLocalize(text: "Current Location")
-
+var CSelectLanguage      : String { return CLocalize(text: "Select Language")}
+var CLogin               : String { return CLocalize(text: "Log In")}
+var CSignUp              : String { return CLocalize(text: "Sign Up")}
+var CForgotPassword      : String { return CLocalize(text: "Forgot Password")}
+var CSearchYourLocation  : String { return CLocalize(text: "Search your location")}
+var CDone                : String { return CLocalize(text: "Done")}
+var CContinue            : String { return CLocalize(text: "Continue")}
+var CCurrentLocation     : String { return CLocalize(text: "Current Location")}
+var CDontHaveAnAccount   : String { return CLocalize(text: "Don't have an account?")}
+var CAlreadyHaveAnAccount   : String { return CLocalize(text: "Already have an account?")}
 
 //Home
 
-let CNearbyRestaurant   =  CLocalize(text: "Nearby Restaurants")
-let CMostPopular        =  CLocalize(text: "Most Popular")
-let CNewArrival         =  CLocalize(text: "New Arrival")
-let CRatings            = CLocalize(text: "Ratings")
-let CPromotions         = CLocalize(text: "Promotions")
-let CSearchRestaurant   = CLocalize(text: "Search restaurant by name, cuisine or dish")
-let CClearCartAndAdd    = CLocalize(text: "CLEAR CART & ADD")
+var CMostPopular : String { return CLocalize(text:  "Most Popular") }
+var CNearbyRestaurant   : String { return CLocalize(text: "Nearby Restaurants")}
+var CNewArrival         : String { return  CLocalize(text: "New Arrival")}
+var CRatings            : String { return CLocalize(text: "Ratings")}
+var CPromotions         : String { return CLocalize(text: "Promotions")}
+var CSearchRestaurant   : String { return CLocalize(text: "Search restaurant by name, cuisine or dish")}
 
-let CMessageNoSearchRest     = CLocalize(text: "No restaurant,cuisine or dish available.")
-let CMessageNoDishAvailableForRest  = CLocalize(text: "No dishes available for this restaurant.")
-let CMessageNoDishAvailable     = CLocalize(text: "No dishes available.")
-let CMessageNoFoundPromotion = CLocalize(text: "Promotion list not found.")
-let CMessageAlreadyCardAdded     = CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")
+var CSearchDish         : String { return CLocalize(text: "Search")}
+var CClearCartAndAdd    : String { return CLocalize(text: "CLEAR CART & ADD")}
+
+var CMessageNoSearchRest     : String { return CLocalize(text: "No restaurant,cuisine or dish available.")}
+var CMessageNoDishAvailableForRest  : String { return CLocalize(text: "No dishes available for this restaurant.")}
+var CMessageNoDishAvailable     : String { return CLocalize(text: "No dishes available.")}
+var CMessageNoFoundPromotion : String { return CLocalize(text: "There are no promotions added for this restaurant.")}
+var CMessageAlreadyCardAdded     : String { return CLocalize(text: "Adding dishes from this restaurant will clear your cart and will add new dishes from this restaurant. There are some dishes already added from other restaurant in your cart. Are you sure you want to clear cart and add new dishes from this restaurant ?")}
 
 
 //Order
 
-let CYourOrders         =  CLocalize(text: "Your Orders")
-let COrderSummary       =  CLocalize(text: "Order Summary")
-let COrderAccepted      =  CLocalize(text: "ORDER ACCEPTED")
-let COrderRejected      =  CLocalize(text: "ORDER REJECTED")
-let COrderReady         =  CLocalize(text: "ORDER READY")
-let COrderPending       =  CLocalize(text: "ORDER PENDING")
+var CYourOrders         : String { return  CLocalize(text: "Your Orders")}
+var COrderSummary       : String { return  CLocalize(text: "Order Summary")}
+var COrderAccepted      : String { return  CLocalize(text: "ORDER ACCEPTED")}
+var COrderRejected      : String { return  CLocalize(text: "ORDER REJECTED")}
+var COrderReady         : String { return  CLocalize(text: "ORDER READY")}
+var COrderPending       : String { return CLocalize(text: "ORDER PENDING")}
 
-let CAddYourReview      =  CLocalize(text: "Add your review...")
-let CToPay              = CLocalize(text: "To pay (by cash)")
-let CPaid               = CLocalize(text: "Paid (with stripe)")
-
-let CMessageNoOrder     = CLocalize(text: "Yet you have not given order.")
+var CAddYourReview      : String { return  CLocalize(text: "Add your review...")}
+var CToPay              : String { return CLocalize(text: "To pay (by cash)")}
+var CPaid               : String { return CLocalize(text: "Paid (with stripe)")}
+var CSubTotal           : String { return CLocalize(text: "Subtotal")}
+var CTax                : String { return CLocalize(text: "Tax")}
+var CMessageNoOrder     : String { return CLocalize(text: "Yet you have not given order.")}
 
 
 //Cart
 
-let CViewCart           =  CLocalize(text: "View Cart")
-let CPaymentSuccess     =  CLocalize(text: "Payment Success")
+var CViewCart           : String { return  CLocalize(text: "View Cart")}
+var CPaymentSuccess     : String { return  CLocalize(text: "Payment Success")}
 
-let CMessageUpdatedRestCart     = CLocalize(text: "Updated cart detail.")
-let CClosedRestaurant           = CLocalize(text: "Restaurant is closed.")
-let CPaymentMessage1            = CLocalize(text: "Your Payment of")
-let CPaymentMessage2            = CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")
-let COrderPlaceDateTime         = CLocalize(text: "The order was place on")
+var CMessageUpdatedRestCart     : String { return CLocalize(text: "Updated cart detail.")}
+var CClosedRestaurant           : String { return CLocalize(text: "Restaurant is closed.")}
+var CPaymentMessage1            : String { return CLocalize(text: "Your Payment of")}
+var CPaymentMessage2            : String { return CLocalize(text: "has been successfully done. Here is your Order ID and Transaction ID.")}
+var COrderPlaceDateTime         : String { return CLocalize(text: "The order was place on")}
 
 
 //Profile
 
-let CProfileSetting      =  CLocalize(text: "Profile Setting")
-let CEditProfile         =  CLocalize(text: "Edit Profile")
-let CChangePassword      =  CLocalize(text: "Change Password")
-let CChangeLanguage      =  CLocalize(text: "Change Language") 
-let CMyFavourite         =  CLocalize(text: "My Favourites")
-let CTermsConditions     =  CLocalize(text: "Terms & Conditions")
-let CNotification        =  CLocalize(text: "Notification")
-let CAboutUs             =  CLocalize(text: "About Us")
-let CPrivacyPolicy       =  CLocalize(text: "Privacy Policy")
-let CContactUs           =  CLocalize(text: "Contact Us")
-let CLogOut              =  CLocalize(text: "Log Out")
+var CProfileSetting      : String { return  CLocalize(text: "Profile Setting")}
+var CEditProfile         : String { return  CLocalize(text: "Edit Profile")}
+var CChangePassword      : String { return  CLocalize(text: "Change Password")}
+var CChangeLanguage      : String { return  CLocalize(text: "Change Language")}
+var CMyFavourite         : String { return  CLocalize(text: "My Favourites")}
+var CTermsConditions     : String { return  CLocalize(text: "Terms & Conditions")}
+var CNotification        : String { return  CLocalize(text: "Notification")}
+var CAboutUs             : String { return  CLocalize(text: "About Us")}
+var CPrivacyPolicy       : String { return  CLocalize(text: "Privacy Policy")}
+var CContactUs           : String { return  CLocalize(text: "Contact Us")}
+var CLogOut              : String { return  CLocalize(text: "Log Out")}
 
-let CMessageNoFavouriteRest  = CLocalize(text: "You have not favourite any restaurant.")
+var CMessageNoFavouriteRest  : String { return CLocalize(text: "You have not favourite any restaurant.")}
 
 
 //Confirmation Message
 
-let CDeleteOrderMessage     = CLocalize(text: "Are you sure you want to delete this order?")
-let CLogOutMessage          = CLocalize(text: "Are you sure you want to Log Out?")
+var CDeleteOrderMessage     : String { return CLocalize(text: "Are you sure you want to delete this order?")}
+var CLogOutMessage          : String { return CLocalize(text: "Are you sure you want to Log Out?")}
 
 
 //Validaton Message
 
-let CBlankEmailMessage           = CLocalize(text:"Please enter your Email.")
-let CInvalidEmailMessage         = CLocalize(text:"Please enter valid Email.")
-let CBlankPasswordMessage        = CLocalize(text:"Please enter your Password.")
-let CBlankConfirmPasswordMessage = CLocalize(text:"Please enter your Confirm Password.")
-let CMisMatchMessage             = CLocalize(text:"Password and Confirm Password doesn’t match.")
-let CBlankFullNameMessage        = CLocalize(text:"Please enter your Full Name.")
-let CInvalidPasswordMessage      = CLocalize(text:"Please enter minimum 6 character alphanumeric Password.")
-let CBlankCountryCodeMessage     = CLocalize(text:"Please select your Country Code.")
-let CValidMobileNo               =  CLocalize(text:"Please enter valid Mobile Number.")
+var CBlankEmailMessage           : String { return CLocalize(text:"Please enter your Email.")}
+var CInvalidEmailMessage         : String { return CLocalize(text:"Please enter valid Email.")}
+var CBlankPasswordMessage        : String { return CLocalize(text:"Please enter your Password.")}
+var CBlankConfirmPasswordMessage : String { return CLocalize(text:"Please enter your Confirm Password.")}
+var CMisMatchMessage             : String { return CLocalize(text:"Password and Confirm Password doesn’t match.")}
+var CBlankFullNameMessage        : String { return CLocalize(text:"Please enter your Full Name.")}
+var CInvalidPasswordMessage      : String { return CLocalize(text:"Please enter minimum 6 character alphanumeric Password.")}
+var CBlankCountryCodeMessage     : String { return CLocalize(text:"Please select your Country Code.")}
+var CValidMobileNo               : String { return  CLocalize(text:"Please enter valid Mobile Number.")}
 
-let CSelectRating                = CLocalize(text:"Please select ratings.")
-let CBlankReview                 = CLocalize(text:"Please enter review.")
+var CSelectRating                : String { return CLocalize(text:"Please select ratings.")}
+var CBlankReview                 : String { return CLocalize(text:"Please enter review.")}
 
-let CBlankOldPassword            = CLocalize(text:"Please enter your Old Password.")
-let CBlankNewPassword            = CLocalize(text:"Please enter your New Password.")
+var CBlankOldPassword            : String { return CLocalize(text:"Please enter your Old Password.")}
+var CBlankNewPassword            : String { return CLocalize(text:"Please enter your New Password.")}
 
-let CMessaseLoginPopup           = CLocalize(text:"Please login to continue")
-let CMessaseOrderPopup           = CLocalize(text:"Please login to get your cart history.")
+var CMessaseLoginPopup           : String { return CLocalize(text:"Please login to continue")}
+var CMessaseOrderPopup           : String { return CLocalize(text:"Please login to get your cart history.")}
 
 
-let CMessaseDeviceNotSupport     = CLocalize(text:"Sorry, your device is not support mail")
+var CMessaseDeviceNotSupport     : String { return CLocalize(text:"Sorry, your device is not support mail")}
 
-let CMessaseProfileUpdated       = CLocalize(text:"Your profile updated successfully.")
-let CMessaseChangePassword       = CLocalize(text:"Password updated successfully.")
+var CMessaseProfileUpdated       : String { return CLocalize(text:"Your profile updated successfully.")}
+var CMessaseChangePassword       : String { return CLocalize(text:"Password updated successfully.")}
 
 
 // General Message
 
-let CError  = "ERROR!"
-let CMessageRetry  = "An error has occured. Please check your network connection or try again."
-
-
-
-
-
+var CError  = "ERROR!"
+var CMessageRetry  = "An error has occured. Please check your network connection or try again."

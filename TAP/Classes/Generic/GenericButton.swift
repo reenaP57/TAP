@@ -63,5 +63,7 @@ extension GenericButton {
         ///... Common Setup
         self.titleLabel?.font = self.titleLabel?.font.setUpAppropriateFont()
         self.setNormalTitle(normalTitle: CLocalize(text: self.currentTitle ?? ""))
+        
+        CLocalize(text: "Email")
     }
 }

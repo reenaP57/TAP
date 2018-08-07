@@ -29,7 +29,11 @@ class RestaurantDetailTopView: UIView {
     @IBOutlet weak var btnContactNo : UIButton!
     @IBOutlet weak var btnPromotion : UIButton!
     @IBOutlet weak var btnViewRating : UIButton!
-    @IBOutlet weak var txtSearch : UITextField!
+    @IBOutlet weak var txtSearch : UITextField!{
+        didSet{
+            txtSearch.placeholder = CSearchDish
+        }
+    }
     @IBOutlet weak var vwDetail : UIView!
     @IBOutlet weak var vwSearch : UIView!
     @IBOutlet weak var vwTop : UIView!

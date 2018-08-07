@@ -56,7 +56,7 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
         var strCategoryName = ""
         
         if indexPath.row == 0 {
-             strCategoryName = "Most Popular"
+             strCategoryName = CMostPopular
         } else {
             let dict = arrCategoryDetail[indexPath.row - 1]
             strCategoryName = dict.valueForString(key: CDish_category_name)
@@ -72,7 +72,7 @@ extension RestaurantDetailHeaderView : UICollectionViewDelegateFlowLayout, UICol
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RestaurantCategoryCollectionViewCell", for: indexPath) as? RestaurantCategoryCollectionViewCell {
             
             if indexPath.item == 0 {
-                cell.lblCategory.text  = "Most Popular"
+                cell.lblCategory.text  = CMostPopular
                 cell.accessibilityLabel = ""
             } else {
                 

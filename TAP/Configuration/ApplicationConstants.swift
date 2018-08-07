@@ -80,7 +80,7 @@ let kNotificationUpdateRestaurantDetail   = "UpdateRestaurantDetail"
 //MARK:-
 //MARK:- Application Language
 
-let CLanguagePortuguese         = "port"
+let CLanguagePortuguese         = "pt" //"port"
 let CLanguageEnglish            = "en"
 
 

@@ -361,6 +361,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="lblDontAccount" destination="E5N-HW-W4c" id="Vpz-yH-rnZ"/>
                         <outlet property="txtEmail" destination="g1R-d4-3ic" id="mUd-az-GYN"/>
                         <outlet property="txtPassword" destination="nKo-qt-0hP" id="xZa-PL-X5h"/>
                     </connections>
@@ -860,6 +861,7 @@
                     <size key="freeformSize" width="375" height="727"/>
                     <connections>
                         <outlet property="imgVProfile" destination="30c-Pl-LXS" id="60l-wL-e9K"/>
+                        <outlet property="lblLogin" destination="XfX-wQ-NfM" id="sde-sY-6rh"/>
                         <outlet property="txtConfirmPassword" destination="bw7-dz-6Sq" id="MaQ-6Q-ogB"/>
                         <outlet property="txtCountryCode" destination="E1x-xQ-Hh6" id="axY-B5-jGh"/>
                         <outlet property="txtEmail" destination="Yfc-Nz-mha" id="OZv-jh-00s"/>

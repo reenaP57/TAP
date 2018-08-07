@@ -61,6 +61,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locManager.startUpdatingLocation()
         }
 
+        print("Lang : ",Localization.sharedInstance.getLanguage())
+        print("Text : ",CLocalize(text: CSignUp))
+        
         return true
     }
     

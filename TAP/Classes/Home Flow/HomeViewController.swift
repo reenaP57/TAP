@@ -244,6 +244,9 @@ extension HomeViewController {
                 if (arrPopular.count) > 0 {
                     self.arrPopularData.removeAll()
                     self.arrPopularData = arrPopular
+                    
+                    print("CMostPopular ", CMostPopular)
+                    
                     self.arrSection.append(CMostPopular)
                 }
                 

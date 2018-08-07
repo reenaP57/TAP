@@ -20,7 +20,8 @@ class LoginViewController: ParentViewController {
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
     @IBOutlet weak var btnCountiueGuest : UIButton!
-    
+    @IBOutlet weak var lblDontAccount : UILabel!
+
     var loginFrom = loginFromType.FromSelectLangugae
     var strPwd = String()
     
@@ -62,6 +63,22 @@ class LoginViewController: ParentViewController {
             txtEmail.text = "bhavika.mi@mailinator.com"
             //txtPassword.text = "abc1234"
         }
+        self.setAtttibuteString()
+    }
+    
+    func setAtttibuteString() {
+        
+        let textAttributesOne = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
+        let textAttributesTwo = [NSAttributedStringKey.foregroundColor: CColorNavRed, NSAttributedStringKey.font: CFontSFUIText(size: 14.0, type: .SemiBold)]
+        
+        let textPartOne = NSMutableAttributedString(string: CDontHaveAnAccount, attributes: textAttributesOne)
+        let textPartTwo = NSMutableAttributedString(string: CSignUp, attributes: textAttributesTwo)
+        
+        let textCombination = NSMutableAttributedString()
+        textCombination.append(textPartOne)
+        textCombination.append(textPartTwo)
+       
+        self.lblDontAccount.attributedText = textCombination
     }
 
 }

@@ -174,9 +174,9 @@ class OrderDetailViewController: ParentViewController {
         arrOrderList = dictDetail.valueForJSON(key: "dish") as! [[String : AnyObject]]
         let arrAD = dictDetail.valueForJSON(key: "additional_charge") as![[String : AnyObject]]
         
-        arrOrderPrice.append(["title":"Subtotal" as AnyObject,"value": dictDetail.valueForDouble(key: CSubtotal) as AnyObject])
-        arrOrderPrice.append(["title":"Tax(\(dictDetail.valueForDouble(key: CTax_percent) ?? 0.0)%)" as AnyObject,"value": dictDetail.valueForDouble(key: CTax_amount)  as AnyObject])
-
+        arrOrderPrice.append(["title":CSubTotal as AnyObject,"value": dictDetail.valueForDouble(key: CSubtotal) as AnyObject])
+        arrOrderPrice.append(["title":"\(CTax)(\(dictDetail.valueForDouble(key: CTax_percent) ?? 0.0)%)" as AnyObject,"value": dictDetail.valueForDouble(key: CTax_amount)  as AnyObject])
+ 
         for adCharge in arrAD {
             
             arrOrderPrice.append(["title":adCharge.valueForString(key: "tax_name") as AnyObject,"value": adCharge.valueForString(key: "order_tax_amount") as AnyObject])
