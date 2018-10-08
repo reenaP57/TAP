@@ -44,6 +44,7 @@ let CAPITagAddCart                     = "add-cart"
 let CAPITagCartDetail                  = "cart-detail"
 let CAPITagDeviceToken                 = "device-token"
 let CAPITagRemoveDeviceToken           = "delete-device-token"
+let CAPITagCuisineList                 = "cuisine-list"
 
 
 
@@ -76,7 +77,8 @@ let CStatus500              = 500
 let CStatus550              = 550 // Inactive/Delete user
 let CStatus555              = 555 // Invalid request
 let CStatus556              = 556 // Invalid request
-
+let CStatus1009             = -1009 // No Internet
+let CStatus1005             = -1005 //Network connection lost
 
 //MARK:- ---------Networking
 typealias ClosureSuccess = (_ task:URLSessionTask, _ response:AnyObject?) -> Void
@@ -635,6 +637,42 @@ class APIRequest: NSObject {
         print("API Error =" + "\(strApiTag )" + "\(String(describing: error?.localizedDescription))" )
     }
     
+    
+    func checkInternetConnection(complete:@escaping () -> Void) {
+        
+        var isScreenFind = false
+        
+        for objView in CTopMostViewController.view.subviews {
+            if objView .isKind(of: NoInternetView.classForCoder()) {
+                isScreenFind = true
+                break
+            }
+        }
+        
+        if isScreenFind {
+            return
+        }
+        
+        let noInternetVW = NoInternetView.viewFromXib as? NoInternetView
+       // noInternetVW?.frame = CGRect(x: 0, y: 64, width: CScreenWidth, height: CScreenHeight - 64)
+        noInternetVW?.frame = CGRect(x: 0, y: 0, width: CScreenWidth, height: CScreenHeight)
+
+        
+        let net = NetworkReachabilityManager()
+        net?.startListening()
+        
+        CTopMostViewController.view.addSubview(noInternetVW!)
+        
+        noInternetVW?.btnTryAgain.touchUpInside(genericTouchUpInsideHandler: { (sender) in
+            
+            if (net?.isReachable)! {
+                //...Network Available
+                print("Network Available")
+                noInternetVW?.removeFromSuperview()
+                complete()
+            }
+        })
+    }
 }
 
 
@@ -660,7 +698,16 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCountry, error: error)
+            
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.getCountryList(_timestamp: _timestamp, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCountry, error: error)
+            }
+            
         })
         
     }
@@ -673,7 +720,16 @@ extension APIRequest {
                 completion(response, nil)
             }
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCMS, error: error)
+           
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.cms(completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCMS, error: error)
+            }
+            
         })
     }
     
@@ -706,7 +762,15 @@ extension APIRequest {
         }) { (task, message, error) in
             MILoader.shared.hideLoader()
             
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSignUp, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.signUp(param, _imgData: _imgData, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSignUp, error: error)
+            }
+            
         }
     }
     
@@ -724,7 +788,15 @@ extension APIRequest {
             
         }) { (task, message, error) in
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagLogin, error: error)
+            
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.login(_email: _email, _password: _password, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagLogin, error: error)
+            }
         }
         
     }
@@ -743,7 +815,15 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagForgotPassword, error: error)
+            
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.forgotPasswrd(_email: _email, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagForgotPassword, error: error)
+            }
         })
     }
     
@@ -767,7 +847,15 @@ extension APIRequest {
         }) { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagEditProfile, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.editProfile(_param: _param, _imgData: _imgData, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagEditProfile, error: error)
+            }
+            
         }
         
     }
@@ -787,7 +875,14 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagChangePassword, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.changePassword(oldPwd: oldPwd, newPwd: newPwd, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagChangePassword, error: error)
+            }
         })
     }
     
@@ -841,8 +936,13 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantMainList, error: error)
-            
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.restaurantList(completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantMainList, error: error)
+            }
         })!
     }
     
@@ -879,8 +979,13 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantList, error: error)
-            
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.moreRestaurantList(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantList, error: error)
+            }
         })!
     }
     
@@ -917,8 +1022,13 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
-            
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.searchRestaurantOrCuisine(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagSearchRestaurant, error: error)
+            }
         })!
     }
     
@@ -932,6 +1042,13 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.restaurantDetail(restaurant_id: restaurant_id, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantDetails, error: error)
+            }
         })
         
     }
@@ -946,7 +1063,15 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddFavouriteRestaurant, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.favouriteRestaurant(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddFavouriteRestaurant, error: error)
+            }
+            
         })
     }
     
@@ -960,7 +1085,14 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagFavouriteRestaurantList, error: error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.favouriteRestaurantList(page: page, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagFavouriteRestaurantList, error: error)
+            }
+            
         })!
     }
     
@@ -974,7 +1106,14 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagPromotionList, error: error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.promotionList(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagPromotionList, error: error)
+            }
+            
         })!
     }
     
@@ -987,8 +1126,13 @@ extension APIRequest {
             }
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
-            
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.restaurantRatingList(restaurant_id: restaurant_id, page: page, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
+            }
         })!
     }
     
@@ -1001,9 +1145,39 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
+           
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.updateRestaurantDetail(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantRating, error: error)
+            }
             
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRestaurantUpdateDetail, error: error)
         })
+    }
+    
+    func cuisineList(page : Int?, completion : @escaping ClosureCompletion) -> URLSessionTask {
+        
+        return Networking.sharedInstance.POST(apiTag: CAPITagCuisineList, param: [CPage : page as AnyObject, CPerPage : CLimit as AnyObject], successBlock: { (task, response) in
+            
+            if self.checkResponseStatusAndShowAlert(showAlert: true, responseobject: response, strApiTag: CAPITagCuisineList) {
+                completion(response, nil)
+            }
+            
+        }, failureBlock: { (task, message, error) in
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.cuisineList(page: page, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagCuisineList, error: error)
+            }
+            
+        })!
+        
     }
     
     
@@ -1025,8 +1199,15 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             MILoader.shared.hideLoader()
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.addOrder(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddOrder, error: error)
+            }
             
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddOrder, error: error)
         })
     }
     
@@ -1046,7 +1227,15 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagStripePayment, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.stripePayment(order_id: order_id, stripe_token: stripe_token, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagStripePayment, error: error)
+            }
+            
         })
     }
     
@@ -1060,7 +1249,14 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             completion(nil, error)
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderList, error: error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.orderList(completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderList, error: error)
+            }
+            
         })!
     }
     
@@ -1077,9 +1273,17 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            
             MILoader.shared.hideLoader()
             completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.orderDetail(order_id: order_id, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagOrderDetail, error: error)
+
+            }
+                
         })
     }
     
@@ -1099,8 +1303,14 @@ extension APIRequest {
         }, failureBlock: { (task, message, error) in
             
             MILoader.shared.hideLoader()
-            
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddRating, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.orderRating(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddRating, error: error)
+            }
         })
     }
     
@@ -1118,7 +1328,15 @@ extension APIRequest {
             
         }, failureBlock: { (task, message, error) in
             MILoader.shared.hideLoader()
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddCart, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.addCart(param: param, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagAddCart, error: error)
+            }
+            
         })
         
     }
@@ -1134,7 +1352,15 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: false, strApiTag: CAPITagCartDetail, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.cartDetail(completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: false, strApiTag: CAPITagCartDetail, error: error)
+            }
+            
         })
     }
     
@@ -1151,7 +1377,15 @@ extension APIRequest {
             }
             
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagDeviceToken, error: error)
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.addDeviceToken(device_token: device_token, player_id: player_id, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagDeviceToken, error: error)
+            }
+            
         })
     }
     
@@ -1163,8 +1397,14 @@ extension APIRequest {
                 completion(response, nil)
             }
         }, failureBlock: { (task, message, error) in
-            self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRemoveDeviceToken, error: error)
-            
+            completion(nil, error)
+            if error?.code == CStatus1009 || error?.code == CStatus1005 {
+                self.checkInternetConnection {
+                    _ = self.removeDeviceToken(player_id: player_id, completion: completion)
+                }
+            } else {
+                self.actionOnAPIFailure(errorMessage: message, showAlert: true, strApiTag: CAPITagRemoveDeviceToken, error: error)
+            }
         })
     }
 }
@@ -1209,9 +1449,18 @@ extension APIRequest {
         tblUser.is_notify = dictUser.valueForBool(key: CIs_notify)
         tblUser.profile_image = dictUser.valueForString(key: CImage)
         tblUser.country_id = Int16(dictUser.valueForInt(key: CCountry_id)!)
-        tblUser.latitude = CUserDefaults.object(forKey: CLatitude) as! Double
-        tblUser.longitude = CUserDefaults.object(forKey: CLongitude) as! Double
-        tblUser.address = (CUserDefaults.object(forKey: UserDefaultCurrentLocation) as! String)
+        
+        if let lat = CUserDefaults.object(forKey: CLatitude) {
+            tblUser.latitude = lat as! Double
+        }
+       
+        if let long = CUserDefaults.object(forKey: CLatitude) {
+            tblUser.longitude = long as! Double
+        }
+        
+        if let address  = CUserDefaults.object(forKey: UserDefaultCurrentLocation) {
+            tblUser.address = address as? String
+        }
         
         CoreData.saveContext()
         
@@ -1222,7 +1471,9 @@ extension APIRequest {
         
         let data = response.valueForJSON(key: CJsonData) as? [[String : AnyObject]]
         
-        for item in data! {
+        let arrData = data?.sorted(by: {($0.valueForString(key: CCountry_name)) < ($1.valueForString(key: CCountry_name))})
+        
+        for item in arrData! {
             
             let tblCountry = TblCountryList.findOrCreate(dictionary: ["country_id":Int16(item.valueForInt(key: CId)!)]) as! TblCountryList
             
@@ -1230,6 +1481,8 @@ extension APIRequest {
             tblCountry.country_name = item.valueForString(key: CCountry_name)
             tblCountry.status_id = Int16(item.valueForInt(key: CStatus_id)!)
             tblCountry.country_with_code = "\(item.valueForString(key: "country_name")) (\(item.valueForString(key: "country_code")))"
+            
+            print("Country name :", item.valueForString(key: CCountry_name))
         }
         
         CoreData.saveContext()

@@ -39,7 +39,7 @@ extension UIImageView {
         static var TouchUpInside = "genericTouchUpInsideHandler"
     }
     
-    func touchUpInside(touchUpInside:touchUpInsideHandler<UIImageView>) {
+    func touchUpInside(touchUpInside:@escaping touchUpInsideHandler<UIImageView>) {
         
         objc_setAssociatedObject(self, &AssociatedObjectKey.TouchUpInside, touchUpInside, .OBJC_ASSOCIATION_RETAIN)
         

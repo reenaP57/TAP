@@ -146,8 +146,8 @@ class CartViewController: ParentViewController {
         let taxPrice = subTotal * resDetail.tax / 100
         
         
-        arrPrice.append(["title":"Subtotal" as AnyObject,"value": String(format: "%.2f", subTotal) as AnyObject])
-        arrPrice.append(["title":"Tax(\(resDetail.tax)%)" as AnyObject,"value": String(format: "%.2f", taxPrice) as AnyObject])
+        arrPrice.append(["title":CSubTotal as AnyObject,"value": String(format: "%.2f", subTotal) as AnyObject])
+        arrPrice.append(["title":"\(CTax)(\(resDetail.tax)%)" as AnyObject,"value": String(format: "%.2f", taxPrice) as AnyObject])
         
         
         for cart in arrAD! {
@@ -165,7 +165,7 @@ class CartViewController: ParentViewController {
             additionalCharge = additionalCharge + amount
         }
         
-        arrPrice.append(["title":"To Pay" as AnyObject,"value": 0.0 as AnyObject])
+        arrPrice.append(["title":CPay as AnyObject,"value": 0.0 as AnyObject])
         
         self.updatePrice(tax: taxPrice, additional_charge: additionalCharge)
     }
@@ -181,15 +181,15 @@ class CartViewController: ParentViewController {
             
             var dict = item
             
-            if dict.valueForString(key: "title") == "Subtotal" {
+            if dict.valueForString(key: "title") == CSubTotal {
                 dict["value"] = subTotal as AnyObject
             }
             
-            if dict.valueForString(key: "title") == "Tax(\(resDetail.tax)%)" {
+            if dict.valueForString(key: "title") == "\(CTax)(\(resDetail.tax)%)" {
                 dict["value"] = tax as AnyObject
             }
             
-            if dict.valueForString(key: "title") == "To Pay" {
+            if dict.valueForString(key: "title") == CPay {
                 dict["value"] = toPay as AnyObject
             }
             
@@ -355,7 +355,7 @@ extension CartViewController {
                             if Int(cart.dish_id) == dishes.valueForInt(key: CDish_id) &&
                                 (cart.dish_name != dishes.valueForString(key: CDish_name) ||
                                     cart.dish_price != dishes.valueForDouble(key: CDish_price) ||
-                                    dishes.valueForInt(key: "status_id") == 3) {
+                                    dishes.valueForInt(key: "status_id") == 3 || dishes.valueForInt(key: CIs_available) == 0)   {
                                 
                                 tblCart.dish_name = dishes.valueForString(key: CDish_name)
                                 tblCart.dish_price = dishes.valueForDouble(key: CDish_price)!
@@ -538,15 +538,65 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//
+//        if tableView.isEqual(tblOrderList) {
+//            return true
+//        }
+//
+//        return false
+//    }
+//
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        if tableView.isEqual(tblOrderList) {
-            return true
+        let delete = UITableViewRowAction(style: .destructive, title: CDelete) { (action, indexpath) in
+            
+            if tableView.isEqual(self.tblOrderList) {
+                
+                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: CDeleteOrderMessage, btnOneTitle: CYes, btnOneTapped: { (action) in
+                    
+                    let dict = self.arrCartList[indexPath.row]
+                    TblCart.deleteObjects(predicate: NSPredicate(format: "%K == %@", CDish_id, "\(dict.dish_id)"))
+                    
+                    self.arrCartList.remove(at: indexPath.row)
+                    self.tblOrderList.reloadData()
+                    
+                    
+                    //... Update cart and price
+                    
+                    self.subTotal = 0.0
+                    
+                    for cart in self.arrCartList {
+                        let total = cart.dish_price * Double(cart.quantity)
+                        self.subTotal = self.subTotal + total
+                    }
+                    
+                    let taxPrice = self.subTotal * self.resDetail.tax / 100
+                    self.updatePrice(tax: taxPrice, additional_charge: self.additionalCharge)
+                    
+                    
+                    if self.arrCartList.count == 0 {
+                        self.vwEmptyCart.isHidden = false
+                        self.vwFooter.isHidden = true
+                        self.scrollVW.isHidden = true
+                        appDelegate?.setCartCountOnTab()
+                    }
+                    
+                    self.updateOrderTableHeight()
+                    self.view.layoutIfNeeded()
+                    
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: kNotificationUpdateRestaurantDetail), object: nil)
+                    
+                }, btnTwoTitle: CNo) { (action) in
+                }
+            }
         }
-        
-        return false
+        return [delete]
     }
     
+    /*
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             
@@ -590,7 +640,7 @@ extension CartViewController : UITableViewDelegate, UITableViewDataSource {
                 }
             }
        }
-    }
+    } */
 }
 
 

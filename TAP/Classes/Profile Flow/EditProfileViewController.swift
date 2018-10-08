@@ -31,6 +31,8 @@ class EditProfileViewController: ParentViewController {
     fileprivate var imgData = Data()
     var isPicUpdated : Bool = false
     var countryID = Int()
+    var arrCountry = [TblCountryList?]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,30 +66,64 @@ class EditProfileViewController: ParentViewController {
     func initialize() {
         self.title = CEditProfile
         
-        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: "country_name", ascending: false)
-        let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
-        
-        if (arrCountryCode?.count)! > 0 {
-            
-            txtCountryCode.setPickerData(arrPickerData: arrCountryCode!, selectedPickerDataHandler: { (select, index, component) in
-                
-                let dict = arrCountry![index] as AnyObject
-                countryID = dict.value(forKey: "country_id") as! Int
-                
-                let countryCode = dict.value(forKey: "country_code") as? String
-                
-                if countryCode?.first == "+" {
-                    txtCountryCode.text = countryCode
-                } else{
-                    txtCountryCode.text = "+\(countryCode ?? "")"
-                }
-                
-            }, defaultPlaceholder: "")
-        }
-        
+        self.countryList()
         self.prefilledUserDetail()
     }
 
+    func countryList() {
+        
+        let arrUSA = TblCountryList.fetch(predicate: NSPredicate(format: "%K == %d",CCountry_id, USAID), orderBy: CCountry_name, ascending: true) as? [TblCountryList]
+        let arrBrazil = TblCountryList.fetch(predicate: NSPredicate(format: "%K == %d",CCountry_id, BrazilID), orderBy: CCountry_name, ascending: true) as? [TblCountryList]
+        
+        arrCountry = (TblCountryList.fetchAllObjects() as! [TblCountryList?]).sorted(by: {($0?.country_with_code)! < ($1?.country_with_code)!})
+        
+        if let index = arrCountry.index(where: {$0?.country_id == 840}){
+            arrCountry.remove(at: index)
+        }
+        
+        if let index = arrCountry.index(where: {$0?.country_id == 76}){
+            arrCountry.remove(at: index)
+        }
+        
+        if var arrTemp = (arrCountry.map({$0?.country_with_code}) as? [String])?.sorted(by: {$0 < $1}){
+            
+            if (arrUSA?.count)! > 0{
+                let usaInfo = arrUSA?[0]
+                arrCountry.insert(usaInfo, at: 0)
+                arrTemp.insert((usaInfo?.country_with_code)!, at: 0)
+            }
+            
+            if (arrBrazil?.count)! > 0{
+                let brazilInfo = arrBrazil?[0]
+                arrCountry.insert(brazilInfo, at: 1)
+                arrTemp.insert((brazilInfo?.country_with_code)!, at: 1)
+                
+            }
+            
+            if (arrTemp.count) > 0 {
+                txtCountryCode.setPickerData(arrPickerData: arrTemp, selectedPickerDataHandler: { (select, index, component) in
+                    
+                    print(self.arrCountry.count)
+                    if self.arrCountry.count > 0{
+                        let countryInfo = self.arrCountry[index]
+                        let countryId: Int16 = (countryInfo?.country_id)!
+                        self.countryID = Int(countryId)
+                        
+                        let countryCode = countryInfo?.country_code
+
+                        if countryCode?.first == "+" {
+                            self.txtCountryCode.text = countryCode
+                        } else{
+                            self.txtCountryCode.text = "+\(countryCode ?? "")"
+                        }
+                    }
+                    
+                }, defaultPlaceholder: "")
+            }
+        }
+    }
+    
+    
     func getCountryCodeFromId() -> String
     {
         var countryCode = ""
@@ -158,9 +194,9 @@ extension EditProfileViewController {
         self.presentImagePickerController(allowEditing: true) { (image, info) in
             
             if let selectedImage = image {
-                imgVProfile.image = selectedImage
+                self.imgVProfile.image = selectedImage
                 self.imgData = UIImageJPEGRepresentation(selectedImage, 0.5)!
-                isPicUpdated = true
+                self.isPicUpdated = true
             }
         }
     }

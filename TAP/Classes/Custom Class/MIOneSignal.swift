@@ -116,6 +116,41 @@ class MIOneSignal: NSObject,OSPermissionObserver,OSSubscriptionObserver {
         }
     }
     
+    
+    func removeDeviceToken()
+    {
+        let deviceToken = CUserDefaults.value(forKey: CDeviceToken) as? String
+        let playerID = CUserDefaults.value(forKey: CPlayerId) as? String
+        
+        if deviceToken != nil && ((appDelegate?.loginUser) != nil) && playerID != nil
+        {
+            APIRequest.shared().removeDeviceToken(player_id: playerID!) { (response, error) in
+                
+                if response != nil && error == nil {
+                    
+                    appDelegate?.tabbarController = nil
+                    appDelegate?.tabbar = nil
+                    
+                    TblRecentLocation.deleteAllObjects()
+                    TblCart.deleteAllObjects()
+                    TblCartRestaurant.deleteAllObjects()
+                    
+                    appDelegate?.loginUser = nil
+                    CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
+                    CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
+                    CUserDefaults.synchronize()
+                    
+                    guard let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
+                        return
+                    }
+                    
+                    appDelegate?.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: loginVC), animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    
     func actionOnPushNotificationWithDic(_ dicNotification : [String : Any], isComingFromQuitMode : Bool?)
     {
         print(dicNotification)

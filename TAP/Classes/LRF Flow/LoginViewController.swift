@@ -19,8 +19,9 @@ class LoginViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
     @IBOutlet weak var txtPassword : GenericTextField!
-    @IBOutlet weak var btnCountiueGuest : UIButton!
+    @IBOutlet weak var btnCountiueGuest : UIButton?
     @IBOutlet weak var lblDontAccount : UILabel!
+    @IBOutlet weak var btnBack : UIButton!
 
     var loginFrom = loginFromType.FromSelectLangugae
     var strPwd = String()
@@ -52,12 +53,17 @@ class LoginViewController: ParentViewController {
         if (appDelegate?.isFromLoginPop)!
         {
             //...From Login popup
-            if appDelegate?.objNavController != nil
-            {
-                btnCountiueGuest.hide(byHeight: true)
-               // self.view.layoutIfNeeded()
+            if appDelegate?.objNavController != nil {
+                btnCountiueGuest?.hide(byHeight: true)
+                btnBack.isHidden = false
             }
         }
+        
+        if  self.loginFrom == .FromProfileLogin {
+            btnCountiueGuest?.hide(byHeight: true)
+            btnBack.isHidden = false
+        }
+        
         
         if IS_iPhone_Simulator {
             txtEmail.text = "bhavika.mi@mailinator.com"
@@ -146,6 +152,10 @@ extension LoginViewController {
             self.navigationController?.pushViewController(signUpVC, animated: true)
         }
     }
+    
+    @IBAction func btnBackClicked(sender : UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 
@@ -214,7 +224,16 @@ extension LoginViewController {
                             appDelegate?.tabbar?.btnProfile.isSelected = true
                             appDelegate?.tabbar?.btnHome.isSelected = false
                             appDelegate?.window?.rootViewController = appDelegate?.tabbarController
+                        } else if appDelegate?.tabbarController?.selectedIndex == 2{
+                            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+                            appDelegate?.tabbarController?.selectedIndex = 2
+                            appDelegate?.tabbar?.btnProfile.isSelected = false
+                            appDelegate?.tabbar?.btnHome.isSelected = false
+                            appDelegate?.tabbar?.btnOrder.isSelected = true
+
+                            appDelegate?.window?.rootViewController = appDelegate?.tabbarController
                         }
+                        
                         
                     } else {
                         //... For Normal Login

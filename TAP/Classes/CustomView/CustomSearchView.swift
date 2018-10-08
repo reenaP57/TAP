@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
+
 
 @objc protocol customSearchViewDelegate : class {
     @objc optional func showNextScreen()
     @objc optional func textDidChange(text : String)
     @objc optional func clearSearchText()
+    @objc optional func searchCuisine(text : String)
 }
 
 class CustomSearchView: UIView, UISearchBarDelegate {
@@ -40,7 +43,7 @@ class CustomSearchView: UIView, UISearchBarDelegate {
             
             let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
             
-            searchTextField?.font = (IS_iPhone_X) ? CFontSFUIText(size: 15, type: .Regular) : (IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 15, type: .Regular) :  CFontSFUIText(size: 11, type: .Regular)
+            searchTextField?.font = (IS_iPhone_X || IS_iPhone_6 || IS_iPhone_6_Plus) ? CFontSFUIText(size: 13, type: .Regular) :  CFontSFUIText(size: 11, type: .Regular)
             searchTextField?.textColor = CColorWhite
             searchBar.layer.cornerRadius = 0.0
             searchBar.layer.masksToBounds = true
@@ -79,10 +82,10 @@ class CustomSearchView: UIView, UISearchBarDelegate {
         btnClear.hide(byWidth: true)
         
         btnClear.touchUpInside { (sender) in
-            searchBar.text = ""
-            searchBar.resignFirstResponder()
-            btnClear.hide(byWidth: true)
-            delegate?.clearSearchText!()
+            self.searchBar.text = ""
+            self.searchBar.resignFirstResponder()
+            self.btnClear.hide(byWidth: true)
+            self.delegate?.clearSearchText!()
         }
     }
 
@@ -90,7 +93,10 @@ class CustomSearchView: UIView, UISearchBarDelegate {
     //MARK:-
     //MARK:- UISearchBar delegate
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        delegate?.showNextScreen!()
+        
+//        if let _ = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let _ = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees {
+            delegate?.showNextScreen!()
+     //   }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
@@ -106,8 +112,8 @@ class CustomSearchView: UIView, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-       // delegate?.searchCuisine()
         searchBar.resignFirstResponder()
+        delegate?.searchCuisine!(text: searchBar.text!)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

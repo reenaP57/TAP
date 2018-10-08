@@ -37,10 +37,10 @@ class OrderViewController: ParentViewController {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
         
-        if appDelegate?.loginUser?.user_id == nil {
-            appDelegate?.openLoginPopup(viewController: self, fromOrder: true, completion: {
-            })
-        }
+//        if appDelegate?.loginUser?.user_id == nil {
+//            appDelegate?.openLoginPopup(viewController: self, fromOrder: true, completion: {
+//            })
+//        }
     }
     
     

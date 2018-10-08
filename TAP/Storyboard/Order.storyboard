@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,52 +44,55 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vwa-kJ-DgM" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="7" width="335" height="137"/>
+                                                    <rect key="frame" x="20" y="7" width="335" height="137.5"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download-4.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="J6h-Go-cqz">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J6h-Go-cqz">
                                                             <rect key="frame" x="10" y="10" width="100" height="100"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="J6h-Go-cqz" secondAttribute="height" multiplier="1:1" id="w1c-wA-Kly"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cafe De Perks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWs-7K-bZg" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Cafe De Perks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWs-7K-bZg" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="120" y="10" width="96.5" height="17"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nim-By-Sdz" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="$12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nim-By-Sdz" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="303" y="12" width="22" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>
                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Margarita Pizza" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vR-io-dwe" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Margarita Pizza" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vR-io-dwe" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="120" y="33" width="205" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                             <color key="textColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alpha One Mall" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSa-bV-lJG" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Alpha One Mall" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSa-bV-lJG" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="120" y="54" width="205" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                             <color key="textColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Nov 23, 2017 at 7:30 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emf-m2-sHm" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Nov 23, 2017 at 7:30 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emf-m2-sHm" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="137" y="75" width="188" height="14.5"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                             <color key="textColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calender" translatesAutoresizingMaskIntoConstraints="NO" id="JRK-eE-LHt">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="calender" translatesAutoresizingMaskIntoConstraints="NO" id="JRK-eE-LHt">
                                                             <rect key="frame" x="120" y="76.5" width="12" height="12"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_dot" translatesAutoresizingMaskIntoConstraints="NO" id="Rx6-ra-3uo">
-                                                            <rect key="frame" x="120" y="98" width="107" height="24"/>
+                                                            <rect key="frame" x="120" y="98.5" width="107" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Nuy-Xm-6Jp"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ORDER ACCEPTED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uv-GG-R6o" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                            <rect key="frame" x="125" y="98" width="97" height="24"/>
+                                                            <rect key="frame" x="125" y="98.5" width="97" height="24"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="10"/>
                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -271,7 +272,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4o-ai-RKo" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                <rect key="frame" x="173" y="102.5" width="0.0" height="0.0"/>
+                                                                <rect key="frame" x="173" y="102" width="0.0" height="0.0"/>
                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="10"/>
                                                                 <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -367,23 +368,23 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view clipsSubviews="YES" tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1h-9P-zyP">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="79.5"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download-1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WJI-IE-nAg" customClass="GenericImageView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="260" y="8" width="65" height="65"/>
+                                                                            <rect key="frame" x="260" y="7.5" width="65" height="65"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="WJI-IE-nAg" secondAttribute="height" multiplier="1:1" id="bwU-KA-29o"/>
                                                                                 <constraint firstAttribute="width" constant="65" id="mPP-o8-vlB"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBm-qo-F6g" userLabel="lblMenu" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="9" y="17" width="0.0" height="22.5"/>
+                                                                            <rect key="frame" x="9" y="17" width="0.0" height="22"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-eF-kBR" userLabel="lblPrice" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="9" y="44.5" width="20" height="19.5"/>
+                                                                            <rect key="frame" x="9" y="44" width="20" height="19.5"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="tvH-Vh-UCf"/>
                                                                             </constraints>
@@ -407,13 +408,13 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oB-Lk-f0i" userLabel="lblEquals" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="62" y="44.5" width="9.5" height="19.5"/>
+                                                                            <rect key="frame" x="62" y="44" width="9.5" height="19.5"/>
                                                                             <fontDescription key="fontDescription" name=".SFUIText" family=".SF UI Text" pointSize="14"/>
                                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3X-qv-yOf" userLabel="lblPrice" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="76.5" y="44.5" width="0.0" height="19.5"/>
+                                                                            <rect key="frame" x="76.5" y="44" width="0.0" height="19.5"/>
                                                                             <fontDescription key="fontDescription" name=".SFUIText" family=".SF UI Text" pointSize="14"/>
                                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -521,13 +522,13 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="070-b4-0ST" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="9" y="21.5" width="0.0" height="0.0"/>
+                                                                            <rect key="frame" x="9" y="22" width="0.0" height="0.0"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7u3-Li-9CK" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                            <rect key="frame" x="324.5" y="21.5" width="0.0" height="0.0"/>
+                                                                            <rect key="frame" x="324.5" y="22" width="0.0" height="0.0"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -603,7 +604,7 @@
                                 <rect key="frame" x="0.0" y="606" width="375" height="120"/>
                                 <subviews>
                                     <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0g3-rd-Qp9" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                        <rect key="frame" x="117" y="25" width="140" height="40"/>
+                                        <rect key="frame" x="117.5" y="25" width="140" height="40"/>
                                         <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0g3-rd-Qp9" secondAttribute="height" multiplier="7:2" id="aG6-7K-pYW"/>
@@ -692,7 +693,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcf-Os-vG2">
-                                                <rect key="frame" x="0.0" y="34" width="80" height="80"/>
+                                                <rect key="frame" x="0.0" y="34.5" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="80" id="9kQ-mh-ers"/>
                                                     <constraint firstAttribute="height" constant="80" id="cXB-vR-ZpT"/>
@@ -704,7 +705,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxQ-xD-7av" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                <rect key="frame" x="188" y="74.5" width="0.0" height="0.0"/>
+                                                <rect key="frame" x="187.5" y="74.5" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -744,7 +745,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXG-75-Uqs" customClass="RatingView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                        <rect key="frame" x="77" y="61" width="180" height="32"/>
+                                                        <rect key="frame" x="77.5" y="61" width="180" height="32"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="size" keyPath="minImageSize">
@@ -790,7 +791,7 @@
                                                             <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                                 <color key="value" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Add a Note (extra napkins, extra souces...)"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Add your review…"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <outlet property="delegate" destination="Kua-0r-8aY" id="wgM-Ga-jbd"/>
@@ -812,7 +813,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVg-2x-Svv" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                                <rect key="frame" x="100" y="513.5" width="176" height="50"/>
+                                                <rect key="frame" x="99.5" y="513.5" width="176" height="50"/>
                                                 <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="1"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
@@ -824,7 +825,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEk-wq-PGs" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                                <rect key="frame" x="100" y="583" width="176" height="50"/>
+                                                <rect key="frame" x="99.5" y="583.5" width="176" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="176" id="JWp-Ib-FgD"/>
@@ -920,7 +921,6 @@
         <image name="back_white" width="22" height="15"/>
         <image name="calender" width="12" height="12"/>
         <image name="download-1.jpg" width="700" height="500"/>
-        <image name="download-4.jpg" width="275" height="183"/>
         <image name="location_detail_page" width="12" height="15"/>
         <image name="mobile" width="8" height="15"/>
         <image name="red_dot" width="107" height="24"/>

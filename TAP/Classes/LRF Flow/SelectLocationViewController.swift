@@ -59,7 +59,13 @@ class SelectLocationViewController: ParentViewController {
         //    lblCurrentLoc.text = appDelegate?.dictLocation[CAddress] as? String
       //  }
         
-        lblCurrentLoc.text = CUserDefaults.object(forKey: UserDefaultCurrentLocation) as? String
+        if let _ = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let _ = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
+        {
+                  lblCurrentLoc.text = CUserDefaults.object(forKey: UserDefaultCurrentLocation) as? String
+        } else {
+            lblCurrentLoc.text = CCurrentLocation
+        }
+ 
         
 //        if (appDelegate?.loginUser != nil && appDelegate?.loginUser?.latitude != nil && appDelegate?.loginUser?.longitude != nil) && !(appDelegate?.isCurrentLoc)! {
 //            lblCurrentLoc.text = appDelegate?.loginUser?.address
@@ -104,12 +110,49 @@ class SelectLocationViewController: ParentViewController {
 //MARK:- Action
 
 extension SelectLocationViewController {
-
+   
+    @IBAction func btnClearAllListClicked(sender : UIButton) {
+        TblRecentLocation.deleteAllObjects()
+        arrLocation.removeAll()
+        tblLocation.reloadData()
+    }
+    
      @IBAction func btnCurrentLocationClicked(sender : UIButton) {
         
-        appDelegate?.isCurrentLoc = true
-        appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
-        appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)
+        if let _ = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let _ = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
+        {
+            appDelegate?.isCurrentLoc = true
+            appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
+            appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: true, completion: nil)
+            
+        } else {
+           
+            if CLLocationManager.locationServicesEnabled() {
+                switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                    
+                    self.presentAlertViewWithTwoButtons(alertTitle: CLocationPermissionTitle, alertMessage: CLocationpermissionMsg, btnOneTitle: CSetting, btnOneTapped: { (action) in
+                        
+                        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                            return
+                        }
+                        
+                        if UIApplication.shared.canOpenURL(settingsUrl) {
+                            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                                print("Settings opened: \(success)")
+                            })
+                        }
+                        
+                    }, btnTwoTitle: CCancel) { (action) in
+                    }
+                    
+                case .authorizedAlways, .authorizedWhenInUse:
+                    print("Access")
+                }
+            } else {
+                print("Location services are not enabled")
+            }
+        }
     }
 }
 
@@ -126,7 +169,6 @@ extension SelectLocationViewController : customSearchViewDelegate {
     }
     
     func clearSearchText() {
-        
     }
 }
 
@@ -139,18 +181,25 @@ extension SelectLocationViewController : GMSPlacePickerViewControllerDelegate{
     
     func showPickerWithCurrentLocation()
     {
-//        if let latitude = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let longitude = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
-//        {
-//            MILoader.shared.hideLoader()
-        let center = CLLocationCoordinate2DMake(CUserDefaults.value(forKey: CLatitude) as! CLLocationDegrees, CUserDefaults.value(forKey: CLongitude) as! CLLocationDegrees)
+        if let latitude = CUserDefaults.value(forKey: CLatitude) as? CLLocationDegrees, let longitude = CUserDefaults.value(forKey: CLongitude) as? CLLocationDegrees
+        {
+        
+        let center = CLLocationCoordinate2DMake(latitude, longitude)
             let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001, longitude: center.longitude + 0.001)
             let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001, longitude: center.longitude - 0.001)
             let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
             let config = GMSPlacePickerConfig(viewport: viewport)
             self.showPlacePicker(config: config)
             
-  //      }
-        
+        } else {
+            
+            let center = CLLocationCoordinate2DMake(0.0, 0.0)
+            let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001, longitude: center.longitude + 0.001)
+            let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001, longitude: center.longitude - 0.001)
+            let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+            let config = GMSPlacePickerConfig(viewport: viewport)
+            self.showPlacePicker(config: config)
+        }
     }
     
     func showPlacePicker(config: GMSPlacePickerConfig)
@@ -267,12 +316,7 @@ extension SelectLocationViewController : UITableViewDelegate, UITableViewDataSou
             appDelegate?.dictLocation[CLatitude] = dict.latitude as AnyObject
             appDelegate?.dictLocation[CLongitude] = dict.longitude as AnyObject
             appDelegate?.dictLocation[CAddress] = dict.name as AnyObject
-            
-            //
-//            CUserDefaults.set(dict.latitude, forKey: CLatitude)
-//            CUserDefaults.set(dict.longitude, forKey: CLongitude)
-//            CUserDefaults.set(dict.name, forKey: UserDefaultCurrentLocation)
-//            CUserDefaults.synchronize()
+
         }
  
 
@@ -308,8 +352,8 @@ extension SelectLocationViewController {
         
         if (arrData?.count)! > 0 {
             arrLocation = (arrData as? [TblRecentLocation])!.sorted(by: { $0.index > $1.index })
-            tblLocation.reloadData()
         }
+        tblLocation.reloadData()
     }
     
 }

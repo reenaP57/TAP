@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -38,17 +38,17 @@
                             <color key="backgroundColor" red="0.098039215690000001" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                         </view>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hg4-XZ-aH0">
-                            <rect key="frame" x="30" y="107.5" width="22" height="22"/>
+                            <rect key="frame" x="30" y="108.5" width="22" height="22"/>
                             <state key="normal" image="back_white"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oag-aw-AAj" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                            <rect key="frame" x="188" y="118" width="0.0" height="0.0"/>
+                            <rect key="frame" x="188" y="119" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="19"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqp-Dl-7tN">
-                            <rect key="frame" x="310" y="92.5" width="50" height="50"/>
+                            <rect key="frame" x="310" y="93.5" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="3Uf-SA-Hef"/>
                                 <constraint firstAttribute="height" constant="50" id="WZK-tN-QXa"/>
@@ -57,7 +57,7 @@
                             <state key="selected" image="heart_selected"/>
                         </button>
                         <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgo-5G-0p0" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
-                            <rect key="frame" x="20" y="193" width="335" height="82"/>
+                            <rect key="frame" x="20" y="194" width="335" height="81"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnK-HN-QQN" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                     <rect key="frame" x="15" y="15" width="300" height="0.0"/>
@@ -116,7 +116,7 @@
                                     </state>
                                 </button>
                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcW-Ns-1AD" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                    <rect key="frame" x="240.5" y="41.5" width="84.5" height="27"/>
+                                    <rect key="frame" x="240.5" y="41.5" width="84.5" height="26"/>
                                     <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="81" id="YIE-az-cmp"/>
@@ -125,7 +125,7 @@
                                     <state key="normal" title="View Ratings"/>
                                 </button>
                                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5iN-of-WAe" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                    <rect key="frame" x="146.5" y="41.5" width="85" height="27"/>
+                                    <rect key="frame" x="146.5" y="41.5" width="85" height="26"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <accessibility key="accessibilityConfiguration" identifier="1"/>
                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>

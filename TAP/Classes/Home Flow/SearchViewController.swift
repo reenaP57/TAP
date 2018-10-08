@@ -31,6 +31,7 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
     
     var currentPage : Int = 1
     var lastPage : Int = 0
+    var searchCuisine = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,11 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+    
     
     //MARK:-
     //MARK:- General Method
@@ -58,7 +64,7 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
         refreshControl.tintColor = CColorNavRed
         tblSearch.pullToRefreshControl = refreshControl
         
-        self.loadSearchRestaurantList(search: "", isRefresh: false)
+        self.loadSearchRestaurantList(search: searchCuisine, isRefresh: false)
     }
     
     func setCustomSearchBar() {
@@ -69,6 +75,10 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
             customeView.searchBar.placeholder = CSearchRestaurant
             customeView.delegate = self
             vwCustomSearch = customeView
+            
+            if searchCuisine != "" {
+                customeView.searchBar.text = searchCuisine
+            }
             
             if isFromOther {
                 cnTblBottom.constant = 0
@@ -81,7 +91,6 @@ class SearchViewController: ParentViewController, customSearchViewDelegate {
                 customeView.layoutSearchBarTrailing.constant = 0
                 customeView.layoutWidthSearchbar.constant = CScreenWidth - 20
             }
- 
             
             self.navigationItem.titleView = customeView
             
@@ -102,6 +111,7 @@ extension SearchViewController {
        currentPage = 1
        lblResultCount.text = ""
        vwResultCount.hide(byHeight: true)
+       lblNoData.isHidden = true
        self.loadSearchRestaurantList(search: text, isRefresh: false)
     }
     
@@ -109,7 +119,10 @@ extension SearchViewController {
         currentPage = 1
         self.loadSearchRestaurantList(search: "", isRefresh: true)
     }
-
+   
+    func searchCuisine(text : String) {
+    }
+    
     func showNextScreen() {
     }
 }

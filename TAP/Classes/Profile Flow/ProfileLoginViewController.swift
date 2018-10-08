@@ -10,6 +10,9 @@ import UIKit
 
 class ProfileLoginViewController: ParentViewController {
 
+    @IBOutlet weak var lblChangePwd : UILabel!
+    @IBOutlet weak var lblNote : UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,6 +24,7 @@ class ProfileLoginViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.showTabBar()
+        self.initialize()
     }
     
     
@@ -29,7 +33,24 @@ class ProfileLoginViewController: ParentViewController {
     
     func initialize() {
 
+//        let attributedString = NSMutableAttributedString(string: CChangeLanguage)
+//
+//        attributedString.addAttribute(kCTUnderlineStyleAttributeName as NSAttributedStringKey, value: NSUnderlineStyle.styleSingle.rawValue, range: NSRange(location: 0, length: attributedString.length - 1))
+//
+//        lblChangePwd.attributedText = attributedString
+        
+        if appDelegate?.tabbar?.btnOrder.isSelected == true {
+            lblChangePwd.isHidden = true
+            lblNote.text = CMessaseOrderPopup
+            
+        } else {
+            lblChangePwd.isHidden = false
+            lblNote.text = CRegisteredUser
+            lblChangePwd.attributedText = NSAttributedString(string: CChangeLanguage, attributes:
+                [.underlineStyle: NSUnderlineStyle.styleSingle.rawValue])
+        }
     }
+
 }
 
 

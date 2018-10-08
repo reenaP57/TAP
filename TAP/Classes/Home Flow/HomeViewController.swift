@@ -10,9 +10,10 @@ import UIKit
 
 class HomeViewController: ParentViewController {
 
-    @IBOutlet weak var tblHome : UITableView!
+    @IBOutlet weak var tblHome : UITableView?
     @IBOutlet weak var lblLocation : UILabel!
-    @IBOutlet weak var activityLoader : UIActivityIndicatorView!
+    @IBOutlet weak var activityLoader : UIActivityIndicatorView?
+    @IBOutlet weak var lblMsg : UILabel?
 
     var arrNearByData = [[String : AnyObject]]()
     var arrPopularData = [[String : AnyObject]]()
@@ -58,7 +59,7 @@ class HomeViewController: ParentViewController {
         
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         refreshControl.tintColor = CColorNavRed
-        tblHome.pullToRefreshControl = refreshControl
+        tblHome?.pullToRefreshControl = refreshControl
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateFavouriteStatus), name: NSNotification.Name(rawValue: kNotificationUpdateFavStatus), object: nil)
         
@@ -115,8 +116,10 @@ class HomeViewController: ParentViewController {
             }
             
             if stop {
-                tblHome.reloadData()
+                tblHome?.reloadData()
             }
+        } else {
+            self.loadRestaurantList(isRefresh: false)
         }
         
     }
@@ -211,14 +214,14 @@ extension HomeViewController {
         }
         
         if !isRefresh {
-            activityLoader.startAnimating()
+            activityLoader?.startAnimating()
         }
         
         
         apiTask = APIRequest.shared().restaurantList { (response, error) in
         
             self.apiTask?.cancel()
-            self.activityLoader.stopAnimating()
+            self.activityLoader?.stopAnimating()
             self.refreshControl.endRefreshing()
             
             if response != nil && error == nil {
@@ -256,8 +259,15 @@ extension HomeViewController {
                     self.arrSection.append(CNewArrival)
                 }
                 
-                self.tblHome.isHidden = false
-                self.tblHome.reloadData()
+                self.tblHome?.isHidden = false
+                
+                if arrNear.count == 0 && arrArrival.count == 0 && arrPopular.count == 0{
+                    self.lblMsg?.isHidden = false
+                } else {
+                    self.lblMsg?.isHidden = true
+                }
+                
+                self.tblHome?.reloadData()
             }
         }
         

@@ -14,6 +14,8 @@ import GoogleMaps
 import MessageUI
 import CoreLocation
 import Stripe
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -35,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        Fabric.with([Crashlytics.self])
+        
         IQKeyboardManager.shared.enable = true
         
         STPPaymentConfiguration.shared().publishableKey = CStripePublishableKey
@@ -47,8 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         MIOneSignal.shared().pushNotificatonRegistration()
         
         
-        print(window!)
-        
         self.loadCountryList()
         self.initSelectLanguageViewController()
         
@@ -60,9 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         } else {
             locManager.startUpdatingLocation()
         }
-
-        print("Lang : ",Localization.sharedInstance.getLanguage())
-        print("Text : ",CLocalize(text: CSignUp))
         
         return true
     }
@@ -111,23 +110,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func logout()
     {
-        tabbarController = nil
-        tabbar = nil
-        
-        TblRecentLocation.deleteAllObjects()
-        TblCart.deleteAllObjects()
-        
-        appDelegate?.loginUser = nil
-        CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
-        CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
-        CUserDefaults.synchronize()
-        
-        guard let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
-            return
+        if IS_iPhone_Simulator {
+            
+            tabbarController = nil
+            tabbar = nil
+            
+            TblRecentLocation.deleteAllObjects()
+            TblCart.deleteAllObjects()
+            TblCartRestaurant.deleteAllObjects()
+            
+            appDelegate?.loginUser = nil
+            CUserDefaults.removeObject(forKey: UserDefaultLoginUserToken)
+            CUserDefaults.removeObject(forKey: UserDefaultLoginUserID)
+            CUserDefaults.synchronize()
+            
+            guard let loginVC = CLRF_SB.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else{
+                return
+            }
+            
+            self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: loginVC), animated: true, completion: nil)
+            
+        } else {
+            MIOneSignal.shared().removeDeviceToken()
         }
-        
-        self.setWindowRootViewController(rootVC: UINavigationController.rootViewController(viewController: loginVC), animated: true, completion: nil)
-        
     }
     
     func setCartCountOnTab(){
@@ -273,6 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
         })
     }
+    
     
     // MARK:-
     // MARK:- Location Delegate

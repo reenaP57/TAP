@@ -28,11 +28,7 @@ class PaymentSuccessViewController: ParentViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.navigationItem.hidesBackButton = true
-//        self.navigationItem.backBarButtonItem = nil
-        
-//        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "back_white"), style: .plain, target: self, action: #selector(btnBackClicked))
-        
+
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(image: UIImage(named: "back_white"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(btnBackClicked))
         self.navigationItem.leftBarButtonItem = newBackButton

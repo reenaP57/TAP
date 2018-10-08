@@ -199,11 +199,11 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 
-                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
-                    self.setRestaurantDetail(isRefresh: isRefresh)
-                }, btnTwoTitle: CCancel, btnTwoTapped: { (action) in
-                    
-                })
+//                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
+//                    self.setRestaurantDetail(isRefresh: isRefresh)
+//                }, btnTwoTitle: CCancel, btnTwoTapped: { (action) in
+//
+//                })
             }
             
         }
@@ -227,7 +227,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 
             } else{
                 
-                appDelegate?.updateFavouriteStatus(restaurant_id: restaurantID!, sender: restaurantTopView.btnLike, completionBlock: { (response) in
+                appDelegate?.updateFavouriteStatus(restaurant_id: self.restaurantID!, sender: self.restaurantTopView.btnLike, completionBlock: { (response) in
                     
                     let data = response.value(forKey: CJsonData) as! [String : AnyObject]
                     
@@ -242,7 +242,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         
         restaurantTopView.btnPromotion.touchUpInside { (sender) in
             
-            isUpdated = true
+            self.isUpdated = true
             if let promotionVC = CMain_SB.instantiateViewController(withIdentifier: "PromotionViewController") as? PromotionViewController {
                 promotionVC.restaurantID = self.restaurantID
                 self.navigationController?.pushViewController(promotionVC, animated: true)
@@ -251,7 +251,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
         
         restaurantTopView.btnViewRating.touchUpInside { (sender) in
             
-            isUpdated = true
+            self.isUpdated = true
             
             if let ratingVC = CMain_SB.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController {
                 ratingVC.restaurantID = self.restaurantID
@@ -346,7 +346,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
                 
                 appDelegate?.setCartCountOnTab()
                 
-            }, btnTwoTitle: CClose, btnTwoTapped: { (actio) in
+            }, btnTwoTitle: CCLOSE, btnTwoTapped: { (actio) in
             })
         }
         
@@ -470,6 +470,7 @@ extension RestaurantDetailViewController :  UITableViewDelegate, UITableViewData
         footerView.btnViewCart.touchUpInside { (sender) in
             appDelegate?.tabbar?.btnTabClicked(sender: (appDelegate?.tabbar?.btnCart)!)
         }
+        
         return self.checkCartIsAvailable() ? footerView : nil
     }
     

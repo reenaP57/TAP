@@ -93,12 +93,12 @@ extension SelectLanguageViewController {
     @IBAction func btnContinueClicked(sender : UIButton) {
         
         if isFromProfile {
-           // self.navigationController?.popViewController(animated: true)
             
             appDelegate?.tabbarController = nil
             
             appDelegate?.tabbarController = TabbarViewController.initWithNibName() as? TabbarViewController
             appDelegate?.setWindowRootViewController(rootVC: appDelegate?.tabbarController, animated: false, completion: nil)
+            appDelegate?.tabbar?.btnTabClicked(sender: (appDelegate?.tabbar?.btnProfile)!)
             
         } else {
             

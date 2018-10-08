@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,7 +42,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="clI-Mf-RXl">
-                                        <rect key="frame" x="166" y="60" width="24" height="13"/>
+                                        <rect key="frame" x="166" y="59.5" width="24" height="13"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7v5-Qz-e05">
                                         <rect key="frame" x="20" y="41" width="142" height="50"/>
@@ -127,7 +124,7 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mI-LJ-zt3" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                        <rect key="frame" x="5" y="7.5" width="315" height="212"/>
+                                                                        <rect key="frame" x="5" y="7.5" width="315" height="212.5"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L3h-74-ty9" customClass="GenericImageView" customModule="Ta_Pronto" customModuleProvider="target">
                                                                                 <rect key="frame" x="10" y="10" width="295" height="98"/>
@@ -185,13 +182,13 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTU-mG-MZp" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                                <rect key="frame" x="70" y="143" width="0.0" height="0.0"/>
+                                                                                <rect key="frame" x="70" y="143.5" width="0.0" height="0.0"/>
                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WkE-ha-isL" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                                                <rect key="frame" x="300" y="143" width="0.0" height="0.0"/>
+                                                                                <rect key="frame" x="300" y="143.5" width="0.0" height="0.0"/>
                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
@@ -292,15 +289,24 @@
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No restaurants available for this location, try with another location." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H9j-Qi-Vgu" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="20" y="130" width="335" height="41"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="rzK-Sn-aq1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="67H-cR-6a5"/>
                             <constraint firstItem="ZCM-Vd-mAv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FaP-qb-BPT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="H9j-Qi-Vgu" secondAttribute="trailing" constant="20" id="Xch-ZA-4b9"/>
                             <constraint firstItem="rzK-Sn-aq1" firstAttribute="top" secondItem="Arf-hW-ScB" secondAttribute="bottom" id="aMX-eb-hNz"/>
                             <constraint firstItem="rzK-Sn-aq1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="afA-7g-FaL"/>
                             <constraint firstItem="ZCM-Vd-mAv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bxE-Qo-LoY"/>
                             <constraint firstItem="Arf-hW-ScB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cHi-7Y-NSw"/>
+                            <constraint firstItem="H9j-Qi-Vgu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dVt-EI-8D7"/>
+                            <constraint firstItem="H9j-Qi-Vgu" firstAttribute="top" secondItem="Arf-hW-ScB" secondAttribute="bottom" constant="30" id="dbl-2H-bPx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rzK-Sn-aq1" secondAttribute="bottom" constant="49" id="fhN-xa-i3W"/>
                             <constraint firstItem="Arf-hW-ScB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="qGm-PJ-Uz1"/>
                             <constraint firstItem="Arf-hW-ScB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="vOI-tb-FqZ"/>
@@ -312,6 +318,7 @@
                     <connections>
                         <outlet property="activityLoader" destination="ZCM-Vd-mAv" id="1Ki-kQ-Ot8"/>
                         <outlet property="lblLocation" destination="m8x-aG-bRG" id="XQc-Il-pw2"/>
+                        <outlet property="lblMsg" destination="H9j-Qi-Vgu" id="2lc-Ml-hL1"/>
                         <outlet property="tblHome" destination="rzK-Sn-aq1" id="TLj-GE-0WT"/>
                     </connections>
                 </viewController>
@@ -380,7 +387,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stM-WY-SkW" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="7" width="335" height="106"/>
+                                                    <rect key="frame" x="20" y="7" width="335" height="104.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maxican Crepe" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgF-fx-82J" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="15" y="15" width="100.5" height="17"/>
@@ -389,7 +396,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" text="Maxican style tomato salsa, spicy  chill sauce cheese  cream..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLE-bW-aIb" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="37" width="218.5" height="32"/>
+                                                            <rect key="frame" x="15" y="37" width="260" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="29" id="t3r-LR-g5v"/>
                                                             </constraints>
@@ -403,7 +410,7 @@
                                                             </variation>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6TE-c8-096">
-                                                            <rect key="frame" x="243.5" y="10" width="81.5" height="82"/>
+                                                            <rect key="frame" x="285" y="10" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="6TE-c8-096" secondAttribute="height" multiplier="81:82" id="KDj-eN-9td"/>
                                                                 <constraint firstAttribute="width" constant="82" id="Zs9-ZW-Ax5"/>
@@ -415,20 +422,20 @@
                                                             </variation>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzS-ZE-bGI" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="78" width="17" height="21"/>
+                                                            <rect key="frame" x="15" y="75.5" width="17" height="22"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1u-vF-xMl">
-                                                            <rect key="frame" x="47" y="70" width="72" height="36"/>
+                                                            <rect key="frame" x="47" y="67.5" width="71.5" height="37"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Np9-6i-DZL">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="37"/>
                                                                     <state key="normal" image="minus"/>
                                                                 </button>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWx-Gr-u3J" userLabel="---">
-                                                                    <rect key="frame" x="12" y="7" width="47" height="1"/>
+                                                                    <rect key="frame" x="11.5" y="7" width="46.5" height="1"/>
                                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="1" id="JVG-kZ-R9J"/>
@@ -444,11 +451,11 @@
                                                                     </connections>
                                                                 </textField>
                                                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-la-ZQv">
-                                                                    <rect key="frame" x="47" y="0.0" width="25" height="36"/>
+                                                                    <rect key="frame" x="46.5" y="0.0" width="25" height="37"/>
                                                                     <state key="normal" image="plus"/>
                                                                 </button>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQw-XJ-sn8" userLabel="---">
-                                                                    <rect key="frame" x="12" y="29" width="47" height="1"/>
+                                                                    <rect key="frame" x="11.5" y="29" width="46.5" height="1"/>
                                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="1" id="mcP-1N-eO1"/>
@@ -476,9 +483,9 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUf-IL-8tj">
-                                                            <rect key="frame" x="47" y="75" width="102.5" height="26"/>
+                                                            <rect key="frame" x="47" y="73.5" width="102.5" height="26"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJ3-Hj-rMP">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJ3-Hj-rMP" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                                     <rect key="frame" x="10" y="5" width="82.5" height="16"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -656,7 +663,7 @@
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no promotions added for this restaurant." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4n-HZ-qHe">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no promotions added for this restaurant." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4n-HZ-qHe" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="20" y="0.0" width="335" height="667"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -795,7 +802,7 @@
                                     <outlet property="delegate" destination="FsW-Zg-ckK" id="SZ6-Sv-OZL"/>
                                 </connections>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This restaurant does not have any reviews yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipm-9g-EG0">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This restaurant does not have any reviews yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipm-9g-EG0" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="20" y="0.0" width="335" height="667"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -843,7 +850,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSB-nK-goj" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="20.5" width="335" height="0.0"/>
+                                        <rect key="frame" x="20" y="20" width="335" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -866,8 +873,8 @@
                                     <outlet property="delegate" destination="RFU-IQ-ilq" id="0Ri-D6-1Gm"/>
                                 </connections>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No restaurant,cuisine or dish available." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxF-AP-1wo">
-                                <rect key="frame" x="20" y="324" width="335" height="20.5"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No match found for the entered text." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxF-AP-1wo" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="20" y="323.5" width="335" height="20.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -959,7 +966,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjO-Hz-6PO" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="7" width="335" height="106"/>
+                                                    <rect key="frame" x="20" y="7" width="335" height="223"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhz-81-8vm" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                             <rect key="frame" x="15" y="15" width="0.0" height="0.0"/>
@@ -968,7 +975,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTO-jU-7IX" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="20" width="218.5" height="47.5"/>
+                                                            <rect key="frame" x="15" y="20" width="103.5" height="164.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="29" id="nht-Ps-e8S"/>
                                                             </constraints>
@@ -982,7 +989,7 @@
                                                             </variation>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bpk-3n-ool">
-                                                            <rect key="frame" x="243.5" y="10" width="81.5" height="82"/>
+                                                            <rect key="frame" x="128.5" y="10" width="196.5" height="199"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="82" id="Oey-kd-gaZ"/>
                                                                 <constraint firstAttribute="width" secondItem="bpk-3n-ool" secondAttribute="height" multiplier="81:82" id="zXA-CV-dtg"/>
@@ -994,20 +1001,20 @@
                                                             </variation>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SjN-Rd-CQy" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="77" width="17" height="22"/>
+                                                            <rect key="frame" x="15" y="194" width="17" height="22"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2y3-9U-J8N">
-                                                            <rect key="frame" x="47" y="75" width="72" height="25"/>
+                                                            <rect key="frame" x="47" y="192.5" width="71.5" height="25"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nh9-IT-hEY">
                                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                                                     <state key="normal" image="minus"/>
                                                                 </button>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bc-V4-kMU" userLabel="---">
-                                                                    <rect key="frame" x="12" y="2" width="47" height="1"/>
+                                                                    <rect key="frame" x="11.5" y="2" width="46.5" height="1"/>
                                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="1" id="VL3-5a-FrS"/>
@@ -1023,11 +1030,11 @@
                                                                     </connections>
                                                                 </textField>
                                                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZn-TC-wcZ">
-                                                                    <rect key="frame" x="47" y="0.0" width="25" height="25"/>
+                                                                    <rect key="frame" x="46.5" y="0.0" width="25" height="25"/>
                                                                     <state key="normal" image="plus"/>
                                                                 </button>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HDb-IU-qkK" userLabel="---">
-                                                                    <rect key="frame" x="12" y="23" width="47" height="1"/>
+                                                                    <rect key="frame" x="11.5" y="23" width="46.5" height="1"/>
                                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="1" id="Kp7-bl-7Vl"/>
@@ -1055,9 +1062,9 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-W2-y4p">
-                                                            <rect key="frame" x="47" y="75" width="102.5" height="26"/>
+                                                            <rect key="frame" x="47" y="192" width="102.5" height="26"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XU7-af-JU6">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XU7-af-JU6" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                                                     <rect key="frame" x="10" y="5" width="82.5" height="16"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="13"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1136,8 +1143,8 @@
                                     <outlet property="delegate" destination="BL4-O8-jRo" id="Vhq-b7-4c7"/>
                                 </connections>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No dishes available for this restaurant." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1o-VF-woW">
-                                <rect key="frame" x="20" y="324" width="335" height="20.5"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No dishes available for this restaurant." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1o-VF-woW" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="20" y="323.5" width="335" height="20.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1172,8 +1179,131 @@
             </objects>
             <point key="canvasLocation" x="4200.8000000000002" y="224.4377811094453"/>
         </scene>
+        <!--Cuisine View Controller-->
+        <scene sceneID="Mi8-uw-r0q">
+            <objects>
+                <viewController storyboardIdentifier="CuisineViewController" id="stq-Tu-vgq" customClass="CuisineViewController" customModule="Ta_Pronto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Is-Lg-ROj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisines" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSf-Qv-Nte" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="15" y="10" width="345" height="18"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1of-uk-RxK">
+                                <rect key="frame" x="0.0" y="38" width="375" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="jha-qN-PuZ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CuisineCollectionViewCell" id="DuY-d4-cY7" customClass="CuisineCollectionViewCell" customModule="Ta_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="0.0" width="150" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="byl-Z5-0zo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cuisine_thumb" translatesAutoresizingMaskIntoConstraints="NO" id="13g-2R-mhz">
+                                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </imageView>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="POD-pG-JTP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Panjabi" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Jp-lE-NUP">
+                                                            <rect key="frame" x="7" y="66" width="136" height="18"/>
+                                                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="2Jp-lE-NUP" firstAttribute="centerY" secondItem="byl-Z5-0zo" secondAttribute="centerY" id="0Sx-I7-M92"/>
+                                                        <constraint firstItem="2Jp-lE-NUP" firstAttribute="leading" secondItem="byl-Z5-0zo" secondAttribute="leading" constant="7" id="5Eh-PM-Bd4"/>
+                                                        <constraint firstItem="13g-2R-mhz" firstAttribute="leading" secondItem="byl-Z5-0zo" secondAttribute="leading" id="7XU-vH-8wO"/>
+                                                        <constraint firstItem="POD-pG-JTP" firstAttribute="height" secondItem="13g-2R-mhz" secondAttribute="height" id="DTy-ol-hZa"/>
+                                                        <constraint firstAttribute="trailing" secondItem="13g-2R-mhz" secondAttribute="trailing" id="OPm-Ai-wQS"/>
+                                                        <constraint firstItem="POD-pG-JTP" firstAttribute="width" secondItem="13g-2R-mhz" secondAttribute="width" id="U2p-TH-cp3"/>
+                                                        <constraint firstItem="POD-pG-JTP" firstAttribute="centerX" secondItem="13g-2R-mhz" secondAttribute="centerX" id="eL3-K4-8ZV"/>
+                                                        <constraint firstItem="POD-pG-JTP" firstAttribute="centerY" secondItem="13g-2R-mhz" secondAttribute="centerY" id="mkb-mE-D0u"/>
+                                                        <constraint firstAttribute="bottom" secondItem="13g-2R-mhz" secondAttribute="bottom" id="u5R-wX-XW8"/>
+                                                        <constraint firstItem="13g-2R-mhz" firstAttribute="top" secondItem="byl-Z5-0zo" secondAttribute="top" id="uPY-BQ-DXj"/>
+                                                        <constraint firstAttribute="trailing" secondItem="2Jp-lE-NUP" secondAttribute="trailing" constant="7" id="v6L-gc-bEQ"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="byl-Z5-0zo" secondAttribute="bottom" id="KQm-2M-MYW"/>
+                                            <constraint firstItem="byl-Z5-0zo" firstAttribute="leading" secondItem="DuY-d4-cY7" secondAttribute="leading" id="Kgb-pu-9oN"/>
+                                            <constraint firstItem="byl-Z5-0zo" firstAttribute="top" secondItem="DuY-d4-cY7" secondAttribute="top" id="Lxo-eS-ofW"/>
+                                            <constraint firstAttribute="trailing" secondItem="byl-Z5-0zo" secondAttribute="trailing" id="V0L-Ir-gA0"/>
+                                        </constraints>
+                                        <size key="customSize" width="150" height="150"/>
+                                        <connections>
+                                            <outlet property="imgVCuisine" destination="13g-2R-mhz" id="B0Z-SD-7nm"/>
+                                            <outlet property="lblCuisineName" destination="2Jp-lE-NUP" id="Z9o-SY-QfY"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="stq-Tu-vgq" id="Td2-eT-JHw"/>
+                                    <outlet property="delegate" destination="stq-Tu-vgq" id="w7X-ps-3LR"/>
+                                </connections>
+                            </collectionView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cuisine available." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0k-km-v7w" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="20" y="323.5" width="335" height="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" red="0.83529411760000005" green="0.17254901959999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="o1I-aj-jEK">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1of-uk-RxK" firstAttribute="trailing" secondItem="bRu-BS-IOM" secondAttribute="trailing" id="08q-td-bW4"/>
+                            <constraint firstItem="e0k-km-v7w" firstAttribute="centerY" secondItem="3Is-Lg-ROj" secondAttribute="centerY" id="7Br-XL-ziy"/>
+                            <constraint firstItem="wSf-Qv-Nte" firstAttribute="leading" secondItem="bRu-BS-IOM" secondAttribute="leading" constant="15" id="7lR-9v-Dmh"/>
+                            <constraint firstItem="wSf-Qv-Nte" firstAttribute="top" secondItem="3Is-Lg-ROj" secondAttribute="top" constant="10" id="Meg-VD-aLB"/>
+                            <constraint firstItem="e0k-km-v7w" firstAttribute="leading" secondItem="bRu-BS-IOM" secondAttribute="leading" constant="20" id="Nqr-24-Yy0"/>
+                            <constraint firstItem="bRu-BS-IOM" firstAttribute="trailing" secondItem="e0k-km-v7w" secondAttribute="trailing" constant="20" id="UKp-wv-S1k"/>
+                            <constraint firstItem="bRu-BS-IOM" firstAttribute="trailing" secondItem="wSf-Qv-Nte" secondAttribute="trailing" constant="15" id="WmS-n1-UQo"/>
+                            <constraint firstItem="1of-uk-RxK" firstAttribute="top" secondItem="wSf-Qv-Nte" secondAttribute="bottom" constant="10" id="YtG-ug-i2u"/>
+                            <constraint firstItem="bRu-BS-IOM" firstAttribute="bottom" secondItem="1of-uk-RxK" secondAttribute="bottom" constant="49" id="c6i-2z-Qj9"/>
+                            <constraint firstItem="o1I-aj-jEK" firstAttribute="centerX" secondItem="3Is-Lg-ROj" secondAttribute="centerX" id="d8j-Sp-vJL"/>
+                            <constraint firstItem="1of-uk-RxK" firstAttribute="leading" secondItem="bRu-BS-IOM" secondAttribute="leading" id="esZ-7X-Etp"/>
+                            <constraint firstItem="o1I-aj-jEK" firstAttribute="centerY" secondItem="3Is-Lg-ROj" secondAttribute="centerY" id="jkh-QF-idq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bRu-BS-IOM"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityLoader" destination="o1I-aj-jEK" id="pv9-lH-ggC"/>
+                        <outlet property="collCuisine" destination="1of-uk-RxK" id="bDK-c2-zoh"/>
+                        <outlet property="lblNoData" destination="e0k-km-v7w" id="096-R1-WPx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rmY-d8-TXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4930.3999999999996" y="194.75262368815595"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="cuisine_thumb" width="100" height="100"/>
         <image name="dropdown" width="24" height="13"/>
         <image name="heart" width="16" height="15"/>
         <image name="heart_selected" width="16" height="15"/>

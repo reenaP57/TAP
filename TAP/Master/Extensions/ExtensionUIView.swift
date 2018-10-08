@@ -153,7 +153,7 @@ extension UIView {
         static var tapInsideViewHandler = "tapInsideViewHandler"
     }
     
-    func tapInsideViewHandler(tapInsideViewHandler:tapInsideViewHandler) {
+    func tapInsideViewHandler(tapInsideViewHandler:@escaping tapInsideViewHandler) {
         
         self.isUserInteractionEnabled = true
         

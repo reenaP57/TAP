@@ -422,20 +422,29 @@
                                             <constraint firstAttribute="width" secondItem="Qgv-K4-QLb" secondAttribute="height" multiplier="7:2" id="5rK-sk-Ll4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
-                                        <state key="normal" title="Proceed To Pay">
+                                        <state key="normal">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="btnProceedToPayClickedWithSender:" destination="dJp-nk-u2m" eventType="touchUpInside" id="TD6-PT-f6g"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proceed To Pay" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIa-Mk-eBD" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                        <rect key="frame" x="128" y="40" width="121" height="30"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Qgv-K4-QLb" secondAttribute="bottom" constant="100" id="6gC-Ig-wth"/>
+                                    <constraint firstItem="JIa-Mk-eBD" firstAttribute="top" secondItem="Qgv-K4-QLb" secondAttribute="top" constant="5" id="72Y-hj-Z4t"/>
                                     <constraint firstItem="Qgv-K4-QLb" firstAttribute="centerX" secondItem="hmr-wP-dvs" secondAttribute="centerX" id="EGe-1t-cgB"/>
-                                    <constraint firstItem="Qgv-K4-QLb" firstAttribute="width" secondItem="hmr-wP-dvs" secondAttribute="width" multiplier="0.373333" id="Nhy-sO-Cze"/>
+                                    <constraint firstItem="JIa-Mk-eBD" firstAttribute="trailing" secondItem="Qgv-K4-QLb" secondAttribute="trailing" constant="-9" id="ld5-zI-ZQJ"/>
                                     <constraint firstAttribute="height" constant="175" id="naj-KE-LXW"/>
+                                    <constraint firstItem="JIa-Mk-eBD" firstAttribute="bottom" secondItem="Qgv-K4-QLb" secondAttribute="bottom" constant="-5" id="o7G-L4-1Mw"/>
+                                    <constraint firstItem="JIa-Mk-eBD" firstAttribute="leading" secondItem="Qgv-K4-QLb" secondAttribute="leading" constant="10" id="rJn-3O-3FE"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -512,14 +521,14 @@
                             <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="em9-We-uuq" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="20" y="170" width="335" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Order Id:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIe-a4-epo" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Id:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIe-a4-epo" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                         <rect key="frame" x="12" y="13.5" width="50" height="14.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMx-a9-hDD" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMx-a9-hDD" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                         <rect key="frame" x="66.5" y="20.5" width="0.0" height="0.0"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
@@ -532,7 +541,7 @@
                                     <constraint firstItem="tMx-a9-hDD" firstAttribute="leading" secondItem="MIe-a4-epo" secondAttribute="trailing" constant="5" id="0Yv-3G-KxZ"/>
                                     <constraint firstItem="MIe-a4-epo" firstAttribute="centerY" secondItem="em9-We-uuq" secondAttribute="centerY" id="TgJ-Vl-yh7"/>
                                     <constraint firstAttribute="width" secondItem="em9-We-uuq" secondAttribute="height" multiplier="67:8" id="cnq-UN-0RZ"/>
-                                    <constraint firstItem="MIe-a4-epo" firstAttribute="leading" secondItem="em9-We-uuq" secondAttribute="leading" constant="15" id="e7G-y1-Iaf"/>
+                                    <constraint firstItem="MIe-a4-epo" firstAttribute="leading" secondItem="em9-We-uuq" secondAttribute="leading" constant="12" id="e7G-y1-Iaf"/>
                                     <constraint firstItem="tMx-a9-hDD" firstAttribute="centerY" secondItem="MIe-a4-epo" secondAttribute="centerY" id="jAV-si-gKz"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -544,14 +553,14 @@
                             <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUw-f1-GVG" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="20" y="220" width="335" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Transaction Id:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43N-zB-jqp" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction Id:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43N-zB-jqp" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                         <rect key="frame" x="12" y="13.5" width="84" height="14.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                         <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KfV-Lu-d1A" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KfV-Lu-d1A" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                         <rect key="frame" x="101" y="12" width="0.0" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
@@ -566,7 +575,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="hxS-1h-KGJ"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KfV-Lu-d1A" secondAttribute="trailing" constant="8" id="s3y-G0-Zcu"/>
                                     <constraint firstItem="KfV-Lu-d1A" firstAttribute="top" secondItem="HUw-f1-GVG" secondAttribute="top" constant="12" id="sze-Mr-fVx"/>
-                                    <constraint firstItem="43N-zB-jqp" firstAttribute="leading" secondItem="HUw-f1-GVG" secondAttribute="leading" constant="15" id="uXT-ra-hKm"/>
+                                    <constraint firstItem="43N-zB-jqp" firstAttribute="leading" secondItem="HUw-f1-GVG" secondAttribute="leading" constant="12" id="uXT-ra-hKm"/>
                                     <constraint firstItem="KfV-Lu-d1A" firstAttribute="leading" secondItem="43N-zB-jqp" secondAttribute="trailing" constant="5" id="v8I-hh-R97"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -575,43 +584,52 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The receipt has been sent to your email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxc-FC-q2V" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The receipt has been sent to your email." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxc-FC-q2V" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                                 <rect key="frame" x="20" y="300" width="335" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Plc-al-ymn" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="95" y="367" width="185" height="40"/>
+                                <rect key="frame" x="109" y="367" width="158" height="37.5"/>
                                 <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Plc-al-ymn" secondAttribute="height" multiplier="37:8" id="lGS-ud-eEA"/>
+                                    <constraint firstAttribute="width" secondItem="Plc-al-ymn" secondAttribute="height" multiplier="37:8" constant="-14.5" id="lGS-ud-eEA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
-                                <state key="normal" title="View Order Details">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="btnViewOrderDetailClickedWithSender:" destination="Gg6-Fl-Yho" eventType="touchUpInside" id="c6G-Ye-ril"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View Order Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYS-Vl-eVz" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                                <rect key="frame" x="114.5" y="372" width="146.5" height="27.5"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fYS-Vl-eVz" firstAttribute="leading" secondItem="Plc-al-ymn" secondAttribute="leading" constant="5.5" id="17v-15-kfG"/>
                             <constraint firstItem="O8n-q4-U4v" firstAttribute="trailing" secondItem="HUw-f1-GVG" secondAttribute="trailing" constant="20" id="2h3-RN-jVB"/>
                             <constraint firstItem="O8n-q4-U4v" firstAttribute="trailing" secondItem="gdH-Nl-ZCs" secondAttribute="trailing" constant="20" id="41w-d0-OT8"/>
                             <constraint firstItem="gdH-Nl-ZCs" firstAttribute="leading" secondItem="O8n-q4-U4v" secondAttribute="leading" constant="20" id="6Uy-9S-utB"/>
                             <constraint firstItem="em9-We-uuq" firstAttribute="leading" secondItem="O8n-q4-U4v" secondAttribute="leading" constant="20" id="8ki-Em-xg2"/>
                             <constraint firstItem="em9-We-uuq" firstAttribute="top" secondItem="gdH-Nl-ZCs" secondAttribute="bottom" constant="10" id="9pR-hw-DxF"/>
-                            <constraint firstItem="Plc-al-ymn" firstAttribute="width" secondItem="xkb-JL-uI3" secondAttribute="width" multiplier="0.493333" id="Aau-ET-Zeb"/>
                             <constraint firstItem="Cxc-FC-q2V" firstAttribute="leading" secondItem="O8n-q4-U4v" secondAttribute="leading" constant="20" id="CDF-e1-Ayc"/>
                             <constraint firstItem="HUw-f1-GVG" firstAttribute="top" secondItem="em9-We-uuq" secondAttribute="bottom" constant="10" id="E9a-aQ-JJi"/>
                             <constraint firstItem="Plc-al-ymn" firstAttribute="top" secondItem="Cxc-FC-q2V" secondAttribute="bottom" constant="50" id="EXd-Dh-OMO"/>
                             <constraint firstItem="O8n-q4-U4v" firstAttribute="trailing" secondItem="em9-We-uuq" secondAttribute="trailing" constant="20" id="S4Z-Jq-Ih5"/>
+                            <constraint firstItem="fYS-Vl-eVz" firstAttribute="bottom" secondItem="Plc-al-ymn" secondAttribute="bottom" constant="-5" id="Tcl-cF-oSk"/>
                             <constraint firstItem="gdH-Nl-ZCs" firstAttribute="top" secondItem="O8n-q4-U4v" secondAttribute="top" constant="20" id="a6f-Nh-fRh"/>
                             <constraint firstItem="O8n-q4-U4v" firstAttribute="trailing" secondItem="Cxc-FC-q2V" secondAttribute="trailing" constant="20" id="b1r-e4-rNL"/>
                             <constraint firstItem="Plc-al-ymn" firstAttribute="centerX" secondItem="xkb-JL-uI3" secondAttribute="centerX" id="dkC-8n-DDS"/>
                             <constraint firstItem="HUw-f1-GVG" firstAttribute="leading" secondItem="O8n-q4-U4v" secondAttribute="leading" constant="20" id="e0T-5T-QhJ"/>
+                            <constraint firstItem="fYS-Vl-eVz" firstAttribute="trailing" secondItem="Plc-al-ymn" secondAttribute="trailing" constant="-6" id="i0Z-fX-wIS"/>
+                            <constraint firstItem="fYS-Vl-eVz" firstAttribute="top" secondItem="Plc-al-ymn" secondAttribute="top" constant="5" id="naR-c7-q1x"/>
                             <constraint firstItem="Cxc-FC-q2V" firstAttribute="top" secondItem="HUw-f1-GVG" secondAttribute="bottom" constant="40" id="o3w-U6-CL3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O8n-q4-U4v"/>

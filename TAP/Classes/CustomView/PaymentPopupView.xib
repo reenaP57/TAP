@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,26 +29,39 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="woX-J5-TNh" customClass="GenericView" customModule="Ta_Pronto" customModuleProvider="target">
                     <rect key="frame" x="32" y="219.5" width="311" height="227"/>
                     <subviews>
-                        <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJA-np-4FH" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                            <rect key="frame" x="67" y="76.5" width="177" height="50"/>
-                            <color key="backgroundColor" red="0.40392156862745099" green="0.44705882352941173" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJA-np-4FH" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="67.5" y="84.5" width="177" height="50"/>
+                            <color key="backgroundColor" red="0.74901960784313726" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
-                            <state key="normal" title="Pay with Stripe">
+                            <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay with Stripe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xhv-au-YrD" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="78" y="92.5" width="156" height="33"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64Q-t7-shd" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                            <rect key="frame" x="67" y="147" width="177" height="50"/>
+                            <rect key="frame" x="67.5" y="147" width="177" height="50"/>
                             <color key="backgroundColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="64Q-t7-shd" secondAttribute="height" multiplier="177:50" id="jBq-Yf-f2P"/>
+                                <constraint firstAttribute="height" constant="50" id="nvu-pk-xWJ"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="177" id="xys-mQ-FOC"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
-                            <state key="normal" title="Pay by Cash">
+                            <state key="normal">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT PAYMENT METHOD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0O-Ld-ohu">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay by Cash" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EH1-q3-bsm" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
+                            <rect key="frame" x="78" y="155.5" width="156" height="33"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT PAYMENT METHOD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0O-Ld-ohu" customClass="GenericLabel" customModule="Ta_Pronto" customModuleProvider="target">
                             <rect key="frame" x="10" y="25" width="291" height="18"/>
                             <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="15"/>
                             <color key="textColor" red="0.74901960779999999" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -67,19 +80,26 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="EH1-q3-bsm" firstAttribute="leading" secondItem="64Q-t7-shd" secondAttribute="leading" constant="10" id="4pf-p9-DQf"/>
+                        <constraint firstItem="Xhv-au-YrD" firstAttribute="bottom" secondItem="XJA-np-4FH" secondAttribute="bottom" constant="-9" id="51r-oj-z07"/>
                         <constraint firstAttribute="trailing" secondItem="G0O-Ld-ohu" secondAttribute="trailing" constant="10" id="5L1-2c-RY2"/>
-                        <constraint firstAttribute="bottom" secondItem="64Q-t7-shd" secondAttribute="bottom" constant="30" id="DXP-H2-J5r"/>
+                        <constraint firstAttribute="bottom" secondItem="64Q-t7-shd" secondAttribute="bottom" constant="30" id="6is-2P-IDQ"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="top" secondItem="XJA-np-4FH" secondAttribute="bottom" constant="12.5" id="8cJ-I5-X0q"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="width" secondItem="XJA-np-4FH" secondAttribute="width" id="BiJ-K8-QXB"/>
+                        <constraint firstItem="EH1-q3-bsm" firstAttribute="top" secondItem="64Q-t7-shd" secondAttribute="top" constant="8" id="DE8-S2-nai"/>
+                        <constraint firstItem="EH1-q3-bsm" firstAttribute="bottom" secondItem="64Q-t7-shd" secondAttribute="bottom" constant="-8" id="Dvy-Mb-Fs7"/>
                         <constraint firstAttribute="trailing" secondItem="Si8-qt-eHB" secondAttribute="trailing" id="EyK-qC-iV5"/>
-                        <constraint firstItem="64Q-t7-shd" firstAttribute="centerX" secondItem="woX-J5-TNh" secondAttribute="centerX" id="H6e-de-cz9"/>
-                        <constraint firstItem="64Q-t7-shd" firstAttribute="width" secondItem="woX-J5-TNh" secondAttribute="width" multiplier="0.569132" id="HUg-XD-Sgm"/>
-                        <constraint firstItem="XJA-np-4FH" firstAttribute="centerX" secondItem="64Q-t7-shd" secondAttribute="centerX" id="OOM-dB-c94"/>
-                        <constraint firstItem="XJA-np-4FH" firstAttribute="height" secondItem="64Q-t7-shd" secondAttribute="height" id="Xnf-0z-Mml"/>
-                        <constraint firstItem="XJA-np-4FH" firstAttribute="width" secondItem="64Q-t7-shd" secondAttribute="width" id="iob-du-yja"/>
+                        <constraint firstItem="XJA-np-4FH" firstAttribute="centerX" secondItem="64Q-t7-shd" secondAttribute="centerX" id="Hnx-W4-EHK"/>
+                        <constraint firstItem="Xhv-au-YrD" firstAttribute="trailing" secondItem="XJA-np-4FH" secondAttribute="trailing" constant="-10.5" id="Mub-gn-69u"/>
+                        <constraint firstItem="Xhv-au-YrD" firstAttribute="leading" secondItem="XJA-np-4FH" secondAttribute="leading" constant="10.5" id="Sy7-12-Kvu"/>
+                        <constraint firstItem="EH1-q3-bsm" firstAttribute="trailing" secondItem="64Q-t7-shd" secondAttribute="trailing" constant="-10" id="Z9b-gN-m4j"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="centerX" secondItem="woX-J5-TNh" secondAttribute="centerX" id="lHM-a7-xws"/>
                         <constraint firstItem="Si8-qt-eHB" firstAttribute="top" secondItem="woX-J5-TNh" secondAttribute="top" id="m3S-jJ-ZZD"/>
+                        <constraint firstItem="64Q-t7-shd" firstAttribute="height" secondItem="XJA-np-4FH" secondAttribute="height" id="ofF-xV-NWf"/>
                         <constraint firstItem="G0O-Ld-ohu" firstAttribute="leading" secondItem="woX-J5-TNh" secondAttribute="leading" constant="10" id="os3-Ps-hnY"/>
                         <constraint firstItem="G0O-Ld-ohu" firstAttribute="top" secondItem="woX-J5-TNh" secondAttribute="top" constant="25" id="seX-mp-Twc"/>
                         <constraint firstAttribute="width" secondItem="woX-J5-TNh" secondAttribute="height" multiplier="311:227" id="vnd-H8-f3Y"/>
-                        <constraint firstItem="64Q-t7-shd" firstAttribute="top" secondItem="XJA-np-4FH" secondAttribute="bottom" constant="20" id="xz9-VW-9o0"/>
+                        <constraint firstItem="Xhv-au-YrD" firstAttribute="top" secondItem="XJA-np-4FH" secondAttribute="top" constant="8" id="zmh-rQ-Y1v"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

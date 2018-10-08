@@ -52,9 +52,11 @@ extension TabbarViewController {
         guard let homeVC = CMain_SB.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
         let homeNav = UINavigationController.rootViewController(viewController: homeVC)
         
-      
-        guard let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return }
+        guard let searchVC = CMain_SB.instantiateViewController(withIdentifier: "CuisineViewController") as? CuisineViewController else { return }
         let searchNav = UINavigationController.rootViewController(viewController: searchVC)
+        
+//        guard let searchVC = CMain_SB.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return }
+//        let searchNav = UINavigationController.rootViewController(viewController: searchVC)
         
         
         guard let orderVC = COrder_SB.instantiateViewController(withIdentifier: "OrderViewController") as? OrderViewController else { return }
@@ -68,12 +70,15 @@ extension TabbarViewController {
         guard let profileVC = CProfile_SB.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController else { return }
         let profileNav = UINavigationController.rootViewController(viewController: profileVC)
 
-        guard let profileLoginVC = CProfile_SB.instantiateViewController(withIdentifier: "ProfileLoginViewController") as? ProfileLoginViewController else { return }
-        let profileLoginNav = UINavigationController.rootViewController(viewController: profileLoginVC)
+        guard let profileLoginVC1 = CProfile_SB.instantiateViewController(withIdentifier: "ProfileLoginViewController") as? ProfileLoginViewController else { return }
+        let profileLoginNav1 = UINavigationController.rootViewController(viewController: profileLoginVC1)
+        
+        guard let profileLoginVC2 = CProfile_SB.instantiateViewController(withIdentifier: "ProfileLoginViewController") as? ProfileLoginViewController else { return }
+        let profileLoginNav2 = UINavigationController.rootViewController(viewController: profileLoginVC2)
         
        
         if appDelegate?.loginUser?.user_id == nil {
-            self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileLoginNav], animated: true)
+            self.setViewControllers([homeNav, searchNav, profileLoginNav1, cartNav, profileLoginNav2], animated: true)
         } else{
             self.setViewControllers([homeNav, searchNav, orderNav, cartNav, profileNav], animated: true)
         }

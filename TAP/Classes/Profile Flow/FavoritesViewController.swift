@@ -122,13 +122,11 @@ extension FavoritesViewController : UITableViewDelegate, UITableViewDataSource {
                         
                         self.arrRestData.remove(at: indexPath.row)
                         
-//                        if self.arrRestData.count == 0 {
-//                           self.tblFavorite.reloadRows(at: [indexPath], with: .none)
-//                        } else {
-                            self.lblNoData.isHidden = self.arrRestData.count != 0
-                            self.tblFavorite.reloadData()
-                     //   }
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kNotificationUpdateFavStatus), object: nil)
                         
+                        self.lblNoData.isHidden = self.arrRestData.count != 0
+                        self.tblFavorite.reloadData()
+           
                     })
                     
                 }

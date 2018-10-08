@@ -8,6 +8,9 @@
 
 import UIKit
 
+let USAID = 840
+let BrazilID = 76
+
 class SignUpViewController: ParentViewController {
 
     @IBOutlet weak var txtEmail : UITextField!
@@ -18,12 +21,14 @@ class SignUpViewController: ParentViewController {
     @IBOutlet weak var txtConfirmPassword : GenericTextField!
     @IBOutlet weak var imgVProfile : UIImageView!
     @IBOutlet weak var lblLogin : UILabel!
-
+    @IBOutlet weak var lblTermsCondition : UILabel!
+   
+    var arrCountry = [TblCountryList?]()
     fileprivate var imgData = Data()
     var strPwd = String()
     var strConfirmPwd = String()
     var isFromProfileScreen : Bool?
-    var countryID = Int()
+    var countryID = 0
     
     
     override func viewDidLoad() {
@@ -56,24 +61,56 @@ class SignUpViewController: ParentViewController {
         self.title = CSignUp
         
         self.setAtttibuteString()
+        self.setTermsConditionString()
         
-        let arrCountry = TblCountryList.fetch(predicate: nil, orderBy: CCountry_name, ascending: true)
-        let arrCountryCode = arrCountry?.value(forKeyPath: "country_with_code") as? [Any]
+       let arrUSA = TblCountryList.fetch(predicate: NSPredicate(format: "%K == %d",CCountry_id, USAID), orderBy: CCountry_name, ascending: true) as? [TblCountryList]
+        let arrBrazil = TblCountryList.fetch(predicate: NSPredicate(format: "%K == %d",CCountry_id, BrazilID), orderBy: CCountry_name, ascending: true) as? [TblCountryList]
         
-        if (arrCountryCode?.count)! > 0 {
-
-            txtCountryCode.setPickerData(arrPickerData: arrCountryCode!, selectedPickerDataHandler: { (select, index, component) in
-
-                 let dict = arrCountry![index] as AnyObject
-                 countryID = dict.value(forKey: CCountry_id) as! Int
-                txtCountryCode.text = dict.value(forKey: CCountry_code) as? String
-            }, defaultPlaceholder: "")
+        arrCountry = (TblCountryList.fetchAllObjects() as! [TblCountryList?]).sorted(by: {($0?.country_with_code)! < ($1?.country_with_code)!})
+        
+        if let index = arrCountry.index(where: {$0?.country_id == 840}){
+          arrCountry.remove(at: index)
         }
+        
+        if let index = arrCountry.index(where: {$0?.country_id == 76}){
+            arrCountry.remove(at: index)
+        }
+        
+        if var arrTemp = (arrCountry.map({$0?.country_with_code}) as? [String])?.sorted(by: {$0 < $1}){
+            
+            if (arrUSA?.count)! > 0{
+                let usaInfo = arrUSA?[0]
+                arrCountry.insert(usaInfo, at: 0)
+                arrTemp.insert((usaInfo?.country_with_code)!, at: 0)
+            }
+            
+            if (arrBrazil?.count)! > 0{
+                let brazilInfo = arrBrazil?[0]
+                arrCountry.insert(brazilInfo, at: 1)
+                arrTemp.insert((brazilInfo?.country_with_code)!, at: 1)
+                
+            }
+            
+            if (arrTemp.count) > 0 {
+                txtCountryCode.setPickerData(arrPickerData: arrTemp, selectedPickerDataHandler: { (select, index, component) in
+                    
+                    print(self.arrCountry.count)
+                    if self.arrCountry.count > 0{
+                        let countryInfo = self.arrCountry[index]
+                        let countryId: Int16 = (countryInfo?.country_id)!
+                        self.countryID = Int(countryId)
+                        self.txtCountryCode.text = countryInfo?.country_code
+                    }
+                    
+                }, defaultPlaceholder: "")
+            }
+        }
+
     }
 
     func setAtttibuteString() {
         
-        let textAttributesOne = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
+       let textAttributesOne = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
         let textAttributesTwo = [NSAttributedStringKey.foregroundColor: CColorNavRed, NSAttributedStringKey.font: CFontSFUIText(size: 14.0, type: .SemiBold)]
         
         let textPartOne = NSMutableAttributedString(string: CAlreadyHaveAnAccount, attributes: textAttributesOne)
@@ -86,6 +123,23 @@ class SignUpViewController: ParentViewController {
         self.lblLogin.attributedText = textCombination
     }
     
+    func setTermsConditionString() {
+        
+        let textAttributesOne = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
+        let textAttributesTwo = [NSAttributedStringKey.foregroundColor: CColorNavRed, NSAttributedStringKey.font: CFontSFUIText(size: 14.0, type: .SemiBold)]
+        let textAttributesThree = [NSAttributedStringKey.foregroundColor: CColorLightGray, NSAttributedStringKey.font:CFontSFUIText(size: 14.0, type: .Regular)]
+
+        let textPartOne = NSMutableAttributedString(string: CSignupTermsConditionMsg, attributes: textAttributesOne)
+        let textPartTwo = NSMutableAttributedString(string:CTermsConditions , attributes: textAttributesTwo)
+        let textPartThree = NSMutableAttributedString(string: CSignupTermsConditionMsg2, attributes: textAttributesThree)
+
+        let textCombination = NSMutableAttributedString()
+        textCombination.append(textPartOne)
+        textCombination.append(textPartTwo)
+        textCombination.append(textPartThree)
+
+        self.lblTermsCondition.attributedText = textCombination
+    }
 }
 
 //MARK:-
@@ -127,7 +181,7 @@ extension SignUpViewController {
         self.presentImagePickerController(allowEditing: true) { (image, info) in
             
             if let selectedImage = image {
-                imgVProfile.image = selectedImage
+                self.imgVProfile.image = selectedImage
                 self.imgData = UIImageJPEGRepresentation(selectedImage, 0.5)!
             }
         }

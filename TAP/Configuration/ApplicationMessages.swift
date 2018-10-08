@@ -13,9 +13,10 @@ import Foundation
 var CRetry              : String { return CLocalize(text: "Retry")}
 var CYes                : String { return CLocalize(text: "Yes")}
 var CNo                 : String { return CLocalize(text: "No")}
-var COk                 : String { return CLocalize(text: "Ok")}
+var COk                 : String { return CLocalize(text: "OK")}
 var CCancel             : String { return CLocalize(text: "Cancel")}
-var CClose              : String { return CLocalize(text: "CLOSE")}
+var CCLOSE              : String { return CLocalize(text: "CLOSE")}
+var CClose              : String { return CLocalize(text: "Close")}
 
 //LRF
 
@@ -28,7 +29,13 @@ var CDone                : String { return CLocalize(text: "Done")}
 var CContinue            : String { return CLocalize(text: "Continue")}
 var CCurrentLocation     : String { return CLocalize(text: "Current Location")}
 var CDontHaveAnAccount   : String { return CLocalize(text: "Don't have an account?")}
-var CAlreadyHaveAnAccount   : String { return CLocalize(text: "Already have an account?")}
+var CAlreadyHaveAnAccount: String { return CLocalize(text: "Already have an account?")}
+var CSignupTermsConditionMsg   : String { return CLocalize(text: "By signing up you do agree with the ")}
+var CSignupTermsConditionMsg2   : String { return CLocalize(text: " of Ta Pronto!")}
+var CTakePhoto            : String { return CLocalize(text: "Take A Photo") }
+var CGallery              : String { return CLocalize(text: "Gallery") }
+var CSetting              : String { return CLocalize(text: "Setting") }
+
 
 //Home
 
@@ -59,11 +66,13 @@ var COrderReady         : String { return  CLocalize(text: "ORDER READY")}
 var COrderPending       : String { return CLocalize(text: "ORDER PENDING")}
 
 var CAddYourReview      : String { return  CLocalize(text: "Add your review...")}
+var CPay                : String { return CLocalize(text: "To pay")}
 var CToPay              : String { return CLocalize(text: "To pay (by cash)")}
 var CPaid               : String { return CLocalize(text: "Paid (with stripe)")}
 var CSubTotal           : String { return CLocalize(text: "Subtotal")}
 var CTax                : String { return CLocalize(text: "Tax")}
 var CMessageNoOrder     : String { return CLocalize(text: "Yet you have not given order.")}
+
 
 
 //Cart
@@ -97,8 +106,9 @@ var CMessageNoFavouriteRest  : String { return CLocalize(text: "You have not fav
 
 //Confirmation Message
 
+var CDelete                 : String { return CLocalize(text: "Delete")}
 var CDeleteOrderMessage     : String { return CLocalize(text: "Are you sure you want to delete this order?")}
-var CLogOutMessage          : String { return CLocalize(text: "Are you sure you want to Log Out?")}
+var CLogOutMessage          : String { return CLocalize(text: "Are you sure you want to Logout?")}
 
 
 //Validaton Message
@@ -128,8 +138,16 @@ var CMessaseDeviceNotSupport     : String { return CLocalize(text:"Sorry, your d
 var CMessaseProfileUpdated       : String { return CLocalize(text:"Your profile updated successfully.")}
 var CMessaseChangePassword       : String { return CLocalize(text:"Password updated successfully.")}
 
+var CRegisteredUser : String { return CLocalize(text: "Are you registered user?")}
 
 // General Message
 
 var CError  = "ERROR!"
 var CMessageRetry  = "An error has occured. Please check your network connection or try again."
+
+var CLocationPermissionTitle       : String { return CLocalize(text:"Allow “Ta Pronto” to access your location while you are using the app?")}
+var CLocationpermissionMsg       : String { return CLocalize(text:"App needs location")}
+
+
+
+

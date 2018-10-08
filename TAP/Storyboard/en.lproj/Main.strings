@@ -1,0 +1,54 @@
+
+/* Class = "UITextField"; text = "0"; ObjectID = "1vu-ZS-HLa"; */
+"1vu-ZS-HLa.text" = "0";
+
+/* Class = "UILabel"; text = "Liam_Martin"; ObjectID = "GzU-Fs-dmm"; */
+"GzU-Fs-dmm.text" = "Liam_Martin";
+
+/* Class = "UILabel"; text = "4.0"; ObjectID = "L0s-C2-rcq"; */
+"L0s-C2-rcq.text" = "4.0";
+
+/* Class = "UILabel"; text = "Maxican Crepe"; ObjectID = "MgF-fx-82J"; */
+"MgF-fx-82J.text" = "Maxican Crepe";
+
+/* Class = "UILabel"; text = "$4"; ObjectID = "SjN-Rd-CQy"; */
+"SjN-Rd-CQy.text" = "$4";
+
+/* Class = "UILabel"; text = "No dishes available for this restaurant."; ObjectID = "T1o-VF-woW"; */
+"T1o-VF-woW.text" = "No dishes available for this restaurant.";
+
+/* Class = "UILabel"; text = "Not Available"; ObjectID = "XU7-af-JU6"; */
+"XU7-af-JU6.text" = "Not Available";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "avz-dS-vuO"; */
+"avz-dS-vuO.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "See All"; ObjectID = "eAc-IZ-yAa"; */
+"eAc-IZ-yAa.normalTitle" = "See All";
+
+/* Class = "UILabel"; text = "This restaurant does not have any reviews yet."; ObjectID = "ipm-9g-EG0"; */
+"ipm-9g-EG0.text" = "This restaurant does not have any reviews yet.";
+
+/* Class = "UILabel"; text = "CLOSED"; ObjectID = "jGC-L9-fb1"; */
+"jGC-L9-fb1.text" = "CLOSED";
+
+/* Class = "UILabel"; text = "New York, NY "; ObjectID = "m8x-aG-bRG"; */
+"m8x-aG-bRG.text" = "New York, NY ";
+
+/* Class = "UILabel"; text = "$4"; ObjectID = "mzS-ZE-bGI"; */
+"mzS-ZE-bGI.text" = "$4";
+
+/* Class = "UILabel"; text = "Maxican style tomato salsa, spicy  chill sauce cheese  cream..."; ObjectID = "qLE-bW-aIb"; */
+"qLE-bW-aIb.text" = "Maxican style tomato salsa, spicy  chill sauce cheese  cream...";
+
+/* Class = "UILabel"; text = "Not Available"; ObjectID = "rJ3-Hj-rMP"; */
+"rJ3-Hj-rMP.text" = "Not Available";
+
+/* Class = "UILabel"; text = "Promotion list not found."; ObjectID = "u4n-HZ-qHe"; */
+"u4n-HZ-qHe.text" = "Promotion list not found.";
+
+/* Class = "UILabel"; text = "Liam_Martin"; ObjectID = "v17-zC-RMe"; */
+"v17-zC-RMe.text" = "Liam_Martin";
+
+/* Class = "UILabel"; text = "No restaurant,cuisine or dish available."; ObjectID = "yxF-AP-1wo"; */
+"yxF-AP-1wo.text" = "No restaurant,cuisine or dish available.";

@@ -76,8 +76,8 @@ class OrderDetailViewController: ParentViewController {
         self.loadOrderDetail()
         
         self.setBlock { (data, error) in
-            scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
-            vwRateOrder.isHidden = true
+            self.scrollVW.contentInset = UIEdgeInsetsMake(0, 0, 20, 0)
+            self.vwRateOrder.isHidden = true
         }
     }
     
@@ -85,7 +85,12 @@ class OrderDetailViewController: ParentViewController {
         super.willMove(toParentViewController: parent)
         
         if parent == nil  && isFromCartPayment {
+            
             appDelegate?.tabbar?.btnTabClicked(sender: (appDelegate?.tabbar?.btnOrder)!)
+            
+            GCDMainThread.asyncAfter(deadline: .now() + 1) {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }
     }
     
@@ -297,13 +302,14 @@ extension OrderDetailViewController {
                 //self.dictDetail = dataRes
                 self.setOrderDetail()
            
-            } else {
-                
-                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
-                   self.loadOrderDetail()
-                }, btnTwoTitle: CCancel, btnTwoTapped: { (action) in
-                })
             }
+//            else {
+//
+//                self.presentAlertViewWithTwoButtons(alertTitle: "", alertMessage: error?.localizedDescription, btnOneTitle: CRetry , btnOneTapped: { (action) in
+//                   self.loadOrderDetail()
+//                }, btnTwoTitle: CCancel, btnTwoTapped: { (action) in
+//                })
+//            }
         }
     }
 }

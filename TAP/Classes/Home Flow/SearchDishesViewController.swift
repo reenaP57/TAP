@@ -155,7 +155,7 @@ class SearchDishesViewController: ParentViewController {
                 TblCartRestaurant.deleteAllObjects()
                 appDelegate?.setCartCountOnTab()
                 
-            }, btnTwoTitle: CClose, btnTwoTapped: { (actio) in
+            }, btnTwoTitle: CCLOSE, btnTwoTapped: { (actio) in
             })
         }
         

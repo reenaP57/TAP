@@ -217,7 +217,7 @@ extension UIViewController {
         
         alertController.addAction(UIAlertAction(title: btnTwoTitle, style: btnTwoStyle, handler: btnTwoTapped))
         
-        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: CClose, style: .cancel, handler: nil))
         
 //        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -341,13 +341,13 @@ extension UIViewController : UIImagePickerControllerDelegate , UINavigationContr
     /// - Parameters:
     ///   - allowEditing: Pass the Bool value for allowEditing OR Not on UIImagePickerController.
     ///   - imagePickerControllerCompletionHandler: This completionHandler contain selected image AND info Dictionary to let you help in CurrentController. Both image AND info Dictionary might be nil , in this case to prevent the crash please use if let OR guard let.
-    func presentImagePickerController(allowEditing:Bool , imagePickerControllerCompletionHandler:imagePickerControllerCompletionHandler) {
+    func presentImagePickerController(allowEditing:Bool , imagePickerControllerCompletionHandler:@escaping imagePickerControllerCompletionHandler) {
         
-        self.presentActionsheetWithTwoButtons(actionSheetTitle: nil, actionSheetMessage: nil, btnOneTitle: "Take A Photo", btnOneStyle: .default, btnOneTapped: { (action) in
+        self.presentActionsheetWithTwoButtons(actionSheetTitle: nil, actionSheetMessage: nil, btnOneTitle: CTakePhoto, btnOneStyle: .default, btnOneTapped: { (action) in
             
             self.takeAPhoto()
             
-        }, btnTwoTitle: "Choose From Phone", btnTwoStyle: .default) { (action) in
+        }, btnTwoTitle: CGallery, btnTwoStyle: .default) { (action) in
             
             self.chooseFromPhone(allowEditing:allowEditing)
         }
@@ -356,14 +356,14 @@ extension UIViewController : UIImagePickerControllerDelegate , UINavigationContr
     }
     
     // Open picker in gallery mode
-    func presentImagePickerControllerWithGallery(allowEditing:Bool , imagePickerControllerCompletionHandler:imagePickerControllerCompletionHandler) {
+    func presentImagePickerControllerWithGallery(allowEditing:Bool , imagePickerControllerCompletionHandler:@escaping imagePickerControllerCompletionHandler) {
         
         self.chooseFromPhone(allowEditing:allowEditing)
         
         objc_setAssociatedObject(self, &AssociatedObjectKey.imagePickerControllerCompletionHandler, imagePickerControllerCompletionHandler, .OBJC_ASSOCIATION_RETAIN)
     }
     // Open picker in Camera mode
-    func presentImagePickerControllerWithCamera(allowEditing:Bool , imagePickerControllerCompletionHandler:imagePickerControllerCompletionHandler) {
+    func presentImagePickerControllerWithCamera(allowEditing:Bool , imagePickerControllerCompletionHandler:@escaping imagePickerControllerCompletionHandler) {
         
         self.takeAPhoto()
         
@@ -461,7 +461,7 @@ extension UIViewController {
     /// This method is used to set the block on CurrentController for getting back with some data(Any Type of Data) AND error message(String).
     ///
     /// - Parameter block: This block contain data(Any Type of Data) AND error message(String) to let you help in CurrentController. Both data AND error might be nil , in this case to prevent the crash please use if let OR guard let.
-    func setBlock(block:blockHandler) {
+    func setBlock(block:@escaping blockHandler) {
         
         objc_setAssociatedObject(self, &blockKey.blockHandler, block, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
