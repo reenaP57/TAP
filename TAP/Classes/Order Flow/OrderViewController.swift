@@ -63,6 +63,7 @@ class OrderViewController: ParentViewController {
     
     
     @objc func refreshOrderList(notification : Notification) {
+        //...Refresh order list when done payment or got notification
         currentPage = 1
         self.loadOrderList(isRefresh: true, isFromNotification: false)
     }

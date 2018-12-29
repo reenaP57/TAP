@@ -67,11 +67,13 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
             restaurantTopView = (Bundle.main.loadNibNamed("RestaurantDetailTopView", owner: self, options: nil)?[0] as? RestaurantDetailTopView)!
         }
         
+        //...Configuration for Top header view
         restaurantTopView.txtSearch.delegate = self
         restaurantTopView.frame.size.width = CScreenWidth
         headerTableTop = ParallaxHeaderView.parallaxHeaderView(withSubView: restaurantTopView)
         self.tblRestDetail.tableHeaderView = headerTableTop
         
+        //...Load resturant detail from server
         self.setRestaurantDetail(isRefresh : false)
     }
 
@@ -87,7 +89,8 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
     }
     
     @objc func RefreshRestaurantDetail(notification : Notification) {
-     
+     //...Update or refresh restaurant dish list when any change in cart
+        
         if let itemInfo = notification.object as? [String : AnyObject] {
             isUpdated = true
             var stop = false
@@ -268,15 +271,15 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
     }
     
     func filterCategoryWithID(categoryID : String) {
-       
+       //...Filter dish list with particular category ID
+        
         arrSelectedDishList.removeAll()
         arrSelectedDishList = arrDishList.filter {( $0["dish_category_ids"]!.contains(categoryID) )}
         tblRestDetail.reloadData()
-        
     }
     
     func filterMostPopularDish() {
-       
+       //...Filter most popular dish
         arrSelectedDishList.removeAll()
         arrSelectedDishList = arrDishList.filter {( $0["popular_index"] as! Int != 0)}
         tblRestDetail.reloadData()
@@ -294,7 +297,7 @@ class RestaurantDetailViewController: ParentViewController, selectCategoryProtoc
     }
  
     func updateQuantity(cell : DishDetailTableViewCell, indexPath : IndexPath, isPlus : Bool) {
-        
+        //...Update quantity on plus or minus in Database
         
         let isClearCart =  self.checkCartForThisRestaurant()
         

@@ -25,7 +25,6 @@ class SeeAllRestaurantViewController: ParentViewController {
     fileprivate var lastPage : Int = 0
     fileprivate var currentPage : Int = 1
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -57,6 +56,7 @@ class SeeAllRestaurantViewController: ParentViewController {
     }
     
     @objc func updateFavouriteStatus(notification : Notification) {
+        //...Update particular object when change favourite status
         
         let itemInfo = notification.object as? [String : AnyObject]
         

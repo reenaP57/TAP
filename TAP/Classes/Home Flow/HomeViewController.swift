@@ -63,10 +63,12 @@ class HomeViewController: ParentViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateFavouriteStatus), name: NSNotification.Name(rawValue: kNotificationUpdateFavStatus), object: nil)
         
+        //...Load restaurant list from server
         self.loadRestaurantList(isRefresh: false)
     }
     
     @objc func updateFavouriteStatus(notification : Notification) {
+        //...Update particular object when favourite status will be change
         
         let itemInfo = notification.object as? [String : AnyObject]
         
@@ -216,7 +218,6 @@ extension HomeViewController {
         if !isRefresh {
             activityLoader?.startAnimating()
         }
-        
         
         apiTask = APIRequest.shared().restaurantList { (response, error) in
         

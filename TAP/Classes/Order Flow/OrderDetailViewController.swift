@@ -73,6 +73,8 @@ class OrderDetailViewController: ParentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         appDelegate?.hideTabBar()
+        
+        //...Load order detail from server
         self.loadOrderDetail()
         
         self.setBlock { (data, error) in

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hiW-8Z-jdS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hiW-8Z-jdS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +47,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="qnw-VQ-eDX">
-                                <rect key="frame" x="317" y="54" width="23" height="23"/>
+                                <rect key="frame" x="317" y="53.5" width="23" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="23" id="1Vh-T0-N9H"/>
                                     <constraint firstAttribute="height" constant="23" id="M76-Jf-KqC"/>
@@ -70,14 +68,14 @@
                                 </connections>
                             </button>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="Sdk-Yj-JOV">
-                                <rect key="frame" x="317" y="114" width="23" height="23"/>
+                                <rect key="frame" x="317" y="113.5" width="23" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="Zfe-CH-AiI"/>
                                     <constraint firstAttribute="width" constant="23" id="wT0-zf-e6P"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFp-Eg-89C" customClass="GenericButton" customModule="Ta_Pronto" customModuleProvider="target">
-                                <rect key="frame" x="117" y="200" width="140" height="40"/>
+                                <rect key="frame" x="117.5" y="200" width="140" height="40"/>
                                 <color key="backgroundColor" red="0.74901960784313726" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="pFp-Eg-89C" secondAttribute="height" multiplier="7:2" id="Fj3-4Y-4v9"/>
@@ -139,7 +137,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="215"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_red" translatesAutoresizingMaskIntoConstraints="NO" id="9RC-pc-c0d">
-                                                <rect key="frame" x="91" y="110.5" width="192" height="34"/>
+                                                <rect key="frame" x="91.5" y="110.5" width="192" height="34"/>
                                             </imageView>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kX1-Vq-AnB">
                                                 <rect key="frame" x="10" y="0.0" width="60" height="60"/>
@@ -294,27 +292,27 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5N-HW-W4c">
-                                        <rect key="frame" x="81" y="599" width="213" height="17"/>
+                                        <rect key="frame" x="84.5" y="599" width="206" height="17"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Don't have an account?">
                                                 <attributes>
                                                     <color key="NSColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="14" name="SFUIText-Regular"/>
-                                                    <font key="NSOriginalFont" size="14" name="SFUIText-Regular"/>
+                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSOriginalFont" metaFont="system" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content=" ">
                                                 <attributes>
-                                                    <font key="NSFont" size="14" name="SFUIText-Regular"/>
-                                                    <font key="NSOriginalFont" size="14" name="SFUIText-Regular"/>
+                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSOriginalFont" metaFont="system" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="Sign Up">
                                                 <attributes>
                                                     <color key="NSColor" red="0.74901960784313726" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="14" name="SFUIText-Semibold"/>
+                                                    <font key="NSFont" metaFont="system" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                     <color key="NSUnderlineColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </attributes>
@@ -323,7 +321,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igT-O9-fIy">
-                                        <rect key="frame" x="80.5" y="592.5" width="213.5" height="30"/>
+                                        <rect key="frame" x="84.5" y="592.5" width="206" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="eaE-Re-t1X"/>
                                         </constraints>
@@ -886,10 +884,10 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="90"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="ouR-iq-5EW">
-                                        <rect key="frame" x="20" y="12.5" width="15" height="19"/>
+                                        <rect key="frame" x="20" y="13" width="15" height="19"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blT-Or-gHh" customClass="GenericLabel" customModule="Ta_Pronto">
-                                        <rect key="frame" x="51" y="13" width="122" height="18"/>
+                                        <rect key="frame" x="51" y="13.5" width="122" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1033,11 +1031,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back_red" width="22" height="15"/>
-        <image name="check" width="23" height="23"/>
-        <image name="close" width="18" height="18"/>
-        <image name="location" width="15" height="19"/>
-        <image name="logo_red" width="192" height="34"/>
-        <image name="user" width="75" height="75"/>
+        <image name="back_red" width="45" height="30"/>
+        <image name="check" width="46" height="46"/>
+        <image name="close" width="36" height="36"/>
+        <image name="location" width="31" height="39"/>
+        <image name="logo_red" width="385" height="68"/>
+        <image name="user" width="150" height="150"/>
     </resources>
 </document>
